@@ -7,13 +7,13 @@
 
 
 <body>
-    <script type="text/javascript" src = "js/jquery-3.2.1.slim.min.js"></script>
+    <script type="text/javascript" src = "js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src = "js/call_parser_apis.js"></script>
     
     Enter some text: <br />
-    <form id='rst'>
-        <input type='text' name='input' maxlength='1000' />
-        <input type='submit' />
+    <form id='rst' method='post'>
+        <input id='input-text' type='text' name='input' maxlength='1000' />
+        <input type='submit' id='btnSubmit' />
     </form>
 
     <div id="results">

@@ -22,7 +22,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "https://hookb.in/v0Ppogd0",
+            url: "http://localhost:8000/1j1l2yf1",
             data: data,
             processData: false,
             contentType: false,

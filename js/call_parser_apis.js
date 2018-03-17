@@ -7,8 +7,9 @@ $(document).ready(function () {
         //stop submit the form, we will post it manually.
         event.preventDefault();
 
-        //grab form data
+        //store text that the user entered into <textarea id='input-text'>
         var input = $('#input-text').val()
+        # store the output format that the user selected from <select id="output-format">
         var outputFormat = $('#output-format').val()
         var formData = new FormData();
         formData.append('input', input);
@@ -16,9 +17,10 @@ $(document).ready(function () {
 
         console.log('input: ', input); // TODO: rm after debug
 
-        // disable the submit button temporarely
+        // disable the non-js submit button temporarely
         $("#btnSubmit").prop("disabled", true);
 
+        // send the form data via a POST request
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
@@ -30,6 +32,7 @@ $(document).ready(function () {
             timeout: 600000,
             success: function (data) {
 
+                // put the result in the <div id="results"> element
                 if (outputFormat == 'nltk-tree-png') {
                     $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + data + '" /></div>');
                 } else {

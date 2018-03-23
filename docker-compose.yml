@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  codra-service:
+    image: "nlpbox/codra-service"
+    ports:
+     - "9001:8000"
+  dplp-service:
+    image: "nlpbox/dplp-service"
+    ports:
+     - "9002:8000"
+  rstweb-service:
+    image: "nlpbox/rstweb-service"
+    ports:
+     - "9100:8080"
+

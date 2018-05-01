@@ -44,7 +44,9 @@ The `rst-workbench`  is based on the following tools / containers.
 
 *Description*: REST API around the CODRA RST parser.
 
-*Dockerized repo*: [codra-service](https://github.com/NLPbox/codra-service)
-*Build status*:
-*Docker hub*: [codra-service](https://hub.docker.com/r/nlpbox/codra-service/)
-*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://img.shields.io/docker/build/nlpbox/codra-service.svg)
+*Dockerized repo*: [codra-service](https://github.com/NLPbox/codra-service)  
+*Build status*:  
+*Docker hub*: [codra-service](https://hub.docker.com/r/nlpbox/codra-service/)  
+*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://img.shields.io/docker/build/nlpbox/codra-service.svg)  
+
+

@@ -29,9 +29,11 @@ The `rst-workbench`  is based on the following tools / containers.
 
 ### codra-docker
 
+<!--- TODO: setup build at https://travis-ci.org/NLPbox/codra-docker --->
+
 *Description*: CODRA RST parser commandline interface.
 
-*Dockerized repo*: [codra-docker](https://github.com/NLPbox/codra-docker)
-*Build status*: <!--- TODO: setup build at https://travis-ci.org/NLPbox/codra-docker --->
-*Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/codra/)
+*Dockerized repo*: [codra-docker](https://github.com/NLPbox/codra-docker)  
+*Build status*:  
+*Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/codra/)  
 *Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra.svg)](https://img.shields.io/docker/build/nlpbox/codra.svg)

@@ -8,12 +8,11 @@ The `rst-workbench`  is based on the following tools / containers.
 
 ### dplp-docker
 
-*Description*: DPLP RST parser commandline interface.
-
-*Dockerized repo*: [dplp-docker](https://github.com/NLPbox/dplp-docker)
-*Build status*:  [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-docker.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-docker)
-*Docker hub*: [nlpbox/dplp](https://hub.docker.com/r/nlpbox/dplp/)
-*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp.svg)](https://img.shields.io/docker/build/nlpbox/dplp.svg)
+| *Description* | DPLP RST parser commandline interface. |
+| *Dockerized repo* | [dplp-docker](https://github.com/NLPbox/dplp-docker) |
+| *Build status* | [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-docker.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-docker) |
+| *Docker hub* | [nlpbox/dplp](https://hub.docker.com/r/nlpbox/dplp/) |
+| *Docker hub build status* | [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp.svg)](https://img.shields.io/docker/build/nlpbox/dplp.svg) |
 
 ### dplp-service
 

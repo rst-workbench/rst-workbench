@@ -3,6 +3,15 @@ rst-workbench
 
 The `rst-workbench`  is based on the following tools / containers.
 
+## [Charniak/BLLIP (Charniak and Johnson 2005)](https://github.com/BLLIP/bllip-parser)
+
+*Description*: Charniak-Johnson reranking parser commandline interface.
+
+*Dockerized repo*: https://github.com/NLPbox/charniak-docker  
+*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/charniak-docker.svg?branch=master)](https://travis-ci.org/NLPbox/charniak-docker)  
+*Docker hub*: https://hub.docker.com/r/nlpbox/charniak  
+*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/charniak.svg)](https://hub.docker.com/r/nlpbox/charniak/builds/)
+
 
 ## [DPLP (Ji and Eisenstein 2014)](https://github.com/jiyfeng/DPLP)
 

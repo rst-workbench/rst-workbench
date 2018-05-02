@@ -23,6 +23,7 @@ your commits like this to trigger build on Docker Hub.
 
 ```
 git tag 2018-05-01
+git push
 git push --tags
 ```
 

@@ -14,9 +14,9 @@ repo you're working on, click on "Build Settings" and "+",
 select the following:
 
 **Type**: ``Tag``  
-**Name**: ``/^([0-9a-z-.]+)$/``
-**Dockerfile Location**: ``/``
-**Docker Tag Name**: (leave empty)
+**Name**: ``/^([0-9a-z-.]+)$/``  
+**Dockerfile Location**: ``/``  
+**Docker Tag Name**: (leave empty)  
 
 Afterwards, click on "Save changes". From now on, you can tag and push
 your commits like this to trigger build on Docker Hub.

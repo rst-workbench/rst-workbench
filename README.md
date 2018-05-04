@@ -51,7 +51,7 @@ This parser is used by CODRA.
 *Description*: REST API around the CODRA RST parser.
 
 *Dockerized repo*: [codra-service](https://github.com/NLPbox/codra-service)  
-*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)
+*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)  
 *Docker hub*: [codra-service](https://hub.docker.com/r/nlpbox/codra-service/)  
 *Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://hub.docker.com/r/nlpbox/codra-service/)  
 

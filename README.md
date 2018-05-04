@@ -44,17 +44,15 @@ This parser is used by CODRA.
 *Dockerized repo*: [codra-docker](https://github.com/NLPbox/codra-docker)  
 *Build status*:  [![Travis Build Status](https://travis-ci.org/NLPbox/codra-docker.svg?branch=master)](https://travis-ci.org/NLPbox/codra-docker)
 *Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/codra/)  
-*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra.svg)](https://img.shields.io/docker/build/nlpbox/codra.svg)
+*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra.svg)](https://hub.docker.com/r/nlpbox/codra/)
 
 ### codra-service
-
-<!--- TODO: setup build at https://travis-ci.org/NLPbox/codra-service --->
 
 *Description*: REST API around the CODRA RST parser.
 
 *Dockerized repo*: [codra-service](https://github.com/NLPbox/codra-service)  
-*Build status*:  
+*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)
 *Docker hub*: [codra-service](https://hub.docker.com/r/nlpbox/codra-service/)  
-*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://img.shields.io/docker/build/nlpbox/codra-service.svg)  
+*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://hub.docker.com/r/nlpbox/codra-service/)  
 
 

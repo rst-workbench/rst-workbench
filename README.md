@@ -5,7 +5,8 @@ The `rst-workbench`  is based on the following tools / containers.
 
 ## [Charniak/BLLIP (Charniak and Johnson 2005)](https://github.com/BLLIP/bllip-parser)
 
-*Description*: Charniak-Johnson reranking parser commandline interface.
+*Description*: Charniak-Johnson reranking parser (commandline interface).
+This parser is used by CODRA.
 
 *Dockerized repo*: https://github.com/NLPbox/charniak-docker  
 *Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/charniak-docker.svg?branch=master)](https://travis-ci.org/NLPbox/charniak-docker)  
@@ -38,12 +39,10 @@ The `rst-workbench`  is based on the following tools / containers.
 
 ### codra-docker
 
-<!--- TODO: setup build at https://travis-ci.org/NLPbox/codra-docker --->
-
 *Description*: CODRA RST parser commandline interface.
 
 *Dockerized repo*: [codra-docker](https://github.com/NLPbox/codra-docker)  
-*Build status*:  
+*Build status*:  [![Travis Build Status](https://travis-ci.org/NLPbox/codra-docker.svg?branch=master)](https://travis-ci.org/NLPbox/codra-docker)
 *Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/codra/)  
 *Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra.svg)](https://img.shields.io/docker/build/nlpbox/codra.svg)
 

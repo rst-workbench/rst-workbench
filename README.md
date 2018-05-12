@@ -42,7 +42,7 @@ This parser is used by CODRA.
 *Description*: CODRA RST parser commandline interface.
 
 *Dockerized repo*: [codra-docker](https://github.com/NLPbox/codra-docker)  
-*Build status*:  [![Travis Build Status](https://travis-ci.org/NLPbox/codra-docker.svg?branch=master)](https://travis-ci.org/NLPbox/codra-docker)
+*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/codra-docker.svg?branch=master)](https://travis-ci.org/NLPbox/codra-docker)  
 *Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/codra/)  
 *Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra.svg)](https://hub.docker.com/r/nlpbox/codra/)
 
@@ -56,3 +56,11 @@ This parser is used by CODRA.
 *Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://hub.docker.com/r/nlpbox/codra-service/)  
 
 
+## heilman-sagae-2015-docker
+
+*Description*: Heilman and Sagae (2015) RST parser commandline interface.
+
+*Dockerized repo*: https://github.com/NLPbox/heilman-sagae-2015-docker  
+*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker)  
+*Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  
+*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  

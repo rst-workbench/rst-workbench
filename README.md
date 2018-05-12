@@ -66,3 +66,12 @@ This parser is used by CODRA.
 [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker)  
 *Docker hub*: [nlpbox/heilman-sagae-2015](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  
+
+### heilman-sagae-2015-service
+
+*Description*: REST API around the Heilman and Sagae (2015) RST parser.
+
+*Dockerized repo*: [heilman-sagae-2015-service](https://github.com/NLPbox/heilman-sagae-2015-service)
+[![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)  
+*Docker hub*: [nlpbox/heilman-sagae-2015-service](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015-service.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)  

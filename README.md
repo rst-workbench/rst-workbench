@@ -8,9 +8,9 @@ The `rst-workbench`  is based on the following tools / containers.
 *Description*: Charniak-Johnson reranking parser (commandline interface).
 This parser is used by CODRA.
 
-*Dockerized repo*: https://github.com/NLPbox/charniak-docker
+*Dockerized repo*: [charniak-docker](https://github.com/NLPbox/charniak-docker)
 [![Travis Build Status](https://travis-ci.org/NLPbox/charniak-docker.svg?branch=master)](https://travis-ci.org/NLPbox/charniak-docker)  
-*Docker hub*: https://hub.docker.com/r/nlpbox/charniak
+*Docker hub*: [nlpbox/charniak](https://hub.docker.com/r/nlpbox/charniak)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/charniak.svg)](https://hub.docker.com/r/nlpbox/charniak/builds/)
 
 
@@ -52,7 +52,7 @@ This parser is used by CODRA.
 
 *Dockerized repo*: [codra-service](https://github.com/NLPbox/codra-service)
 [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)  
-*Docker hub*: [codra-service](https://hub.docker.com/r/nlpbox/codra-service/)
+*Docker hub*: [nlpbox/codra-service](https://hub.docker.com/r/nlpbox/codra-service/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://hub.docker.com/r/nlpbox/codra-service/)  
 
 

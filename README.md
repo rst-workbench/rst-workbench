@@ -62,7 +62,7 @@ This parser is used by CODRA.
 
 *Description*: Heilman and Sagae (2015) RST parser commandline interface.
 
-*Dockerized repo*: [heilman-sagae-2015-docker](https://github.com/NLPbox/heilman-sagae-2015-docker)  
-*Build status*: [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker)  
-*Docker hub*: [nlpbox/codra](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  
-*Docker hub build status*: [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  
+*Dockerized repo*: [heilman-sagae-2015-docker](https://github.com/NLPbox/heilman-sagae-2015-docker)
+[![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-docker)  
+*Docker hub*: [nlpbox/heilman-sagae-2015](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015/)  

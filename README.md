@@ -75,3 +75,14 @@ This parser is used by CODRA.
 [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)  
 *Docker hub*: [nlpbox/heilman-sagae-2015-service](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015-service.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)  
+
+## [HILDA (Hernault et al. 2010)](https://github.com/NLPbox/hilda-docker)
+
+### hilda-docker
+
+*Description*: HILDA RST parser commandline interface. HILDA itself is only
+available from the [Prendinger lab](http://research.nii.ac.jp/%7Eprendinger/),
+so we can't provide automated builds but only the build scripts here.
+
+*Dockerized repo*: [hilda-docker](https://github.com/NLPbox/hilda-docker)
+

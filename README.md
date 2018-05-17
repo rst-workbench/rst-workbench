@@ -13,6 +13,17 @@ This parser is used by CODRA.
 *Docker hub*: [nlpbox/charniak](https://hub.docker.com/r/nlpbox/charniak)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/charniak.svg)](https://hub.docker.com/r/nlpbox/charniak/builds/)
 
+## [discoursegraphs (Neumann 2015](https://github.com/arne-cl/discoursegraphs)
+
+*Description*: discoursegraphs is a graph-based converter library for linguistic file formats.
+
+*Dockerized repo*: [arne-cl/discoursegraphs](https://github.com/arne-cl/discoursegraphs)
+[![Travis Build Status](https://travis-ci.org/NLPbox/discoursegraphs.svg?branch=master)](https://travis-ci.org/NLPbox/discoursegraphs)  
+*Docker hub*: [nlpbox/discoursegraphs](https://hub.docker.com/r/nlpbox/discoursegraphs)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/discoursegraphs.svg)](https://hub.docker.com/r/nlpbox/discoursegraphs/builds/)
+
+
+
 
 ## [DPLP (Ji and Eisenstein 2014)](https://github.com/jiyfeng/DPLP)
 

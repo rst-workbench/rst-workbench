@@ -18,7 +18,7 @@ This parser is used by CODRA.
 *Description*: discoursegraphs is a graph-based converter library for linguistic file formats.
 
 *Dockerized repo*: [arne-cl/discoursegraphs](https://github.com/arne-cl/discoursegraphs)
-[![Travis Build Status](https://travis-ci.org/NLPbox/discoursegraphs.svg?branch=master)](https://travis-ci.org/NLPbox/discoursegraphs)  
+[![Travis Build Status](https://travis-ci.org/arne-cl/discoursegraphs.svg?branch=master)](https://travis-ci.org/arne-cl/discoursegraphs)  
 *Docker hub*: [nlpbox/discoursegraphs](https://hub.docker.com/r/nlpbox/discoursegraphs)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/discoursegraphs.svg)](https://hub.docker.com/r/nlpbox/discoursegraphs/builds/)
 

@@ -22,6 +22,14 @@ This parser is used by CODRA.
 *Docker hub*: [nlpbox/discoursegraphs](https://hub.docker.com/r/nlpbox/discoursegraphs)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/discoursegraphs.svg)](https://hub.docker.com/r/nlpbox/discoursegraphs/builds/)
 
+## [rstviewer](https://github.com/arne-cl/rstviewer)
+
+*Description*: rstviewer converts *.rs3 files to PNG images.
+
+*Dockerized repo*: [arne-cl/rstviewer](https://github.com/arne-cl/rstviewer)
+[![Travis Build Status](https://travis-ci.org/arne-cl/rstviewer.svg?branch=master)](https://travis-ci.org/arne-cl/rstviewer)  
+*Docker hub*: [nlpbox/rstviewer](https://hub.docker.com/r/nlpbox/rstviewer)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/rstviewer.svg)](https://hub.docker.com/r/nlpbox/rstviewer/builds/)
 
 
 

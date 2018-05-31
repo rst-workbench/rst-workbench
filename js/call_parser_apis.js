@@ -24,34 +24,68 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "http://localhost:8000/parse",
+            url: "http://localhost:9001/parse",
             data: formData,
             processData: false,
             contentType: false,
             cache: false,
             timeout: 600000,
             success: function (data) {
-
-                // put the result in the <div id="results"> element
-                if (outputFormat == 'nltk-tree-png') {
-                    $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + data + '" /></div>');
-                } else {
-                    $("#results").append('<div><pre>\n' + data + '\n</pre></div>');
-                }
-
+                handleParserOutput(data, outputFormat);
                 console.log("SUCCESS : ", data);
                 $("#btnSubmit").prop("disabled", false);
-
             },
             error: function (e) {
-
                 $("#results").text(e.responseText);
                 console.log("ERROR : ", e);
                 $("#btnSubmit").prop("disabled", false);
-
             }
         });
 
     });
 
 });
+
+// handleParserOutput takes the output of an RST parser, converts it if needed
+// and adds it to the <div id="results"> section
+function handleParserOutput(outputString, outputFormat) {
+    if (outputFormat == 'nltk-tree-png') {
+        $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + outputString + '" /></div>');
+    } else if (outputFormat == 'rs3') {
+        addRS3toResults(outputString);
+    } else {
+        $("#results").append('<div><pre>\n' + outputString + '\n</pre></div>');
+    }
+}
+
+
+function addRS3toResults(rs3String) {
+    var formData = new FormData();
+    formData.append('input', rs3String);
+
+    // console.log('input: ', input);
+
+    // send the form data via a POST request
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "http://localhost:9100/rs3_to_png",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            console.log("convertRS3toPNG SUCCESS : ", data);
+            addPNGtoResults(data);
+        },
+        error: function (e) {
+            $("#results").text(e.responseText);
+            console.log("convertRS3toPNGERROR : ", e);
+        }
+    });
+}
+
+function addPNGtoResults(pngBase64) {
+    $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + pngBase64 + '" /></div>');
+}

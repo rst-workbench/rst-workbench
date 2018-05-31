@@ -51,7 +51,7 @@ This parser is used by CODRA.
 *Dockerized repo*: [dplp-service](https://github.com/NLPbox/dplp-service)
 [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)  
 *Docker hub*: [nlpbox/dplp-service](https://hub.docker.com/r/nlpbox/dplp-service/)
-[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)  
 *Supported output formats*: `original` (DPLP-specific, tabular format), `rs3` (using discoursegraphs for conversion)
 
 ## [CODRA (Joty et al. 2015)](http://alt.qcri.org/tools/discourse-parser/)

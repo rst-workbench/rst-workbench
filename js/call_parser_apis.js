@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         //store text that the user entered into <textarea id='input-text'>
         var input = $('#input-text').val()
-        # store the output format that the user selected from <select id="output-format">
+        // store the output format that the user selected from <select id="output-format">
         var outputFormat = $('#output-format').val()
         var formData = new FormData();
         formData.append('input', input);

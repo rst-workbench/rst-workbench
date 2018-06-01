@@ -90,6 +90,7 @@ function addRS3toResults(rs3String) {
         timeout: 600000,
         success: function (data) {
             console.log("convertRS3toPNG SUCCESS : ", data);
+            addRS3DownloadButton(rs3String);
             addPNGtoResults(data);
         },
         error: function (e) {
@@ -98,6 +99,32 @@ function addRS3toResults(rs3String) {
         }
     });
 }
+
+
+// source: https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function addRS3DownloadButton(rs3String) {
+    $("#results").append(
+`<form onsubmit="download('result.rs3', this['text'].value)">
+  <textarea name="text" style='display:none;'>${rs3String}</textarea>
+  <input type="submit" value="Download .rs3 file">
+</form>`
+    );
+}
+
+
 
 function addPNGtoResults(pngBase64) {
     $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + pngBase64 + '" /></div>');

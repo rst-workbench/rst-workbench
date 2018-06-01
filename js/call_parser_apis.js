@@ -21,31 +21,40 @@ $(document).ready(function () {
         // disable the non-js submit button temporarely
         $("#btnSubmit").prop("disabled", true);
 
-        // send the form data via a POST request
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "http://localhost:9001/parse",
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-                handleParserOutput(data, outputFormat);
-                console.log("SUCCESS : ", data);
-                $("#btnSubmit").prop("disabled", false);
-            },
-            error: function (e) {
-                $("#results").text(e.responseText);
-                console.log("ERROR : ", e);
-                $("#btnSubmit").prop("disabled", false);
-            }
-        });
+        runRSTParser(formData, "http://localhost:9001", "codra-service", outputFormat);
+        runRSTParser(formData, "http://localhost:9002", "dplp-service", outputFormat);
 
     });
-
 });
+
+// runRSTParser runs the text from the input form through the given RST parser,
+// transforms the output into the given format and adds the output into the
+// results section.
+function runRSTParser(formData, parserURL, parserName, outputFormat) {
+    // send the form data via a POST request
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: parserURL + "/parse",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            // transform output and add it to results section
+            handleParserOutput(data, outputFormat);
+            console.log("SUCCESS : ", data);
+            $("#btnSubmit").prop("disabled", false);
+        },
+        error: function (e) {
+            // add error message to results section
+            $("#results").text(e.responseText);
+            console.log("ERROR : ", e);
+            $("#btnSubmit").prop("disabled", false);
+        }
+    });
+}
 
 // handleParserOutput takes the output of an RST parser, converts it if needed
 // and adds it to the <div id="results"> section

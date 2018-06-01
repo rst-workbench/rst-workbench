@@ -100,6 +100,14 @@ function addRS3toResults(rs3String) {
     });
 }
 
+// FIXME: implement addRSTWebEditOptionToResults
+//~ function addRSTWebEditOptionToResults(rs3String) {
+    //~ $("#results").append(
+//~ `<form id='editor' method='post'>
+    //~ <textarea id='input-rs3' style='display:none;'>${rs3String}</textarea>
+    //~ <input type='submit' id='RSTWebSubmitButton' value='Edit in rstweb'/>
+//~ </form>`);
+//~ }
 
 // source: https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
 function download(filename, text) {

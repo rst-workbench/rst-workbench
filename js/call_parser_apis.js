@@ -43,12 +43,13 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
         timeout: 600000,
         success: function (data) {
             // transform output and add it to results section
-            handleParserOutput(data, outputFormat);
+            handleParserOutput(data, outputFormat, parserName);
             console.log("SUCCESS : ", data);
             $("#btnSubmit").prop("disabled", false);
         },
         error: function (e) {
             // add error message to results section
+            $("#results").append('<h2>' + parserName + ':</h2>\n\n');
             $("#results").text(e.responseText);
             console.log("ERROR : ", e);
             $("#btnSubmit").prop("disabled", false);
@@ -58,7 +59,8 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
 
 // handleParserOutput takes the output of an RST parser, converts it if needed
 // and adds it to the <div id="results"> section
-function handleParserOutput(outputString, outputFormat) {
+function handleParserOutput(outputString, outputFormat, parserName) {
+    $("#results").append('<h2>' + parserName + ':</h2>\n\n');
     if (outputFormat == 'nltk-tree-png') {
         $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + outputString + '" /></div>');
     } else if (outputFormat == 'rs3') {

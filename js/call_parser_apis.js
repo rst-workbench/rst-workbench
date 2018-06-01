@@ -3,7 +3,8 @@ $(document).ready(function () {
 
     //Program a custom submit function for the form
     $("form#rst").submit(function(event){
-         $("#results").empty(); // reset results
+         // FIXME: this was disabled b/c it also reacted to the edit button
+         //~ $("#results").empty(); // reset results
 
         //stop submit the form, we will post it manually.
         event.preventDefault();

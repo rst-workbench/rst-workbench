@@ -31,6 +31,14 @@ This parser is used by CODRA.
 *Docker hub*: [nlpbox/rstviewer](https://hub.docker.com/r/nlpbox/rstviewer)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/rstviewer.svg)](https://hub.docker.com/r/nlpbox/rstviewer/builds/)
 
+### [rstviewer-service](github.com/nlpbox/rstviewer-service)
+
+*Description*: REST API around rstviewer
+
+*Dockerized repo*: [nlpbox/rstviewer-service](github.com/nlpbox/rstviewer-service)
+[![Travis Build Status](https://travis-ci.org/nlpbox/rstviewer-service.svg?branch=master)](https://travis-ci.org/nlpbox/rstviewer-service)  
+*Docker hub*: [nlpbox/rstviewer](https://hub.docker.com/r/nlpbox/rstviewer-service)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/rstviewer-service.svg)](https://hub.docker.com/r/nlpbox/rstviewer-service/builds/)
 
 
 ## [DPLP (Ji and Eisenstein 2014)](https://github.com/jiyfeng/DPLP)

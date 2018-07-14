@@ -2,8 +2,8 @@ version: '3.3'
 services:
   corenlp:
     image: "nlpbox/corenlp:3.9.1"
-    environment:
-      - JAVA_XMX=3g
+#    environment:
+#      - JAVA_XMX=3g # less than the default 4GB only works for very short input
     ports:
       - "9000:9000"
   codra-service:
@@ -17,7 +17,7 @@ services:
     environment:
       - CORENLP_ENDPOINT=http://corenlp:9000
   rstviewer-service:
-    image: "nlpbox/rstviewer-service"
+    image: "nlpbox/rstviewer-service:2018-06-18"
     ports:
      - "9100:8000"
 #  rstweb-service:

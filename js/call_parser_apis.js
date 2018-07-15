@@ -89,7 +89,7 @@ function addRS3toResults(rs3String) {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:9100/rs3_to_png",
+        url: "http://localhost:9100/rs3_to_png_base64",
         data: formData,
         processData: false,
         contentType: false,

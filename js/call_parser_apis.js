@@ -24,6 +24,7 @@ $(document).ready(function () {
 
         runRSTParser(formData, "http://localhost:9001", "codra-service", outputFormat);
         runRSTParser(formData, "http://localhost:9002", "dplp-service", outputFormat);
+        runRSTParser(formData, "http://localhost:9999", "does-not-exist", outputFormat);
 
     });
 });

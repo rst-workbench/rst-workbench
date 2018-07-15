@@ -43,20 +43,24 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
         contentType: false,
         cache: false,
         timeout: 600000,
-        success: function (data) {
-            // transform output and add it to results section
-            handleParserOutput(data, outputFormat, parserName);
-            console.log("SUCCESS : ", data);
-            $("#btnSubmit").prop("disabled", false);
-        },
-        error: function(e){ return alertOnError(e, parserName); }
+        success: function(data) { return onParserSuccess(data, outputFormat, parserName); },
+        error: function(e){ return onParserError(e, parserName); }
     });
 }
 
-function alertOnError(e, parserName) {
+function onParserSuccess(data, outputFormat, parserName) {
+    // transform output and add it to results section
+    handleParserOutput(data, outputFormat, parserName);
+    console.log("Parser success : ", data);
+    // re-enable submit button
+    $("#btnSubmit").prop("disabled", false);
+}
+
+function onParserError(e, parserName) {
     $("#results").append('<h2>' + parserName + ':</h2>\n\n');
-    $("#results").append('<pre>\nError:\n' + JSON.stringify(e, null, 2) + '\n</pre>\n\n');
-    console.log("ERROR : ", e);
+    $("#results").append('<pre>\nParser error:\n' + JSON.stringify(e, null, 2) + '\n</pre>\n\n');
+    console.log("Parser error : ", e);
+    // re-enable submit button
     $("#btnSubmit").prop("disabled", false);
 }
 

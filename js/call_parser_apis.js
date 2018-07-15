@@ -22,9 +22,9 @@ $(document).ready(function () {
         // disable the non-js submit button temporarely
         $("#btnSubmit").prop("disabled", true);
 
-        runRSTParser(formData, "http://localhost:9001", "codra-service", outputFormat);
-        runRSTParser(formData, "http://localhost:9002", "dplp-service", outputFormat);
-        runRSTParser(formData, "http://localhost:9999", "does-not-exist", outputFormat);
+        runRSTParser(formData, "http://localhost:9001", "codra-service", outputFormat, onParserSuccess, onParserError);
+        runRSTParser(formData, "http://localhost:9002", "dplp-service", outputFormat, onParserSuccess, onParserError);
+        runRSTParser(formData, "http://localhost:9999", "does-not-exist", outputFormat, onParserSuccess, onParserError);
 
     });
 });
@@ -32,7 +32,7 @@ $(document).ready(function () {
 // runRSTParser runs the text from the input form through the given RST parser,
 // transforms the output into the given format and adds the output into the
 // results section.
-function runRSTParser(formData, parserURL, parserName, outputFormat) {
+function runRSTParser(formData, parserURL, parserName, outputFormat, successFunc, errorFunc) {
     // send the form data via a POST request
     $.ajax({
         type: "POST",
@@ -43,8 +43,8 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
         contentType: false,
         cache: false,
         timeout: 600000,
-        success: function(data) { return onParserSuccess(data, outputFormat, parserName); },
-        error: function(e){ return onParserError(e, parserName); }
+        success: function(data) { return successFunc(data, outputFormat, parserName); },
+        error: function(e){ return errorFunc(e, parserName); }
     });
 }
 

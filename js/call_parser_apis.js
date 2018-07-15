@@ -48,15 +48,17 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
             console.log("SUCCESS : ", data);
             $("#btnSubmit").prop("disabled", false);
         },
-        error: function (e) {
-            // add error message to results section
-            $("#results").append('<h2>' + parserName + ':</h2>\n\n');
-            $("#results").text(e.responseText);
-            console.log("ERROR : ", e);
-            $("#btnSubmit").prop("disabled", false);
-        }
+        error: function(e){ return alertOnError(e, parserName); }
     });
 }
+
+function alertOnError(e, parserName) {
+    $("#results").append('<h2>' + parserName + ':</h2>\n\n');
+    $("#results").append('<pre>\nError:\n' + JSON.stringify(e, null, 2) + '\n</pre>\n\n');
+    console.log("ERROR : ", e);
+    $("#btnSubmit").prop("disabled", false);
+}
+
 
 // handleParserOutput takes the output of an RST parser, converts it if needed
 // and adds it to the <div id="results"> section

@@ -16,11 +16,7 @@ services:
      - "9002:8000"
     environment:
       - CORENLP_ENDPOINT=http://corenlp:9000
-  rstviewer-service:
-    image: "nlpbox/rstviewer-service:2018-07-15"
+  rstweb-service:
+    image: "nlpbox/rstweb-service:2018-08-26"
     ports:
-     - "9100:8000"
-#  rstweb-service:
-#    image: "rstweb-service:2018-05-31"
-#    ports:
-#     - "9200:8080"
+     - "9200:8080"

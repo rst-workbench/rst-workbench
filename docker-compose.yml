@@ -12,15 +12,12 @@ services:
      - "9001:8000"
   dplp-service:
     image: "nlpbox/dplp-service:2018-06-17"
+#    image: "dplpservice_dplp-service"
     ports:
      - "9002:8000"
     environment:
       - CORENLP_ENDPOINT=http://corenlp:9000
-  rstviewer-service:
-    image: "nlpbox/rstviewer-service"
+  rstweb-service:
+    image: "rstweb-service:2018-08-25"
     ports:
-     - "9100:8000"
-#  rstweb-service:
-#    image: "rstweb-service:2018-05-31"
-#    ports:
-#     - "9200:8080"
+     - "9200:8080"

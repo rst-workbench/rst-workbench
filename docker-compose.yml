@@ -18,6 +18,6 @@ services:
     environment:
       - CORENLP_ENDPOINT=http://corenlp:9000
   rstweb-service:
-    image: "rstweb-service:2018-08-25"
+    image: "nlpbox/rstweb-service:2018-08-25"
     ports:
      - "9200:8080"

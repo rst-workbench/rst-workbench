@@ -22,6 +22,18 @@ This parser is used by CODRA.
 *Docker hub*: [nlpbox/discoursegraphs](https://hub.docker.com/r/nlpbox/discoursegraphs)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/discoursegraphs.svg)](https://hub.docker.com/r/nlpbox/discoursegraphs/builds/)
 
+### [rst-converter-service](https://github.com/arne-cl/rst-converter-service)
+
+*Description*: REST API on top of discoursegraphs that converts between several RST file formats.
+
+```TODO: add automated tests for Travis CI```
+[![Travis Build Status](https://travis-ci.org/arne-cl/rst-converter-service.svg?branch=master)](https://travis-ci.org/arne-cl/rst-converter-service)  
+*Docker hub*: [nlpbox/rst-converter-service](https://hub.docker.com/r/nlpbox/rst-converter-service)
+[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/rst-converter-service.svg)](https://hub.docker.com/r/nlpbox/rst-converter-service/builds/)  
+*Supported input formats*: `codra`, `dis`, `dplp`, `hilda`, `hs2015`, `rs3`  
+*Supported output formats*: `dis`, `rs3`, `tree` (pretty-printed ASCII version of an nltk.Tree)
+
+
 ## [rstviewer](https://github.com/arne-cl/rstviewer)
 
 *Description*: rstviewer converts *.rs3 files to PNG images.
@@ -31,7 +43,7 @@ This parser is used by CODRA.
 *Docker hub*: [nlpbox/rstviewer](https://hub.docker.com/r/nlpbox/rstviewer)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/rstviewer.svg)](https://hub.docker.com/r/nlpbox/rstviewer/builds/)
 
-### [rstviewer-service](github.com/nlpbox/rstviewer-service)
+## [rstviewer-service](github.com/nlpbox/rstviewer-service)
 
 *Description*: REST API around rstviewer
 
@@ -60,7 +72,7 @@ This parser is used by CODRA.
 [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)  
 *Docker hub*: [nlpbox/dplp-service](https://hub.docker.com/r/nlpbox/dplp-service/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)  
-*Supported output formats*: `original` (DPLP-specific, tabular format), `rs3` (using discoursegraphs for conversion)
+*Supported output formats*: `dplp` (DPLP-specific, tabular format), `rs3` (using discoursegraphs for conversion)
 
 ## [CODRA (Joty et al. 2015)](http://alt.qcri.org/tools/discourse-parser/)
 
@@ -81,7 +93,7 @@ This parser is used by CODRA.
 [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)  
 *Docker hub*: [nlpbox/codra-service](https://hub.docker.com/r/nlpbox/codra-service/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/codra-service.svg)](https://hub.docker.com/r/nlpbox/codra-service/)  
-*Supported output formats*: `original` (dis/RST-DT-like, s-expression format with CODRA-specific escaping), `rs3` (using discoursegraphs for conversion)
+*Supported output formats*: `cpdra` (dis/RST-DT-like, s-expression format with CODRA-specific escaping), `rs3` (using discoursegraphs for conversion)
 
 ## [Heilman and Sagae (2015)](https://github.com/EducationalTestingService/discourse-parsing)
 
@@ -102,7 +114,7 @@ This parser is used by CODRA.
 [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)  
 *Docker hub*: [nlpbox/heilman-sagae-2015-service](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)
 [![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015-service.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)  
-*Supported output formats*: `original` (a list of EDUs and an s-expression tree)
+*Supported output formats*: `hs2015` (a list of EDUs and an s-expression tree)
 
 ## [HILDA (Hernault et al. 2010)](https://github.com/NLPbox/hilda-docker)
 

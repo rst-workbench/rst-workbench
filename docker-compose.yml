@@ -6,17 +6,26 @@ services:
       - JAVA_XMX=3g
     ports:
       - "9000:9000"
+
   codra-service:
     image: "nlpbox/codra-service:2018-05-28"
     ports:
      - "9001:8000"
   dplp-service:
     image: "nlpbox/dplp-service:2018-06-17"
-#    image: "dplpservice_dplp-service"
     ports:
      - "9002:8000"
     environment:
       - CORENLP_ENDPOINT=http://corenlp:9000
+  hilda-service: # HILDA can't be distributed; we'll have to build it locally
+    image: "hilda-service:2018-10-18"
+    ports:
+     - "9003:8000"
+  heilman-sagae-service:
+    image: "nlpbox/heilman-sagae-service:2018-09-27"
+    ports:
+     - "9004:8000"
+
   rstweb-service:
     image: "nlpbox/rstweb-service:2018-08-25"
     ports:

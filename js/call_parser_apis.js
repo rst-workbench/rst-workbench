@@ -62,9 +62,7 @@ function runRSTParser(formData, parserURL, parserName, outputFormat) {
 // and adds it to the <div id="results"> section
 function handleParserOutput(outputString, outputFormat, parserName) {
     $("#results").append('<h2>' + parserName + ':</h2>\n\n');
-    if (outputFormat == 'nltk-tree-png') {
-        $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + outputString + '" /></div>');
-    } else if (outputFormat == 'rs3') {
+    } if (outputFormat == 'rstWeb') {
         addRS3toResults(outputString);
     } else {
         $("#results").append('<div><pre>\n' + outputString + '\n</pre></div>');
@@ -132,8 +130,49 @@ function addRS3DownloadButton(rs3String) {
     );
 }
 
-
+function addToResults(thing) {
+    $("#results").append(thing + '<br><br>\n');
+}
 
 function addPNGtoResults(pngBase64) {
     $("#results").append('<div><img alt="Embedded Image" src="data:image/png;base64,' + pngBase64 + '" /></div>');
+}
+
+function parseYAML(dockerComposeFile) {
+    $.get(dockerComposeFile)
+    .done(function (data) {
+        var yamlObject = jsyaml.safeLoad(data);
+        var jsonString = JSON.stringify(data);
+        var jsonObject = $.parseJSON(jsonString);
+        //~ addToResults(jsonObject);
+
+        var rstParsers = getRSTParsers(yamlObject);
+        for (var parser of rstParsers) {
+            addToResults(JSON.stringify(parser));
+        }
+    });
+}
+
+// getRSTParsers returns the metadata of all RST parsers from the object
+// representation of a docker-compose.yml file.
+function getRSTParsers(yamlObject) {
+    var parsers = [];
+    for (var serviceKey of Object.keys(yamlObject.services)) {
+        service = yamlObject.services[serviceKey]
+        serviceLabel = service.build.labels
+        if (serviceLabel.type === 'rst-parser' ) {
+            parser = {
+                name: serviceLabel.name,
+                format: serviceLabel.format,
+                port: getPort(service)
+            };
+            parsers.push(parser);
+        }
+    }
+    return parsers;
+}
+
+function getPort(service) {
+    portString = service.ports[0].split(':')[0];
+    return Number(portString);
 }

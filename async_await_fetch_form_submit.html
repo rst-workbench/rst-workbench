@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="utf-8" /> 
+    <title>rst-workbench demo</title>
+</head>
+
+
+
+<body>
+<script>
+async function jsonfetch(endpoint) {
+  const res = await fetch(endpoint);
+  const data = await res.json();
+
+  addToResults(data);
+}
+
+function addToResults(thing) {
+    $("#results").append(thing + '<br><br>\n');
+}
+
+</script>
+    
+    <h1>Enter URL:</h1>
+    <form id='rst' method='get' onsubmit="return jsonfetch('https://api.github.com/orgs/nlpbox')">
+        <textarea id='input-text' rows="15" cols="100" value></textarea> <br/><br/>
+
+        <input type='submit' id='btnSubmit' value='Run RST Parsers'/>
+    </form>
+
+    <div>
+        <h1>Parser results:</h1>
+
+        <div id="results">
+        <!-- API results go here-->
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

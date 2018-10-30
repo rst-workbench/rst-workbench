@@ -1,14 +1,14 @@
 version: '3.3'
 services:
-  corenlp:
-    labels:
-      name: "corenlp"
-      type: "constituency-parser"
-    image: "nlpbox/corenlp:2018-10-27"
-    environment:
-      - JAVA_XMX=4g
-    ports:
-      - "9000:9000"
+  #~ corenlp:
+    #~ labels:
+      #~ name: "corenlp"
+      #~ type: "constituency-parser"
+    #~ image: "nlpbox/corenlp:2018-10-27"
+    #~ environment:
+      #~ - JAVA_XMX=4g
+    #~ ports:
+      #~ - "9000:9000"
 
   codra-service:
     labels:
@@ -19,25 +19,25 @@ services:
     ports:
      - "9100:8000"
 
-  dplp-service:
-    labels:
-      name: "dplp"
-      format: "dplp"
-      type: "rst-parser"
-    image: "nlpbox/dplp-service:2018-06-17"
-    ports:
-     - "9101:8000"
-    environment:
-      - CORENLP_ENDPOINT=http://corenlp:9000
+  #~ dplp-service:
+    #~ labels:
+      #~ name: "dplp"
+      #~ format: "dplp"
+      #~ type: "rst-parser"
+    #~ image: "nlpbox/dplp-service:2018-06-17"
+    #~ ports:
+     #~ - "9101:8000"
+    #~ environment:
+      #~ - CORENLP_ENDPOINT=http://corenlp:9000
 
-  hilda-service: # HILDA can't be distributed; we'll have to build it locally
-    labels:
-      name: "hilda"
-      format: "hilda"
-      type: "rst-parser"
-    image: "hilda-service:2018-10-18"
-    ports:
-     - "9102:8000"
+  #~ hilda-service: # HILDA can't be distributed; we'll have to build it locally
+    #~ labels:
+      #~ name: "hilda"
+      #~ format: "hilda"
+      #~ type: "rst-parser"
+    #~ image: "hilda-service:2018-10-18"
+    #~ ports:
+     #~ - "9102:8000"
 
   heilman-sagae-service:
     labels:
@@ -48,16 +48,16 @@ services:
     ports:
      - "9103:8000"
 
-  rst-converter-service:
-    labels:
-      name: "rst-converter-service"
-    image: "nlpbox/rst-converter-service:2018-10-19"
-    ports:
-     - "9200:5000"
+  #~ rst-converter-service:
+    #~ labels:
+      #~ name: "rst-converter-service"
+    #~ image: "nlpbox/rst-converter-service:2018-10-19"
+    #~ ports:
+     #~ - "9200:5000"
 
-  rstweb-service:
-    labels:
-      name: "rstweb"
-    image: "nlpbox/rstweb-service:2018-08-25"
-    ports:
-     - "9300:8080"
+  #~ rstweb-service:
+    #~ labels:
+      #~ name: "rstweb"
+    #~ image: "nlpbox/rstweb-service:2018-08-25"
+    #~ ports:
+     #~ - "9300:8080"

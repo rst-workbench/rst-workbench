@@ -1,5 +1,12 @@
 // TODO: import jsyaml directly, so we don't need it in vanilla.html
 
+// FIXME: fix CORS in hilda-service
+//~ Access to fetch at 'http://localhost:9102/parse' from origin
+//~ 'http://localhost:8000' has been blocked by CORS policy: No
+//~ 'Access-Control-Allow-Origin' header is present on the requested resource. If
+//~ an opaque response serves your needs, set the request's mode to 'no-cors' to
+//~ fetch the resource with CORS disabled.
+
 // FIXME: codra-service returns a 200, even if there's an error
 
 const confpath = 'docker-compose.yml';
@@ -66,7 +73,7 @@ function addToResults(title, content) {
 // addToErrors adds a title (e.g. the name of the parser that produced
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
-    addToElement('errors', title, error.message);
+    addToElement('errors', title, error.message + '\n\n' + error.stack);
 }
 
 // loadConfig loads a YAML config file from the given path and returns
@@ -140,7 +147,7 @@ class RSTParser {
             const output = await response.text();
             return output
         } catch(e) {
-            throw new Error(`${this.name} error: ${e.message}`)
+            throw new Error(`${this.name} error: ${e.stack}`)
         }
     }
 }

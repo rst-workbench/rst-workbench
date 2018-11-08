@@ -1,12 +1,5 @@
 // TODO: import jsyaml directly, so we don't need it in vanilla.html
 
-// FIXME: fix CORS in hilda-service
-//~ Access to fetch at 'http://localhost:9102/parse' from origin
-//~ 'http://localhost:8000' has been blocked by CORS policy: No
-//~ 'Access-Control-Allow-Origin' header is present on the requested resource. If
-//~ an opaque response serves your needs, set the request's mode to 'no-cors' to
-//~ fetch the resource with CORS disabled.
-
 // FIXME: codra-service returns a 200, even if there's an error
 
 const confpath = 'docker-compose.yml';

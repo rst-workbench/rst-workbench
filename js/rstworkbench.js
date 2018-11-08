@@ -29,6 +29,7 @@ class RSTWorkbench {
         return new RSTWorkbench(config, rstparsers);
     }
 
+    // FIXME: make calls to parsers concurrently
     async getParseResults(text) {
         let results = [];
         for (let parser of this.rstparsers) {
@@ -138,17 +139,12 @@ class RSTParser {
           body: data,
         };
 
-        try {
-            const response = await fetch(`http://localhost:${this.port}/parse`, options);
-        } catch(e) {
-            throw new Error(`No network response: ${e}`);
+        let response = await fetch(`http://localhost:${this.port}/parse`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
         }
 
-        if (response.ok && response.status == 200) {
-            const output = await response.text();
-            return output
-        }
-
-        throw new Error(`${this.name}:\n${response.status} ${response.statusText}`)
+        return output;
     }
 }

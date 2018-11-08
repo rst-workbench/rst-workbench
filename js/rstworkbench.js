@@ -43,10 +43,10 @@ class RSTWorkbench {
 }
 
 // addToElement adds a title and content to the given DOM element, e.g.
-// <div id=$elementID>
+// <div id={$elementID}>
 //   <div>
-//     <h2>$title</h2>
-//     <p>$content</p>
+//     <h2>{$title}</h2>
+//     <p>{$content}</p>
 //   </div>
 // </div>
 function addToElement(elementID, title, content) {
@@ -73,7 +73,7 @@ function addToResults(title, content) {
 // addToErrors adds a title (e.g. the name of the parser that produced
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
-    addToElement('errors', title, error.message + '\n\n' + error.stack);
+    addToElement('errors', title, error.stack);
 }
 
 // loadConfig loads a YAML config file from the given path and returns
@@ -121,13 +121,9 @@ class RSTParser {
     async isRunning() {
         let running = false;
 
-        try {
-            const response = await fetch(`http://localhost:${this.port}/status`);
-            if (response.ok && response.status == 200) {
-                running = true;
-            }
-        } catch(e) {
-            console.log(e.message);
+        const response = await fetch(`http://localhost:${this.port}/status`);
+        if (response.ok && response.status == 200) {
+            running = true;
         }
         return running;
     }
@@ -144,10 +140,15 @@ class RSTParser {
 
         try {
             const response = await fetch(`http://localhost:${this.port}/parse`, options);
+        } catch(e) {
+            throw new Error(`No network response: ${e}`);
+        }
+
+        if (response.ok && response.status == 200) {
             const output = await response.text();
             return output
-        } catch(e) {
-            throw new Error(`${this.name} error: ${e.stack}`)
         }
+
+        throw new Error(`${this.name}:\n${response.status} ${response.statusText}`)
     }
 }

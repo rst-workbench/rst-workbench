@@ -1,7 +1,5 @@
 // TODO: import jsyaml directly, so we don't need it in vanilla.html
 
-// FIXME: codra-service returns a 200, even if there's an error
-
 const confpath = 'docker-compose.yml';
 
 // Simplest way to create an RSTWorkbench instance:
@@ -22,17 +20,14 @@ class RSTWorkbench {
         return new RSTWorkbench(config, rstparsers);
     }
 
-    // FIXME: make calls to parsers concurrently
     async getParseResults(text) {
         let results = [];
-        for (let parser of this.rstparsers) {
-            try {
-                const output = await parser.parse(text);
-                addToResults(parser.name, output);
-            } catch(e) {
-                addToErrors(parser.name, e);
-            }
-        }
+
+        this.rstparsers.forEach(async (parser) => {
+            parser.parse(text)
+                .then(output => addToResults(parser.name, output))
+                .catch(e => addToErrors(parser.name, e))
+        });
     }
 }
 

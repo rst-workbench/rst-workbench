@@ -6,26 +6,45 @@ const confpath = 'docker-compose.yml';
 // let wb = await RSTWorkbench.fromConfigFile();
 class RSTWorkbench {
     // configObject: docker-compose file parsed into an Object
-    // rstparsers: Array of {name: string, format: string, port: number}}
-    constructor(configObject, rstparsers) {
+    // rstParsers: Array of {name: string, format: string, port: number}}
+    constructor(configObject, rstParsers) {
         this.config = configObject
-        this.rstparsers = rstparsers
+        this.rstParsers = rstParsers
+        this.rstConverter = RSTConverter.fromConfigObject(configObject)
+        this.rstWeb = RSTWeb.fromConfigObject(configObject)
+
+        this.parseResults = null
     }
 
     // fromConfigFile creates a Promise(RSTWorkbench) from a
     // docker-compose config file.
     static async fromConfigFile(filepath = confpath) {
         const config = await loadConfig(filepath);
-        const rstparsers = getRSTParsers(config);
-        return new RSTWorkbench(config, rstparsers);
+        const rstParsers = getRSTParsers(config);
+        return new RSTWorkbench(config, rstParsers);
     }
 
     async getParseResults(text) {
-        let results = [];
-
-        this.rstparsers.forEach(async (parser) => {
+        this.rstParsers.forEach(async (parser) => {
             parser.parse(text)
                 .then(output => addToResults(parser.name, output))
+                .catch(e => addToErrors(parser.name, e))
+        });
+    }
+
+    async getParseImages(text) {
+        this.rstParsers.forEach(async (parser) => {
+            parser.parse(text)
+                .then(output => {
+                    addToResults(parser.name, output);
+                    this.rstConverter.convert(output, parser.format, 'rs3')
+                        .then(rs3 => {
+                            this.rstWeb.rs3ToImage(rs3)
+                                .then(image => addToResults(parser.name, image))
+                                .catch(e => addToErrors(`rstWeb for ${parser.name}`, e))
+                        })
+                        .catch(e => addToErrors(`rst-converter-service for ${parser.name}`, e))
+                })
                 .catch(e => addToErrors(parser.name, e))
         });
     }
@@ -90,6 +109,69 @@ function getRSTParsers(yamlObject) {
     }
     return parsers;
 }
+
+
+class RSTConverter {
+    constructor(port) {
+        this.port = port
+    }
+
+    static fromConfigObject(config) {
+        let service = config.services["rst-converter-service"];
+        let port = getPort(service);
+        return new RSTConverter(port);
+    }
+
+    async convert(document, inputFormat, outputFormat) {
+        const data = new FormData();
+        data.append('input', document);
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/convert/${inputFormat}/${outputFormat}`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+}
+
+
+class RSTWeb {
+    constructor(port) {
+        this.port = port
+    }
+
+    static fromConfigObject(config) {
+        let service = config.services["rstweb-service"];
+        let port = getPort(service);
+        return new RSTWeb(port);
+    }
+
+    async rs3ToImage(document) {
+        const data = new FormData();
+        data.append('input_file', document);
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/convert?input_format=rs3&output_format=png-base64`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+}
+
 
 // getPort returns a Port number given a service Object.
 // service = {build: Object, image: string, ports: Array(string)}

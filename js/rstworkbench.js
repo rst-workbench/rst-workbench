@@ -40,7 +40,7 @@ class RSTWorkbench {
                     this.rstConverter.convert(output, parser.format, 'rs3')
                         .then(rs3 => {
                             this.rstWeb.rs3ToImage(rs3)
-                                .then(image => addToResults(parser.name, image))
+                                .then(image => addPNGtoResults(parser.name, image))
                                 .catch(e => addToErrors(`rstWeb for ${parser.name}`, e))
                         })
                         .catch(e => addToErrors(`rst-converter-service for ${parser.name}`, e))
@@ -64,8 +64,13 @@ function addToElement(elementID, title, content) {
     let titleElem = document.createElement('h2');
     titleElem.innerText = title;
 
-    let contentElem = document.createElement('p');
-    contentElem.innerText = content;
+    let contentElem = document.createElement('div');
+
+    if (typeof content === "string") {
+        contentElem.innerText = content;
+    } else {
+        contentElem.appendChild(content);
+    }
 
     resultElem.appendChild(titleElem);
     resultElem.appendChild(contentElem);
@@ -76,6 +81,15 @@ function addToElement(elementID, title, content) {
 // to the results section of the page.
 function addToResults(title, content) {
     addToElement('results', title, content);
+}
+
+// addPNGtoResults adds the given base64 encoded PNG image to the results
+// section under the given title.
+function addPNGtoResults(title, pngBase64) {
+    let img = document.createElement('img');
+    img.alt = "Embedded Image";
+    img.src = `data:image/png;base64,${pngBase64}`;
+    addToElement('results', title, img);
 }
 
 // addToErrors adds a title (e.g. the name of the parser that produced
@@ -162,7 +176,7 @@ class RSTWeb {
           body: data,
         };
 
-        let response = await fetch(`http://localhost:${this.port}/convert?input_format=rs3&output_format=png-base64`, options);
+        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=png-base64`, options);
         let output = await response.text();
         if (!response.ok) {
             throw new Error(`${response.status}: ${response.statusText}\n${output}`);

@@ -58,6 +58,6 @@ services:
   rstweb-service:
     labels:
       name: "rstweb"
-    image: "nlpbox/rstweb-service:2018-08-25"
+    image: "nlpbox/rstweb-service:2018-11-15"
     ports:
      - "9300:8080"

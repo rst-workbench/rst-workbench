@@ -50,37 +50,52 @@ class RSTWorkbench {
     }
 }
 
-// addToElement adds a title and content to the given DOM element, e.g.
-// <div id={$elementID}>
+// addToSection adds a title and content to the existing, given DOM element, e.g.
+// <div id={$section}>
 //   <div>
 //     <h2>{$title}</h2>
 //     <p>{$content}</p>
 //   </div>
 // </div>
-function addToElement(elementID, title, content) {
-    let resultsElem = document.getElementById(elementID);
+function addToSection(section, title, content) {
+    const contentElem = wrapContent(content);
 
-    let resultElem = document.createElement('div');
-    let titleElem = document.createElement('h2');
-    titleElem.innerText = title;
+    const subsectionID = `${section}-${title}`;
+    let subElem = document.getElementById(subsectionID);
+    if (subElem === null) {
+        const sectionElem = document.getElementById(section);
 
-    let contentElem = document.createElement('div');
+        subElem = document.createElement('div');
+        subElem.id = subsectionID;
+
+        const titleElem = document.createElement('h2');
+        titleElem.innerText = title;
+
+        subElem.appendChild(titleElem);
+        subElem.appendChild(contentElem);
+        sectionElem.appendChild(subElem);
+    } else {
+        subElem.appendChild(contentElem);
+    }
+}
+
+// wrapContent wraps the given content (either a DOM element or a string)
+// into a div element.
+function wrapContent(content) {
+    const contentElem = document.createElement('div');
 
     if (typeof content === "string") {
         contentElem.innerText = content;
     } else {
         contentElem.appendChild(content);
     }
-
-    resultElem.appendChild(titleElem);
-    resultElem.appendChild(contentElem);
-    resultsElem.appendChild(resultElem);
+    return contentElem;
 }
 
 // addToResults adds a title (e.g. the name of a parser) and some content
 // to the results section of the page.
 function addToResults(title, content) {
-    addToElement('results', title, content);
+    addToSection('results', title, content);
 }
 
 // addPNGtoResults adds the given base64 encoded PNG image to the results
@@ -89,13 +104,13 @@ function addPNGtoResults(title, pngBase64) {
     let img = document.createElement('img');
     img.alt = "Embedded Image";
     img.src = `data:image/png;base64,${pngBase64}`;
-    addToElement('results', title, img);
+    addToSection('results', title, img);
 }
 
 // addToErrors adds a title (e.g. the name of the parser that produced
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
-    addToElement('errors', title, error.stack);
+    addToSection('errors', title, error.stack);
 }
 
 // loadConfig loads a YAML config file from the given path and returns

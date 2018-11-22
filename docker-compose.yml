@@ -24,7 +24,7 @@ services:
       name: "dplp"
       format: "dplp"
       type: "rst-parser"
-    image: "nlpbox/dplp-service:2018-06-17"
+    image: "nlpbox/dplp-service:2018-11-18"
     ports:
      - "9101:8000"
     environment:

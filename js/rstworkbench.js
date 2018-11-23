@@ -35,7 +35,8 @@ class RSTWorkbench {
         return jsyaml.safeLoad(text);
     }
 
-
+    // getParseResults retrieves parses from all configured RST parsers for
+    // the given text and adds them to the "Results" section of the page.
     async getParseResults(text) {
         this.rstParsers.forEach(async (parser) => {
             parser.parse(text)
@@ -44,23 +45,42 @@ class RSTWorkbench {
         });
     }
 
+    // getParseImages parses the given text with all configured parsers, converts
+    // the results into images and adds those to the "Results" section of the page.
     async getParseImages(text) {
-        this.rstParsers.forEach(async (parser) => {
-            parser.parse(text)
-                .then(output => {
-                    addToResults(parser.name, output);
-                    this.rstConverter.convert(output, parser.format, 'rs3')
-                        .then(rs3 => {
-                            this.rstWeb.rs3ToImage(rs3)
-                                .then(image => addPNGtoResults(parser.name, image))
-                                .catch(e => addToErrors(`rstWeb for ${parser.name}`, e))
-                        })
-                        .catch(e => addToErrors(`rst-converter-service for ${parser.name}`, e))
-                })
-                .catch(e => addToErrors(parser.name, e))
-        });
+        this.rstParsers.forEach(async (parser) => this.parseTextToImage(parser, text));
     }
+
+    // parseTextToImage parses the given text with the given parser, converts
+    // it to an image (via .rs3) and adds it to the "Results" section of the page.
+    async parseTextToImage(parser, text) {
+        let parseOutput;
+        try {
+            parseOutput = await parser.parse(text);
+            addToResults(parser.name, parseOutput);
+        } catch (err) {
+            addToErrors(parser.name, err);
+            return;
+        }
+
+        let rs3Output;
+        try {
+            rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
+        } catch (err) {
+            addToErrors(`rst-converter-service for ${parser.name}`, err);
+            return;
+        }
+
+        try {
+            const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
+            addPNGtoResults(parser.name, parseImage);
+        } catch (err) {
+            addToErrors(`rstWeb for ${parser.name}`, err);
+        }
+    }
+
 }
+
 
 // addToSection adds a title and content to the existing, given DOM element, e.g.
 // <div id={$section}>

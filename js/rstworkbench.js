@@ -2,7 +2,10 @@
 
 const confpath = 'docker-compose.yml';
 
-// Simplest way to create an RSTWorkbench instance:
+// RSTWorkbench makes different RST parsers and converters accessible via
+// a common interface.
+//
+// To create an RSTWorkbench instance:
 // let wb = await RSTWorkbench.fromConfigFile();
 class RSTWorkbench {
     // configObject: docker-compose file parsed into an Object
@@ -19,10 +22,19 @@ class RSTWorkbench {
     // fromConfigFile creates a Promise(RSTWorkbench) from a
     // docker-compose config file.
     static async fromConfigFile(filepath = confpath) {
-        const config = await loadConfig(filepath);
+        const config = await this.loadConfig(filepath);
         const rstParsers = getRSTParsers(config);
         return new RSTWorkbench(config, rstParsers);
     }
+
+    // loadConfig loads a YAML config file from the given path and returns
+    // a Promise(Object) representing the config file.
+    static async loadConfig(filepath) {
+        const res = await fetch(filepath);
+        const text = await res.text();
+        return jsyaml.safeLoad(text);
+    }
+
 
     async getParseResults(text) {
         this.rstParsers.forEach(async (parser) => {
@@ -111,14 +123,6 @@ function addPNGtoResults(title, pngBase64) {
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
     addToSection('errors', title, error.stack);
-}
-
-// loadConfig loads a YAML config file from the given path and returns
-// a Promise(Object) representing the config file.
-async function loadConfig(filepath) {
-    const res = await fetch(filepath);
-    const text = await res.text();
-    return jsyaml.safeLoad(text);
 }
 
 // getRSTParsers returns the metadata of all RST parsers from the object

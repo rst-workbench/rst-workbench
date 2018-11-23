@@ -23,7 +23,7 @@ class RSTWorkbench {
     // docker-compose config file.
     static async fromConfigFile(filepath = confpath) {
         const config = await this.loadConfig(filepath);
-        const rstParsers = getRSTParsers(config);
+        const rstParsers = this.getRSTParsers(config);
         return new RSTWorkbench(config, rstParsers);
     }
 
@@ -33,6 +33,24 @@ class RSTWorkbench {
         const res = await fetch(filepath);
         const text = await res.text();
         return jsyaml.safeLoad(text);
+    }
+
+    // getRSTParsers returns the metadata of all RST parsers from the object
+    // representation of a docker-compose.yml file.
+    static getRSTParsers(yamlObject) {
+        let parsers = [];
+        for (let serviceKey of Object.keys(yamlObject.services)) {
+            const service = yamlObject.services[serviceKey];
+            const serviceLabel = service.labels;
+            if (serviceLabel.type === 'rst-parser' ) {
+                const parser = new RSTParser(
+                    serviceLabel.name,
+                    serviceLabel.format,
+                    getPort(service));
+                parsers.push(parser);
+            }
+        }
+        return parsers;
     }
 
     // getParseResults retrieves parses from all configured RST parsers for
@@ -143,24 +161,6 @@ function addPNGtoResults(title, pngBase64) {
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
     addToSection('errors', title, error.stack);
-}
-
-// getRSTParsers returns the metadata of all RST parsers from the object
-// representation of a docker-compose.yml file.
-function getRSTParsers(yamlObject) {
-    let parsers = [];
-    for (let serviceKey of Object.keys(yamlObject.services)) {
-        service = yamlObject.services[serviceKey]
-        serviceLabel = service.labels
-        if (serviceLabel.type === 'rst-parser' ) {
-            let parser = new RSTParser(
-                serviceLabel.name,
-                serviceLabel.format,
-                getPort(service));
-            parsers.push(parser);
-        }
-    }
-    return parsers;
 }
 
 

@@ -1,5 +1,3 @@
-// TODO: import jsyaml directly, so we don't need it in vanilla.html
-
 const confpath = 'docker-compose.yml';
 
 // RSTWorkbench makes different RST parsers and converters accessible via
@@ -100,6 +98,107 @@ class RSTWorkbench {
 }
 
 
+class RSTConverter {
+    constructor(port) {
+        this.port = port
+    }
+
+    static fromConfigObject(config) {
+        let service = config.services["rst-converter-service"];
+        let port = getPort(service);
+        return new RSTConverter(port);
+    }
+
+    async convert(document, inputFormat, outputFormat) {
+        const data = new FormData();
+        data.append('input', document);
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/convert/${inputFormat}/${outputFormat}`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+}
+
+
+class RSTWeb {
+    constructor(port) {
+        this.port = port
+    }
+
+    static fromConfigObject(config) {
+        let service = config.services["rstweb-service"];
+        let port = getPort(service);
+        return new RSTWeb(port);
+    }
+
+    async rs3ToImage(document) {
+        const data = new FormData();
+        data.append('input_file', document);
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=png-base64`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+}
+
+
+class RSTParser {
+    constructor(name, format, port) {
+        this.name = name
+        this.format = format
+        this.port = port
+    }
+
+    // TODO: add GET /status to all parser APIs
+    async isRunning() {
+        let running = false;
+
+        const response = await fetch(`http://localhost:${this.port}/status`);
+        if (response.ok && response.status == 200) {
+            running = true;
+        }
+        return running;
+    }
+
+    async parse(input) {
+        const data = new FormData();
+        data.append('input', input);
+        data.append('output_format', 'original'); // TODO: rm after cleanup of parser APIs
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/parse`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+}
+
+
 // addToSection adds a title and content to the existing, given DOM element, e.g.
 // <div id={$section}>
 //   <div>
@@ -163,111 +262,9 @@ function addToErrors(title, error) {
     addToSection('errors', title, error.stack);
 }
 
-
-class RSTConverter {
-    constructor(port) {
-        this.port = port
-    }
-
-    static fromConfigObject(config) {
-        let service = config.services["rst-converter-service"];
-        let port = getPort(service);
-        return new RSTConverter(port);
-    }
-
-    async convert(document, inputFormat, outputFormat) {
-        const data = new FormData();
-        data.append('input', document);
-
-        const options = {
-          method: 'POST',
-          body: data,
-        };
-
-        let response = await fetch(`http://localhost:${this.port}/convert/${inputFormat}/${outputFormat}`, options);
-        let output = await response.text();
-        if (!response.ok) {
-            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
-        }
-
-        return output;
-    }
-}
-
-
-class RSTWeb {
-    constructor(port) {
-        this.port = port
-    }
-
-    static fromConfigObject(config) {
-        let service = config.services["rstweb-service"];
-        let port = getPort(service);
-        return new RSTWeb(port);
-    }
-
-    async rs3ToImage(document) {
-        const data = new FormData();
-        data.append('input_file', document);
-
-        const options = {
-          method: 'POST',
-          body: data,
-        };
-
-        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=png-base64`, options);
-        let output = await response.text();
-        if (!response.ok) {
-            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
-        }
-
-        return output;
-    }
-}
-
-
 // getPort returns a Port number given a service Object.
 // service = {build: Object, image: string, ports: Array(string)}
 function getPort(service) {
     portString = service.ports[0].split(':')[0];
     return Number(portString);
-}
-
-
-class RSTParser {
-    constructor(name, format, port) {
-        this.name = name
-        this.format = format
-        this.port = port
-    }
-
-    // TODO: add GET /status to all parser APIs
-    async isRunning() {
-        let running = false;
-
-        const response = await fetch(`http://localhost:${this.port}/status`);
-        if (response.ok && response.status == 200) {
-            running = true;
-        }
-        return running;
-    }
-
-    async parse(input) {
-        const data = new FormData();
-        data.append('input', input);
-        data.append('output_format', 'original'); // TODO: rm after cleanup of parser APIs
-
-        const options = {
-          method: 'POST',
-          body: data,
-        };
-
-        let response = await fetch(`http://localhost:${this.port}/parse`, options);
-        let output = await response.text();
-        if (!response.ok) {
-            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
-        }
-
-        return output;
-    }
 }

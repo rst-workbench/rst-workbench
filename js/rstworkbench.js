@@ -231,7 +231,7 @@ class RSTParser {
     async parse(input) {
         const data = new FormData();
         data.append('input', input);
-        data.append('output_format', 'original'); // FIXME: rm after cleanup of parser APIs
+        data.append('output_format', 'original'); // TODO: rm after cleanup of parser APIs
 
         const options = {
           method: 'POST',

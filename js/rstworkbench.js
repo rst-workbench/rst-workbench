@@ -1,5 +1,23 @@
 const confpath = 'docker-compose.yml';
 
+// When the page is loaded ...
+window.addEventListener("load", async () => {
+  // access the form element ...
+  let rstForm = document.getElementById("rst");
+
+  let wb = await RSTWorkbench.fromConfigFile();
+
+  // ...and take over its submit event.
+  rstForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // parse the form content and display the results.
+    const text = rstForm["input-text"].value;
+    wb.getParseImages(text);
+  });
+});
+
+
 // RSTWorkbench makes different RST parsers and converters accessible via
 // a common interface.
 //

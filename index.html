@@ -7,11 +7,11 @@
 
 
 <body>
-    <script type="text/javascript" src = "js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src = "js/call_parser_apis.js"></script>
+    <script src='js/js-yaml.min.js'></script>
+    <script src='js/rstworkbench.js'></script>
     
     <h1>Enter some text:</h1>
-    <form id='rst' method='post'>
+    <form id='rst' method='get'>
     <textarea id='input-text' rows="15" cols="100" value>
 In a vote in the early Wednesday morning hours, the Senate approved the final version
 of the first overhaul of the US tax code in more than 30 years, handing
@@ -27,21 +27,21 @@ where it is expected to pass again. It will then head to the President's desk
 for his signature before the Christmas holiday, making good on the
 Republican Party's promise to enact tax relief by the end of the year.</textarea> <br/><br/>
 
-        Output format:
-        <select name="output-format" id="output-format">
-            <option value="rs3">rs3</option>
-            <option value="original">original</option>
-            <option value="nltk-tree-png">nltk-tree-png</option>
-        </select> <br/><br/>
         <input type='submit' id='btnSubmit' value='Run RST Parsers'/>
     </form>
 
     <div>
         <h1>Parser results:</h1>
-
         <div id="results">
         <!-- API results go here-->
         </div>
+
+        <h1>Errors:</h1>
+        <div id="errors">
+            <!-- API errors go here-->
+        </div>
+
+
     </div>
 
 </body>

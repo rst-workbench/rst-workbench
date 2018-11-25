@@ -74,7 +74,7 @@ class RSTWorkbench {
     async getParseResults(text) {
         this.rstParsers.forEach(async (parser) => {
             parser.parse(text)
-                .then(output => addToResults(parser.name, output))
+                .then(output => addToResults(parser.name, output, 'parser-output'))
                 .catch(e => addToErrors(parser.name, e))
         });
     }
@@ -91,7 +91,7 @@ class RSTWorkbench {
         let parseOutput;
         try {
             parseOutput = await parser.parse(text);
-            addToResults(parser.name, parseOutput);
+            addToResults(parser.name, parseOutput, 'parser-output');
         } catch (err) {
             addToErrors(parser.name, err);
             return;
@@ -100,6 +100,8 @@ class RSTWorkbench {
         let rs3Output;
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
+            // FIXME: add RS3 download button
+            addToResults(parser.name, rs3Output, 'rs3');
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name}`, err);
             return;
@@ -217,16 +219,20 @@ class RSTParser {
 }
 
 
-// addToSection adds a title and content to the existing, given DOM element, e.g.
-// <div id={$section}>
-//   <div>
-//     <h2>{$title}</h2>
-//     <p>{$content}</p>
+// addToSection adds a title and content to the existing, given section (i.e.
+// the "results" or "errors" div element, e.g.
+//
+// <div id=${section}> // "results" or "errors"
+//   <div id=${section}-${title}> // e.g. "results-codra"
+//     <h2>{$title}</h2> // e.g. "codra"
+//     <div id=${contentClass}>{$content}</div> // <div id='parser-output'>Lots of parser output...</div>
 //   </div>
 // </div>
-function addToSection(section, title, content) {
-    const contentElem = wrapContent(content);
+function addToSection(section, title, content, contentClass) {
+    const contentElem = wrapContent(content, contentClass);
 
+    // If the subsection already exists, add to id.
+    // If it doesn't, create it first.
     const subsectionID = `${section}-${title}`;
     let subElem = document.getElementById(subsectionID);
     if (subElem === null) {
@@ -248,8 +254,9 @@ function addToSection(section, title, content) {
 
 // wrapContent wraps the given content (either a DOM element or a string)
 // into a div element.
-function wrapContent(content) {
+function wrapContent(content, contentClass) {
     const contentElem = document.createElement('div');
+    contentElem.class = contentClass;
 
     if (typeof content === "string") {
         contentElem.innerText = content;
@@ -261,8 +268,8 @@ function wrapContent(content) {
 
 // addToResults adds a title (e.g. the name of a parser) and some content
 // to the results section of the page.
-function addToResults(title, content) {
-    addToSection('results', title, content);
+function addToResults(title, content, contentClass) {
+    addToSection('results', title, content, contentClass);
 }
 
 // addPNGtoResults adds the given base64 encoded PNG image to the results
@@ -271,13 +278,13 @@ function addPNGtoResults(title, pngBase64) {
     let img = document.createElement('img');
     img.alt = "Embedded Image";
     img.src = `data:image/png;base64,${pngBase64}`;
-    addToSection('results', title, img);
+    addToSection('results', title, img, 'rs3-image');
 }
 
 // addToErrors adds a title (e.g. the name of the parser that produced
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
-    addToSection('errors', title, error.stack);
+    addToSection('errors', title, error.stack, 'error');
 }
 
 // getPort returns a Port number given a service Object.

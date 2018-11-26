@@ -219,6 +219,18 @@ class RSTParser {
 }
 
 
+// FIXME: adapt addRS3DownloadButton()
+// - use parser.name to add to the right div
+function addRS3DownloadButton(rs3String) {
+    $("#results").append(
+`<form onsubmit="download('result.rs3', this['text'].value)">
+  <textarea name="text" style='display:none;'>${rs3String}</textarea>
+  <input type="submit" value="Download .rs3 file">
+</form>`
+    );
+}
+
+
 // addToSection adds a title and content to the existing, given section (i.e.
 // the "results" or "errors" div element, e.g.
 //

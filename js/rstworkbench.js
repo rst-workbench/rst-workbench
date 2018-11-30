@@ -1,6 +1,9 @@
 const confpath = 'docker-compose.yml';
 
-// When the page is loaded ...
+// This would be the "main" function in a sane programming language.
+// Here, this code is triggered when the rst-workbench website is fully loaded.
+// It creates an RSTWorkbench instance and calls its getParseImages
+// method on the content of the RST form whenever the submit button is pressed.
 window.addEventListener("load", async () => {
   // access the form element ...
   let rstForm = document.getElementById("rst");
@@ -117,18 +120,22 @@ class RSTWorkbench {
 
 }
 
-
+// RSTConverter defines a REST API for the rst-converter-service,
+// which converts RST trees between a variety of formats.
 class RSTConverter {
     constructor(port) {
         this.port = port
     }
 
+    // fromConfigObject creates an RSTConverter instance from a configuration object.
     static fromConfigObject(config) {
         let service = config.services["rst-converter-service"];
         let port = getPort(service);
         return new RSTConverter(port);
     }
 
+    // convert converts the string representation of an RST tree from the given
+    // input format into the given output format.
     async convert(document, inputFormat, outputFormat) {
         const data = new FormData();
         data.append('input', document);
@@ -148,18 +155,21 @@ class RSTConverter {
     }
 }
 
-
+// RSTWeb defines a client for the REST API of the rstWeb annotation tool.
 class RSTWeb {
     constructor(port) {
         this.port = port
     }
 
+    // fromConfigObject creates an RSTWeb instance from a configuration object.
     static fromConfigObject(config) {
         let service = config.services["rstweb-service"];
         let port = getPort(service);
         return new RSTWeb(port);
     }
 
+    // rs3ToImage converts the content of an rs3 file into a base64-encoded PNG
+    // image of the underlying RST tree.
     async rs3ToImage(document) {
         const data = new FormData();
         data.append('input_file', document);
@@ -180,6 +190,9 @@ class RSTWeb {
 }
 
 
+// RSTParser defines a common client for the REST APIs of several RST parsers.
+// The REST APIs were added to existing RST parsers as part of the rst-workbench
+// project.
 class RSTParser {
     constructor(name, format, port) {
         this.name = name
@@ -198,6 +211,8 @@ class RSTParser {
         return running;
     }
 
+    // parse converts plain text into an RST tree (in the output format) that
+    // this RST parser uses.
     async parse(input) {
         const data = new FormData();
         data.append('input', input);

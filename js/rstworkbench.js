@@ -104,7 +104,14 @@ class RSTWorkbench {
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
             // FIXME: add RS3 download button
-            addToResults(parser.name, rs3Output, 'rs3');
+            let rs3DownloadButtonString = `<form onsubmit="return download('result.rs3', this['text'].value)">
+                <textarea name="text" style='display:none;'>${rs3Output}</textarea>
+                <input type="submit" value="Download .rs3 file">
+            </form>`;
+            let rs3DownloadButton = htmlToElement(rs3DownloadButtonString);
+            addToResults(parser.name, rs3DownloadButton, 'rs3');
+
+            //~ addToResults(parser.name, rs3Output, 'rs3');
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name}`, err);
             return;
@@ -234,17 +241,29 @@ class RSTParser {
 }
 
 
-// FIXME: adapt addRS3DownloadButton()
-// - use parser.name to add to the right div
-function addRS3DownloadButton(rs3String) {
-    $("#results").append(
-`<form onsubmit="download('result.rs3', this['text'].value)">
-  <textarea name="text" style='display:none;'>${rs3String}</textarea>
-  <input type="submit" value="Download .rs3 file">
-</form>`
-    );
+// htmlToElement converts a string representing an HTML element into an
+// actual DOM element.
+// cf. https://stackoverflow.com/a/35385518
+function htmlToElement(htmlString) {
+    let template = document.createElement('template');
+    htmlString = htmlString.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = htmlString;
+    return template.content.firstChild;
 }
 
+// source: https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  document.body.removeChild(element);
+  return false;
+}
 
 // addToSection adds a title and content to the existing, given section (i.e.
 // the "results" or "errors" div element, e.g.

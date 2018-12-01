@@ -103,15 +103,7 @@ class RSTWorkbench {
         let rs3Output;
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
-            // FIXME: add RS3 download button
-            let rs3DownloadButtonString = `<form onsubmit="return download('result.rs3', this['text'].value)">
-                <textarea name="text" style='display:none;'>${rs3Output}</textarea>
-                <input type="submit" value="Download .rs3 file">
-            </form>`;
-            let rs3DownloadButton = htmlToElement(rs3DownloadButtonString);
-            addToResults(parser.name, rs3DownloadButton, 'rs3');
-
-            //~ addToResults(parser.name, rs3Output, 'rs3');
+            addRS3DownloadButton(parser.name, rs3Output);
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name}`, err);
             return;
@@ -125,6 +117,17 @@ class RSTWorkbench {
         }
     }
 
+}
+
+// addRS3DownloadButton adds an RS3 download button to the results section of the
+// given parser.
+function addRS3DownloadButton(parserName, rs3String) {
+    let rs3DownloadButtonString = `<form onsubmit="return download('${parserName}-result.rs3', this['text'].value)">
+        <textarea name="text" style='display:none;'>${rs3String}</textarea>
+        <input type="submit" value="Download as .rs3 file">
+    </form>`;
+    let rs3DownloadButton = htmlToElement(rs3DownloadButtonString);
+    addToResults(parserName, rs3DownloadButton, 'rs3');
 }
 
 // RSTConverter defines a REST API for the rst-converter-service,
@@ -251,6 +254,8 @@ function htmlToElement(htmlString) {
     return template.content.firstChild;
 }
 
+// download downloads the given input string in a file with the given name to
+// the user's computer.
 // source: https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
 function download(filename, text) {
   var element = document.createElement('a');
@@ -262,6 +267,10 @@ function download(filename, text) {
 
   element.click();
   document.body.removeChild(element);
+
+  // We have to return false, because this function is called in "onsubmit" of
+  // a form.
+  // cf. https://stackoverflow.com/questions/19454310/stop-form-refreshing-page-on-submit/19454378
   return false;
 }
 

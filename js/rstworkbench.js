@@ -112,6 +112,7 @@ class RSTWorkbench {
         try {
             const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
             addPNGtoResults(parser.name, parseImage);
+            addRSTWebEditButton(parser.name, rs3Output);
         } catch (err) {
             addToErrors(`rstWeb for ${parser.name}`, err);
         }
@@ -129,6 +130,18 @@ function addRS3DownloadButton(parserName, rs3String) {
     let rs3DownloadButton = htmlToElement(rs3DownloadButtonString);
     addToResults(parserName, rs3DownloadButton, 'rs3');
 }
+
+// FIXME: implement addRSTWebEditButton
+function addRSTWebEditButton(parserName, rs3String) {
+    let rs3EditButtonString = `<form id='editor' method='post'>
+        <textarea id='input-rs3' style='display:none;'>${rs3String}</textarea>
+        <input type='submit' id='RSTWebSubmitButton' value='Edit in rstWeb'/>
+    </form>`;
+    let rs3EditButton = htmlToElement(rs3EditButtonString);
+    addToResults(parserName, rs3EditButton, 'rs3');
+
+}
+
 
 // RSTConverter defines a REST API for the rst-converter-service,
 // which converts RST trees between a variety of formats.

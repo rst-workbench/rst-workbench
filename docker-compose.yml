@@ -49,6 +49,15 @@ services:
     ports:
      - "9103:8000"
 
+  feng-hirst-service:
+    labels:
+      name: "feng-hirst-2014"
+      format: "hilda"
+      type: "rst-parser"
+    image: "nlpbox/feng-hirst-service:2019-01-03"
+    ports:
+     - "9104:8000"
+
   rst-converter-service:
     labels:
       name: "rst-converter-service"

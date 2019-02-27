@@ -61,7 +61,7 @@ services:
   rst-converter-service:
     labels:
       name: "rst-converter-service"
-    image: "nlpbox/rst-converter-service:2018-11-20"
+    image: "nlpbox/rst-converter-service:2019-02-27-2"
     ports:
      - "9200:5000"
 

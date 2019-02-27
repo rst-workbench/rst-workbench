@@ -104,12 +104,16 @@ class RSTWorkbench {
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
             addRS3DownloadButton(parser.name, rs3Output);
+
+            const nltkTreePNGBase64 = await this.rstConverter.convert(parseOutput, parser.format, 'tree-png-base64');
+            addPNGtoResults(parser.name, nltkTreePNGBase64);
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name}`, err);
             return;
         }
 
         try {
+
             const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
             addPNGtoResults(parser.name, parseImage);
             addRSTWebEditButton(parser.name, rs3Output);

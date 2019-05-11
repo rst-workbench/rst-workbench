@@ -45,7 +45,7 @@ services:
       name: "heilman-sagae-2015"
       format: "hs2015"
       type: "rst-parser"
-    image: "nlpbox/heilman-sagae-service:2018-09-27"
+    image: "nlpbox/heilman-sagae-2015-service:2018-09-27"
     ports:
      - "9103:8000"
 

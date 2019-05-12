@@ -40,7 +40,7 @@ services:
       name: heilman-sagae-2015
       format: hs2015
       type: rst-parser
-    image: nlpbox/heilman-sagae-2015-service:2018-10-27
+    image: nlpbox/heilman-sagae-2015-service:2019-05-12-2
     ports:
     - 9103:8000
   feng-hirst-service:

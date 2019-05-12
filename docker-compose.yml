@@ -1,73 +1,65 @@
 version: '3.3'
 services:
-
   corenlp:
     labels:
-      name: "corenlp"
-      type: "constituency-parser"
-    image: "nlpbox/corenlp:2018-10-27"
+      name: corenlp
+      type: constituency-parser
+    image: nlpbox/corenlp:2018-10-27
     environment:
-      - JAVA_XMX=4g
+    - JAVA_XMX=4g
     ports:
-      - "9000:9000"
-
+    - 9000:9000
   codra-service:
     labels:
-      name: "codra"
-      format: "codra"
-      type: "rst-parser"
-    image: "nlpbox/codra-service:2018-05-28"
+      name: codra
+      format: codra
+      type: rst-parser
+    image: nlpbox/codra-service:2018-05-28
     ports:
-     - "9100:8000"
-
+    - 9100:8000
   dplp-service:
     labels:
-      name: "dplp"
-      format: "dplp"
-      type: "rst-parser"
-    image: "nlpbox/dplp-service:2018-11-18"
+      name: dplp
+      format: dplp
+      type: rst-parser
+    image: nlpbox/dplp-service:2018-11-18
     ports:
-     - "9101:8000"
+    - 9101:8000
     environment:
-      - CORENLP_ENDPOINT=http://corenlp:9000
-
-  hilda-service: # HILDA can't be distributed; we'll have to build it locally
+    - CORENLP_ENDPOINT=http://corenlp:9000
+  hilda-service:
     labels:
-      name: "hilda"
-      format: "hilda"
-      type: "rst-parser"
-    image: "hilda-service:2018-10-18"
+      name: hilda
+      format: hilda
+      type: rst-parser
+    image: hilda-service:2018-10-18
     ports:
-     - "9102:8000"
-
+    - 9102:8000
   heilman-sagae-service:
     labels:
-      name: "heilman-sagae-2015"
-      format: "hs2015"
-      type: "rst-parser"
-    image: "nlpbox/heilman-sagae-2015-service:2018-09-27"
+      name: heilman-sagae-2015
+      format: hs2015
+      type: rst-parser
+    image: nlpbox/heilman-sagae-2015-service:2018-09-27
     ports:
-     - "9103:8000"
-
+    - 9103:8000
   feng-hirst-service:
     labels:
-      name: "feng-hirst-2014"
-      format: "hilda"
-      type: "rst-parser"
-    image: "nlpbox/feng-hirst-service:2019-01-03"
+      name: feng-hirst-2014
+      format: hilda
+      type: rst-parser
+    image: nlpbox/feng-hirst-service:2019-01-03
     ports:
-     - "9104:8000"
-
+    - 9104:8000
   rst-converter-service:
     labels:
-      name: "rst-converter-service"
-    image: "nlpbox/rst-converter-service:2019-02-27-2"
+      name: rst-converter-service
+    image: nlpbox/rst-converter-service:2019-02-27-2
     ports:
-     - "9200:5000"
-
+    - 9200:5000
   rstweb-service:
     labels:
-      name: "rstweb"
-    image: "nlpbox/rstweb-service:2018-11-15"
+      name: rstweb
+    image: nlpbox/rstweb-service:2018-11-15
     ports:
-     - "9300:8080"
+    - 9300:8080

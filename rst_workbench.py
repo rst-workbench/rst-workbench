@@ -2,21 +2,14 @@
 # coding: utf-8
 
 import argparse
+import asyncio
 import codecs
 import os
 import sys
 
-import requests
+import aiohttp
 
 from update_all_containers import DOCKER_COMPOSE_CONFIG_PATH, yamlfile2dict
-
-
-def post_file(host, port, input_filepath):
-    """Send the given file via HTTP POST to the given host:port"""
-    with open(input_filepath) as input_file:
-        input_text = input_file.read()
-        return requests.post(f'http://{host}:{port}/parse',
-                             files={'input': input_text})
 
 
 def get_rst_parsers(config_filepath=DOCKER_COMPOSE_CONFIG_PATH):
@@ -38,43 +31,69 @@ def get_host_port(service_dict):
     return ports[0].split(':')[0]
 
 
+def make_output_filepath(output_dirpath, parser_config):
+    parser_name = parser_config['labels']['name']
+    parser_format = parser_config['labels']['format']
+    output_filename = f"{parser_name}.{parser_format}"
+    return os.path.join(output_dirpath, output_filename)
 
-def parse_file(input_filepath, output_dirpath, parsers):
-    results = []
-    for service_name in parsers:
-        port = get_host_port(parsers[service_name])
-        result = post_file('localhost', port, 'input.txt')
-        results.append((service_name, result))
 
-    for service_name, result in results:
-        parser_config = parsers[service_name]
-        parser_name = parser_config['labels']['name']
-        parser_format = parser_config['labels']['format']
-        output_filename = f"{parser_name}.{parser_format}"
-        if not result.ok:
-            output_filename += ".error"
-
+def ensure_output_dir(output_dirpath):
+    if not os.path.exists(output_dirpath):
+        os.mkdir(output_dirpath)
+    else:
         if not os.path.isdir(output_dirpath):
-            os.mkdir(output_dirpath)
-
-        with codecs.open(os.path.join(output_dirpath, output_filename), 'w', 'utf-8') as output_file:
-            output_file.write(result.content.decode('utf-8'))
+            raise ValueError(f"Given output path is not a directory: {output_dirpath}")
 
 
-if __name__ == '__main__':
+async def post_file(host, port, input_filepath):
+    """Send the given file via HTTP POST to the given host:port"""
+    url = f'http://{host}:{port}/parse'
+    data = aiohttp.FormData()
+    data.add_field('input', open(input_filepath, 'r'))
+
+    async with aiohttp.ClientSession(raise_for_status=True) as session:
+        async with await session.post(url, data=data) as resp:
+            return await resp.text()
+
+
+async def parse_file(input_filepath, output_dirpath, parsers):
+    """Parse the given file with all available parsers and write the results
+    to the output directory.
+    """
+    for service_name in parsers:
+        parser_config = parsers[service_name]
+        port = get_host_port(parser_config)
+
+        ensure_output_dir(output_dirpath)
+        output_filepath = make_output_filepath(output_dirpath, parser_config)
+        try:
+            result = await post_file('localhost', port, 'input.txt')
+        except Exception as err:
+            result = err.__repr__()
+            output_filepath += ".error"
+
+        with codecs.open(output_filepath, 'w', 'utf-8') as output_file:
+            output_file.write(result)
+
+
+async def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-f', '--output-format',
                         help='Output format to be produced (in addition to original parser outputs')
-    
+
     parser.add_argument('input_file')
     parser.add_argument('output_dir', nargs='?', default="./output")
 
     args = parser.parse_args(sys.argv[1:])
 
     parsers = get_rst_parsers()
-    parse_file(args.input_file, args.output_dir, parsers)
+    await parse_file(args.input_file, args.output_dir, parsers)
 
+
+if __name__ == '__main__':
+    asyncio.run(main())
 
 
 

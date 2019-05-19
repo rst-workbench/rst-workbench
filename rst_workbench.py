@@ -3,7 +3,6 @@
 
 import argparse
 import asyncio
-import codecs
 import os
 import sys
 
@@ -59,24 +58,24 @@ async def post_file(host, port, path, input_filepath):
 
     async with aiohttp.ClientSession(raise_for_status=True) as session:
         async with await session.post(url, data=data) as resp:
-            return await resp.text()
+            return await resp.content.read()
 
 
-async def convert_file(input_filepath, input_format, output_dirpath, output_formats, converter):
+async def convert_file(parse_filepath, parse_format, output_dirpath, output_formats, converter):
     port = get_host_port(converter)
-    for output_format in output_formats:
-        api_path = f'/convert/{input_format}/{output_format}'
-        input_filename = os.path.basename(input_filepath)
+    for output_format in output_formats:        
+        api_path = f'/convert/{parse_format}/{output_format}'
+        input_filename = os.path.basename(parse_filepath)
         output_filename = f'{input_filename}.CONVERTED.{output_format}'
         output_filepath = os.path.join(output_dirpath, output_filename)
         try:
-            result = await post_file('localhost', port, api_path, 'input.txt')
+            result = await post_file('localhost', port, api_path, parse_filepath)
 
         except Exception as err:
             result = err.__repr__()
             output_filename += ".error"
 
-        with codecs.open(output_filepath, 'w', 'utf-8') as output_file:
+        with open(output_filepath, 'wb') as output_file:
             output_file.write(result)
 
 
@@ -93,21 +92,19 @@ async def parse_file(input_filepath, output_dirpath, parsers, converter=None, ou
         parse_filepath = make_output_filepath(output_dirpath, parser_config)
         try:
             result = await post_file('localhost', port, '/parse', 'input.txt')
-
-            if converter is not None and output_formats is not None:
-                await convert_file(
-                    input_filepath=parse_filepath,
-                    input_format=parser_format,
-                    output_dirpath=output_dirpath,
-                    output_formats=output_formats,
-                    converter=converter)
-
+            parse_succeeded = True
         except Exception as err:
             result = err.__repr__()
             parse_filepath += ".error"
+            parse_succeeded = False
 
-        with codecs.open(parse_filepath, 'w', 'utf-8') as output_file:
+        with open(parse_filepath, 'wb') as output_file:
             output_file.write(result)
+
+        if parse_succeeded and converter is not None and output_formats is not None:
+            await convert_file(
+                parse_filepath, parser_format, output_dirpath,
+                output_formats, converter)
 
 
 async def get_output_formats(converter):

@@ -4,6 +4,7 @@
 import argparse
 import asyncio
 import os
+import shutil
 import sys
 
 import aiohttp
@@ -83,15 +84,18 @@ async def parse_file(input_filepath, output_dirpath, parsers, converter=None, ou
     """Parse the given file with all available parsers and write the results
     to the output directory.
     """
+    # keep a copy of the input in the output directory
+    ensure_output_dir(output_dirpath)
+    shutil.copy(input_filepath, output_dirpath)
+
     for service_name in parsers:
         parser_config = parsers[service_name]
         parser_format = parser_config['labels']['format']
         port = get_host_port(parser_config)
 
-        ensure_output_dir(output_dirpath)
         parse_filepath = make_output_filepath(output_dirpath, parser_config)
         try:
-            result = await post_file('localhost', port, '/parse', 'input.txt')
+            result = await post_file('localhost', port, '/parse', input_filepath)
             parse_succeeded = True
         except Exception as err:
             result = err.__repr__()

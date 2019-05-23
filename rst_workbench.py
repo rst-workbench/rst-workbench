@@ -147,7 +147,7 @@ async def main():
         sys.exit(0)
 
     parsers = get_rst_parsers()
-    output_formats = args.output_formats.split(',')
+    output_formats = args.output_formats.split(',') if args.output_formats else None
     await parse_file(
         input_filepath=args.input_file,
         output_dirpath=args.output_dir,

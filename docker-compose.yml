@@ -1,5 +1,14 @@
 version: '3.3'
 services:
+  rst-workbench-frontend:
+    labels:
+      name: rst-workbench-frontend
+      type: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    ports:
+    - 8000:80
   corenlp:
     labels:
       name: corenlp

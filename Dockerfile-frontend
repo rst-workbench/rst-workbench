@@ -1,0 +1,5 @@
+FROM nginx:alpine
+
+COPY index.html docker-compose.yml /usr/share/nginx/html/
+COPY js/rstworkbench.js js/js-yaml.min.js /usr/share/nginx/html/js/
+

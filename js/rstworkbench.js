@@ -112,7 +112,11 @@ class RSTWorkbench {
         try {
             const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
             addPNGtoResults(parser.name, parseImage);
-            addRSTWebEditButton(parser.name, rs3Output);
+            // addRSTWebEditButton(parser.name, rs3Output);
+            
+            const editorResponse = await this.rstWeb.editRS3inRSTWeb(rs3Output);
+            addToResults(parser.name, editorResponse, 'editor-response');
+            
         } catch (err) {
             addToErrors(`rstWeb for ${parser.name}`, err);
         }
@@ -210,6 +214,27 @@ class RSTWeb {
 
         return output;
     }
+
+    // editRS3inRSTWeb opens the rs3 file in rstWeb for post-editing.
+    async editRS3inRSTWeb(document) {
+        const data = new FormData();
+        data.append('input_file', document);
+
+        const options = {
+          method: 'POST',
+          body: data,
+        };
+
+        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=editor`, options);
+        let output = await response.text();
+        if (!response.ok) {
+            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+        }
+
+        return output;
+    }
+
+
 }
 
 

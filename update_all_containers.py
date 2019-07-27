@@ -74,7 +74,7 @@ def get_latest_tag(tags):
 def update_images(config_filepath='docker-compose.yml'):
     config = yamlfile2dict(config_filepath)
     for service in config['services']:
-        match = IMAGE_RE.match(config['services'][service]['image'])
+        match = IMAGE_RE.match(config['services'][service].get('image', ''))
         if match:  # local images (i.e. HILDA) can't be matched
             organisation = match.groupdict()['organisation']
             repo = match.groupdict()['repo']

@@ -126,3 +126,17 @@ so we can't provide automated builds but only the build scripts here.
 
 *Dockerized repo*: [hilda-docker](https://github.com/NLPbox/hilda-docker)
 
+
+## Troubleshooting
+
+If running the rst-workbench with the command ``docker-compose up`` produces
+an unexpected error like this one,
+
+```
+Starting rst-workbench_rst-converter-service_1 ... done
+Attaching to rst-workbench_rst-converter-service_1
+rst-converter-service_1  | xvfb-run: error: Xvfb failed to start
+rst-workbench_rst-converter-service_1 exited with code 1
+```
+
+try to run it using ``docker-compose up --force-recreate`` instead.

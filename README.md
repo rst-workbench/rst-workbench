@@ -139,4 +139,4 @@ rst-converter-service_1  | xvfb-run: error: Xvfb failed to start
 rst-workbench_rst-converter-service_1 exited with code 1
 ```
 
-try to run it using ``docker-compose up --force-recreate`` instead.
+try to run it using ``docker-compose up --build --force-recreate`` instead.

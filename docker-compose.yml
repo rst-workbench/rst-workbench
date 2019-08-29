@@ -1,77 +1,86 @@
+---
 version: '3.3'
+
 services:
-  rst-workbench-frontend:
-    labels:
-      name: rst-workbench-frontend
-      type: frontend
-    build:
-      context: .
-      dockerfile: Dockerfile-frontend
-    ports:
-    - 8000:80
-  # corenlp:
-    # labels:
-      # name: corenlp
-      # type: constituency-parser
-    # image: nlpbox/corenlp:2018-10-27
-    # environment:
-    # - JAVA_XMX=4g
-    # ports:
-    # - 9000:9000
-  # codra-service:
-    # labels:
-      # name: codra
-      # format: codra
-      # type: rst-parser
-    # image: nlpbox/codra-service:2019-05-16
-    # ports:
-    # - 9100:8000
-  # dplp-service:
-    # labels:
-      # name: dplp
-      # format: dplp
-      # type: rst-parser
-    # image: nlpbox/dplp-service:2019-02-27
-    # ports:
-    # - 9101:8000
-    # environment:
-    # - CORENLP_ENDPOINT=http://corenlp:9000
-  hilda-service:
-    labels:
-      name: hilda
-      format: hilda
-      type: rst-parser
-    image: hilda-service:2018-10-18
-    ports:
-    - 9102:8000
-  # heilman-sagae-service:
-    # labels:
-      # name: heilman-sagae-2015
-      # format: hs2015
-      # type: rst-parser
-    # image: nlpbox/heilman-sagae-2015-service:2019-05-12-2
-    # ports:
-    # - 9103:8000
-  # feng-hirst-service:
-    # labels:
-      # name: feng-hirst-2014
-      # format: hilda
-      # type: rst-parser
-    # image: nlpbox/feng-hirst-service:2019-01-04
-    # ports:
-    # - 9104:8000
-  rst-converter-service:
-    labels:
-      name: rst-converter-service
-      type: format-converter
-    image: nlpbox/rst-converter-service:2019-05-19
-    ports:
-    - 9150:5000
-  # rstweb-service:
-    # labels:
-      # name: rstweb
-      # type: rst-visualizer
-    ## image: nlpbox/rstweb-service:2019-08-08
-    # image: rstweb-service
-    # ports:
-    # - 9151:8080
+    rst-workbench-frontend:
+        labels:
+            name: rst-workbench-frontend
+            type: frontend
+        build:
+            context: .
+            dockerfile: Dockerfile-frontend
+        ports:
+            - 8000:80
+
+    corenlp:
+        labels:
+            name: corenlp
+            type: constituency-parser
+        image: nlpbox/corenlp:2018-10-27
+        environment:
+            - JAVA_XMX=4g
+        ports:
+            - 9000:9000
+
+    codra-service:
+        labels:
+            name: codra
+            format: codra
+            type: rst-parser
+        image: nlpbox/codra-service:2019-05-16
+        ports:
+            - 9100:8000
+
+    dplp-service:
+        labels:
+            name: dplp
+            format: dplp
+            type: rst-parser
+        image: nlpbox/dplp-service:2019-02-27
+        ports:
+            - 9101:8000
+        environment:
+            - CORENLP_ENDPOINT=http://corenlp:9000
+
+    hilda-service:
+        labels:
+            name: hilda
+            format: hilda
+            type: rst-parser
+        image: hilda-service:2018-10-18
+        ports:
+            - 9102:8000
+
+    heilman-sagae-service:
+        labels:
+            name: heilman-sagae-2015
+            format: hs2015
+            type: rst-parser
+        image: nlpbox/heilman-sagae-2015-service:2019-05-12-2
+        ports:
+            - 9103:8000
+
+    feng-hirst-service:
+        labels:
+            name: feng-hirst-2014
+            format: hilda
+            type: rst-parser
+        image: nlpbox/feng-hirst-service:2019-01-04
+        ports:
+            - 9104:8000
+
+    rst-converter-service:
+        labels:
+            name: rst-converter-service
+            type: format-converter
+        image: nlpbox/rst-converter-service:2019-05-19
+        ports:
+            - 9150:5000
+
+    rstweb-service:
+        labels:
+            name: rstweb
+            type: rst-visualizer
+        image: nlpbox/rstweb-service:2019-08-08
+        ports:
+            - 9151:8080

@@ -6,6 +6,8 @@ services:
       type: frontend
     build:
       context: .
+      args:
+      - HOST_HOSTNAME=${HOSTNAME}
       dockerfile: Dockerfile-frontend
     ports:
     - 8000:80

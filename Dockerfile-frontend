@@ -3,3 +3,6 @@ FROM nginx:alpine
 COPY index.html docker-compose.yml /usr/share/nginx/html/
 COPY js/rstworkbench.js js/js-yaml.min.js /usr/share/nginx/html/js/
 
+ARG HOST_HOSTNAME
+
+RUN sed -i "s/localhost/$HOST_HOSTNAME/g" /usr/share/nginx/html/js/rstworkbench.js

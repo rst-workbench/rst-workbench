@@ -8,7 +8,8 @@ window.addEventListener("load", async () => {
   // access the form element ...
   let rstForm = document.getElementById("rst");
 
-  let wb = await RSTWorkbench.fromConfigFile();
+  // make the workbench instance globally available
+  window.rstworkbench = await RSTWorkbench.fromConfigFile();
 
   // ...and take over its submit event.
   rstForm.addEventListener("submit", async (event) => {
@@ -16,7 +17,7 @@ window.addEventListener("load", async () => {
 
     // parse the form content and display the results.
     const text = rstForm["input-text"].value;
-    wb.getParseImages(text);
+    window.rstworkbench.getParseImages(text);
   });
 });
 
@@ -112,11 +113,7 @@ class RSTWorkbench {
         try {
             const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
             addPNGtoResults(parser.name, parseImage);
-            addRSTWebEditButton(parser.name, rs3Output);
-
-            const editorResponse = await this.rstWeb.editRS3inRSTWeb(rs3Output);
-            addToResults(parser.name, editorResponse, 'editor-response');
-            
+            addRSTWebEditButton(parser.name, rs3Output);            
         } catch (err) {
             addToErrors(`rstWeb for ${parser.name}`, err);
         }
@@ -135,12 +132,13 @@ function addRS3DownloadButton(parserName, rs3String) {
     addToResults(parserName, rs3DownloadButton, 'rs3');
 }
 
-// FIXME: implement addRSTWebEditButton
 function addRSTWebEditButton(parserName, rs3String) {
-    let rs3EditButtonString = `<form id='editor' method='post'>
-        <textarea id='input-rs3' style='display:none;'>${rs3String}</textarea>
-        <input type='submit' id='RSTWebSubmitButton' value='Edit in rstWeb'/>
+    // TODO: replace hardcorded host/port
+    let rs3EditButtonString = `<form action="http://localhost:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor" id="open_rs3_in_rstweb" method="post">
+    <textarea class="text" name="input_file" form="open_rs3_in_rstweb" style='display:none;'>${rs3String}</textarea>
+    <input type="submit" value="Edit in rstWeb" class="submitButton">
     </form>`;
+
     let rs3EditButton = htmlToElement(rs3EditButtonString);
     addToResults(parserName, rs3EditButton, 'rs3');
 
@@ -212,33 +210,8 @@ class RSTWeb {
             throw new Error(`${response.status}: ${response.statusText}\n${output}`);
         }
 
-        let editLinkString = `<a href="http://localhost:${this.port}/api/convert?input_format=rs3&output_format=editor">Edit this document in rstWeb!</a>`
-        let editLink = htmlToElement(editLinkString);
-        addToResults('rstWeb', editLink, 'edit-link')
-
         return output;
     }
-
-    // editRS3inRSTWeb opens the rs3 file in rstWeb for post-editing.
-    async editRS3inRSTWeb(document) {
-        const data = new FormData();
-        data.append('input_file', document);
-
-        const options = {
-          method: 'POST',
-          body: data,
-        };
-
-        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=editor`, options);
-        let output = await response.text();
-        if (!response.ok) {
-            throw new Error(`${response.status}: ${response.statusText}\n${output}`);
-        }
-
-        return output;
-    }
-
-
 }
 
 
@@ -315,6 +288,7 @@ function download(filename, text) {
   // cf. https://stackoverflow.com/questions/19454310/stop-form-refreshing-page-on-submit/19454378
   return false;
 }
+
 
 // addToSection adds a title and content to the existing, given section (i.e.
 // the "results" or "errors" div element, e.g.

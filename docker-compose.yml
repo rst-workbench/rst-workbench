@@ -73,6 +73,6 @@ services:
     labels:
       name: rstweb
       type: rst-visualizer
-    image: nlpbox/rstweb-service:2019-09-29
+    image: nlpbox/rstweb-service:2019-12-02
     ports:
     - 9151:8080

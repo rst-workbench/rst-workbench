@@ -1,25 +1,77 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" /> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>rst-workbench demo</title>
+
+    <style>
+body {
+  padding-top: 5rem; /* padding between navbar and main content */
+}
+
+.content { max-width: 48em; }
+  .content img { max-width: 100%; }
+
+/* image popups / overlays without Javascript
+   source: https://www.sylvaindurand.org/overlay-image-in-pure-css */
+
+.lightbox {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transition: opacity .3s;
+  visibility: hidden; }
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    transform: scale(0.95);
+    transition: transform .3s; }
+  .lightbox:target {
+    outline: none;
+    visibility: visible;
+    cursor: default;
+    opacity: 1; }
+    .lightbox:target img {
+      transform: scale(1); }
+    </style>
 </head>
-
-
 
 <body>
     <script src='js/js-yaml.min.js'></script>
     <script src='js/rstworkbench.js'></script>
-    
-    <h1>Enter some text:</h1>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">rst-workbench</a>
+</nav>
+
+
+<main role="main" class="container">
+
     <form id='rst' method='get'>
-    <textarea id='input-text' rows="15" cols="100" value>
+
+        <div class="form-group">
+            <h2>Enter some text to be parsed:</h2>
+            <textarea class="form-control" id='input-text' rows="10" value>
 Students and lecturers alike are worried about global warming and related climate change.
 With a clear ecological conscience and convinced that they stand on the right side of history,
 they cycle to their university campus, buy a vegetarian sandwich on the way
 and were jointly outraged when Donald Trump pulled the US out of the Paris Climate Agreement.
-However, their own contribution to climate change is all too often ignored.</textarea> <br/><br/>
+However, their own contribution to climate change is all too often ignored.
+            </textarea>
+        </div>
 
-        <input type='submit' id='btnSubmit' value='Run RST Parsers'/>
+        <input class="btn btn-primary" type='submit' id='btnSubmit' value='Run RST Parsers'/>
     </form>
 
     <div>
@@ -35,6 +87,9 @@ However, their own contribution to climate change is all too often ignored.</tex
 
 
     </div>
+
+</main>
+
 
 </body>
 

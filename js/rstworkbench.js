@@ -126,7 +126,7 @@ class RSTWorkbench {
 function addRS3DownloadButton(parserName, rs3String) {
     let rs3DownloadButtonString = `<form onsubmit="return download('${parserName}-result.rs3', this['text'].value)">
         <textarea name="text" style='display:none;'>${rs3String}</textarea>
-        <input type="submit" value="Download as .rs3 file">
+        <input class="btn btn-primary" type="submit" value="Download as .rs3 file">
     </form>`;
     let rs3DownloadButton = htmlToElement(rs3DownloadButtonString);
     addToResults(parserName, rs3DownloadButton, 'rs3');
@@ -136,7 +136,7 @@ function addRSTWebEditButton(parserName, rs3String) {
     // TODO: replace hardcorded host/port
     let rs3EditButtonString = `<form action="http://localhost:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor" id="open_rs3_in_rstweb" method="post">
     <textarea class="text" name="input_file" form="open_rs3_in_rstweb" style='display:none;'>${rs3String}</textarea>
-    <input type="submit" value="Edit in rstWeb" class="submitButton">
+    <input type="submit" class="btn btn-primary submitButton" value="Edit in rstWeb">
     </form>`;
 
     let rs3EditButton = htmlToElement(rs3EditButtonString);
@@ -347,9 +347,29 @@ function addToResults(title, content, contentClass) {
 // section under the given title.
 function addPNGtoResults(title, pngBase64) {
     let img = document.createElement('img');
-    img.alt = "Embedded Image";
+    img.className = "img-fluid";
+    img.alt = title + " RST parse";
     img.src = `data:image/png;base64,${pngBase64}`;
-    addToSection('results', title, img, 'rs3-image');
+
+    // we can't use the img node twice, so we'll copy it
+    let imgClone = img.cloneNode();
+
+    let aEmbedded = document.createElement('a');
+    aEmbedded.href = '#' + title;
+    aEmbedded.appendChild(img);
+
+    let aOverlay = document.createElement('a');
+    aOverlay.href = "#_";
+    aOverlay.className = "lightbox";
+    aOverlay.id = title;
+    aOverlay.appendChild(imgClone);
+
+    let divResultsImages = document.createElement('div');
+    divResultsImages.id = "results-" + title + "-images";
+    divResultsImages.appendChild(aEmbedded);
+    divResultsImages.appendChild(aOverlay);
+
+    addToSection('results', title, divResultsImages, 'rs3-image');
 }
 
 // addToErrors adds a title (e.g. the name of the parser that produced

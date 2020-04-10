@@ -1,0 +1,72 @@
+0 1 Students student NNS nsubj 36 O (ROOT (S (NP (NP (NNS Students) 1
+0 2 and and CC cc 1 O (CC and) 1
+0 3 lecturers lecturer NNS conj 1 O (NNS lecturers)) 1
+0 4 alike alike RB advmod 1 O (ADVP (RB alike))) 1
+0 5 are be VBP cop 36 O (VP (VP (VBP are) 1
+0 6 worried worried JJ xcomp 36 O (ADJP (JJ worried) 1
+0 7 about about IN case 9 O (PP (IN about) 1
+0 8 global global JJ amod 9 O (NP (NP (NP (JJ global) 1
+0 9 warming warming NN nmod 6 O (NN warming)) 1
+0 10 and and CC cc 9 O (CC and) 1
+0 11 related related JJ amod 13 O (NP (JJ related) 1
+0 12 climate climate NN compound 13 O (NN climate) 1
+0 13 change. change. NN conj 9 O (NN change.))) 1
+0 14 With with IN case 18 O (PP (IN With) 1
+0 15 a a DT det 18 O (NP (NP (DT a) 1
+0 16 clear clear JJ amod 18 O (JJ clear) 1
+0 17 ecological ecological JJ amod 18 O (JJ ecological) 1
+0 18 conscience conscience NN nmod 9 O (NN conscience)) 1
+0 19 and and CC cc 18 O (CC and) 1
+0 20 convinced convinced JJ conj 18 O (ADJP (JJ convinced) 1
+0 21 that that IN mark 23 O (SBAR (IN that) 2
+0 22 they they PRP nsubj 23 O (S (NP (PRP they)) 2
+0 23 stand stand VBP ccomp 20 O (VP (VBP stand) 2
+0 24 on on IN case 27 O (PP (IN on) 2
+0 25 the the DT det 27 O (NP (NP (DT the) 2
+0 26 right right JJ amod 27 O (JJ right) 2
+0 27 side side NN nmod 23 O (NN side)) 2
+0 28 of of IN case 29 O (PP (IN of) 2
+0 29 history, history, NN nmod 27 O (NP (NP (NN history,)) 2
+0 30 they they PRP nsubj 31 O (SBAR (S (NP (PRP they)) 2
+0 31 cycle cycle NN acl:relcl 29 O (VP (NN cycle) 2
+0 32 to to TO case 35 O (PP (TO to) 2
+0 33 their they PRP$ nmod:poss 35 O (NP (PRP$ their) 2
+0 34 university university NN compound 35 O (NN university) 2
+0 35 campus, campus, NNS nmod 31 O (NNS campus,))))))))))))))))))) 2
+0 36 buy buy VBP root 0 O (VP (VBP buy) 2
+0 37 a a DT det 39 O (NP (DT a) 2
+0 38 vegetarian vegetarian JJ amod 39 O (JJ vegetarian) 2
+0 39 sandwich sandwich NN dobj 36 O (NN sandwich)) 2
+0 40 on on IN case 42 O (PP (IN on) 2
+0 41 the the DT det 42 O (NP (DT the) 2
+0 42 way way NN nmod 36 O (NN way))))) 2
+0 43 and and CC cc 36 O (CC and) 3
+0 44 were be VBD auxpass 46 O (VP (VBD were) 3
+0 45 jointly jointly RB advmod 46 O (ADVP (RB jointly)) 3
+0 46 outraged outrage VBN conj 36 O (VP (VBN outraged) 3
+0 47 when when WRB advmod 50 O (SBAR (WHADVP (WRB when)) 4
+0 48 Donald Donald NNP compound 49 PERSON (S (NP (NNP Donald) 4
+0 49 Trump Trump NNP nsubj 50 PERSON (NNP Trump)) 4
+0 50 pulled pull VBD advcl 46 O (VP (VBD pulled) 4
+0 51 the the DT det 52 O (NP (DT the) 4
+0 52 US US NNP dobj 50 COUNTRY (NNP US)) 4
+0 53 out out IN case 59 O (SBAR (S (PP (IN out) 4
+0 54 of of IN case 59 O (PP (IN of) 4
+0 55 the the DT det 59 O (NP (DT the) 4
+0 56 Paris Paris NNP compound 59 CITY (NNP Paris) 4
+0 57 Climate climate NN compound 59 O (NN Climate) 4
+0 58 Agreement. Agreement. NNP compound 59 O (NNP Agreement.) 4
+0 59 However, However, NNP nmod 70 O (NNP However,)))) 4
+0 60 their they PRP$ nmod:poss 62 O (NP (NP (PRP$ their) 4
+0 61 own own JJ amod 62 O (JJ own) 4
+0 62 contribution contribution NN nsubj 70 O (NN contribution)) 4
+0 63 to to TO case 65 O (PP (TO to) 4
+0 64 climate climate NN compound 65 O (NP (NN climate) 4
+0 65 change change NN nmod 62 O (NN change)))) 4
+0 66 is be VBZ cop 70 O (VP (VBZ is) 4
+0 67 all all DT dep 69 O (ADVP (DT all) 4
+0 68 too too RB advmod 69 O (RB too) 4
+0 69 often often RB advmod 70 O (RB often)) 4
+0 70 ignored. ignored. JJ dep 50 O (ADJP (JJ ignored.))))))))))))) 4
+
+ParentedTree('SN-attribution', [ParentedTree('EDU', ['1']), ParentedTree('NN-list', [ParentedTree('EDU', ['2']), ParentedTree('NS-circumstance', [ParentedTree('EDU', ['3']), ParentedTree('EDU', ['4'])])])])

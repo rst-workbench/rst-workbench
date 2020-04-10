@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="attribution" type="rst"/>
+      <rel name="circumstance" type="rst"/>
+      <rel name="list" type="multinuc"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="3" parent="5" relname="attribution">Students and lecturers alike are worried about global warming and related climate change. With a clear ecological conscience and convinced</segment>
+    <segment id="7" parent="5" relname="list">that they stand on the right side of history, they cycle to their university campus, buy a vegetarian sandwich on the way</segment>
+    <segment id="11" parent="9" relname="span">and were jointly outraged</segment>
+    <segment id="13" parent="11" relname="circumstance">when Donald Trump pulled the US out of the Paris Climate Agreement. However, their own contribution to climate change is all too often ignored.</segment>
+    <group id="1" type="span"/>
+    <group id="5" type="multinuc" parent="1" relname="span"/>
+    <group id="9" type="span" parent="5" relname="list"/>
+  </body>
+</rst>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="Attribution" type="rst"/>
+      <rel name="Background" type="rst"/>
+      <rel name="Cause" type="rst"/>
+      <rel name="Contrast" type="rst"/>
+      <rel name="Elaboration" type="rst"/>
+      <rel name="Joint" type="multinuc"/>
+      <rel name="Temporal" type="multinuc"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="3" parent="1" relname="span">Students and lecturers alike are worried about global warming and related climate change .</segment>
+    <segment id="11" parent="13" relname="Contrast">With a clear ecological conscience</segment>
+    <segment id="15" parent="17" relname="Attribution">and convinced</segment>
+    <segment id="17" parent="13" relname="span">that they stand on the right side of history ,</segment>
+    <segment id="21" parent="19" relname="Temporal">they cycle to their university campus ,</segment>
+    <segment id="25" parent="23" relname="Joint">buy a vegetarian sandwich on the way</segment>
+    <segment id="29" parent="27" relname="span">and were jointly outraged</segment>
+    <segment id="31" parent="29" relname="Cause">when Donald Trump pulled the US out of the Paris Climate Agreement .</segment>
+    <segment id="35" parent="37" relname="Background">However ,</segment>
+    <segment id="37" parent="33" relname="span">their own contribution to climate change is all too often ignored .</segment>
+    <group id="1" type="span"/>
+    <group id="5" type="span" parent="3" relname="Elaboration"/>
+    <group id="7" type="span" parent="5" relname="span"/>
+    <group id="9" type="span" parent="19" relname="Contrast"/>
+    <group id="13" type="span" parent="9" relname="span"/>
+    <group id="19" type="multinuc" parent="7" relname="span"/>
+    <group id="23" type="multinuc" parent="19" relname="Temporal"/>
+    <group id="27" type="span" parent="23" relname="Joint"/>
+    <group id="33" type="span" parent="7" relname="Elaboration"/>
+  </body>
+</rst>

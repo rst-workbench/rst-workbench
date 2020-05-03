@@ -110,13 +110,26 @@ class RSTWorkbench {
             return;
         }
 
+        // convert .rs3 to a PNG image (using rstweb-service, which is unreliable)
+        // try {
+        //     const parseImage = await this.rstWeb.rs3ToRSTWebPNG(rs3Output);
+        //     addPNGtoResults(parser.name, parseImage);
+        //     addRSTWebEditButton(parser.name, rs3Output);            
+        // } catch (err) {
+        //     addToErrors(`rstWeb for ${parser.name}`, err);
+        // }
+
+        let svgOutput;
         try {
-            const parseImage = await this.rstWeb.rs3ToImage(rs3Output);
-            addPNGtoResults(parser.name, parseImage);
+            svgOutput = await this.rstConverter.convert(rs3Output, 'rs3', 'svgtree');
+            addSVGtoResults(parser.name, svgOutput);
             addRSTWebEditButton(parser.name, rs3Output);            
+
         } catch (err) {
-            addToErrors(`rstWeb for ${parser.name}`, err);
+            addToErrors(`rst-converter-service for ${parser.name} (rs3 to SVG)`, err);
+            return;
         }
+
     }
 
 }
@@ -194,8 +207,8 @@ class RSTWeb {
     }
 
     // rs3ToImage converts the content of an rs3 file into a base64-encoded PNG
-    // image of the underlying RST tree.
-    async rs3ToImage(document) {
+    // image of the underlying RST tree (via calling rstweb-service).
+    async rs3ToRSTWebPNG(document) {
         const data = new FormData();
         data.append('input_file', document);
 
@@ -300,7 +313,7 @@ function download(filename, text) {
 //   </div>
 // </div>
 function addToSection(section, title, content, contentClass) {
-    const contentElem = wrapContent(content, contentClass);
+    const contentElem = wrapInDiv(content, contentClass);
 
     // If the subsection already exists, add to id.
     // If it doesn't, create it first.
@@ -325,14 +338,14 @@ function addToSection(section, title, content, contentClass) {
 
 // wrapContent wraps the given content (either a DOM element or a string)
 // into a div element.
-function wrapContent(content, contentClass) {
+function wrapInDiv(strOrElement, divID) {
     const contentElem = document.createElement('div');
-    contentElem.class = contentClass;
+    contentElem.class = divID;
 
-    if (typeof content === "string") {
-        contentElem.innerText = content;
+    if (typeof strOrElement === "string") {
+        contentElem.innerText = strOrElement;
     } else {
-        contentElem.appendChild(content);
+        contentElem.appendChild(strOrElement);
     }
     return contentElem;
 }
@@ -372,10 +385,21 @@ function addPNGtoResults(title, pngBase64) {
     addToSection('results', title, divResultsImages, 'rs3-image');
 }
 
+// addSVGtoResults adds the given SVG image to the results
+// section under the given title.
+function addSVGtoResults(title, svgString) {
+    let wrappedSVG = document.createElement('div');
+    // create <svg> element from SVG string
+    wrappedSVG.insertAdjacentHTML('beforeend', svgString);
+    
+    addToSection('results', title, wrappedSVG, 'rs3-image'); // TODO: other contentClass than 'rs3-image'?
+}
+
+
 // addToErrors adds a title (e.g. the name of the parser that produced
 // the error) and and error message to the  section of the page.
 function addToErrors(title, error) {
-    addToSection('errors', title, error.stack, 'error');
+    addToSection('errors', title, error.toString(), 'error');
 }
 
 // getPort returns a Port number given a service Object.

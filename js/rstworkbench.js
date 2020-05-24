@@ -110,19 +110,11 @@ class RSTWorkbench {
             return;
         }
 
-        // convert .rs3 to a PNG image (using rstweb-service, which is unreliable)
-         try {
-             const parseImage = await this.rstWeb.rs3ToRSTWebPNG(rs3Output);
-             addPNGtoResults(parser.name, parseImage);
-             addRSTWebEditButton(parser.name, rs3Output);            
-         } catch (err) {
-             addToErrors(`rstWeb for ${parser.name}`, err);
-         }
-
-        // convert .rs3 to an SVG image and add it to the output
+        /* convert .rs3 to an SVG image and add it to the output
+         * and add it to the output (as an base64 image embedded in the HTML) */
         let svgOutput;
         try {
-            svgOutput = await this.rstConverter.convert(rs3Output, 'rs3', 'svgtree');
+            svgOutput = await this.rstConverter.convert(rs3Output, 'rs3', 'svgtree-base64');
             addSVGtoResults(parser.name, svgOutput);
             addRSTWebEditButton(parser.name, rs3Output);            
 
@@ -371,10 +363,19 @@ function addToResults(title, content, contentClass) {
   </div>
 </div> */
 function addPNGtoResults(title, pngBase64) {
+    addBase64ImagetoResults(title, pngBase64, 'png');
+}
+
+function addSVGtoResults(title, svgBase64) {
+    addBase64ImagetoResults(title, svgBase64, 'svg+xml');
+}
+
+
+function addBase64ImagetoResults(title, imageBase64, imageType) {
     let img = document.createElement('img');
     img.className = "img-fluid";
     img.alt = title + " RST parse";
-    img.src = `data:image/png;base64,${pngBase64}`;
+    img.src = `data:image/${imageType};base64,${imageBase64}`;
 
     // we can't use the img node twice, so we'll copy it
     let imgClone = img.cloneNode();
@@ -396,6 +397,7 @@ function addPNGtoResults(title, pngBase64) {
 
     addToSection('results', title, divResultsImages, 'rs3-image');
 }
+
 
 
 /* addToErrors adds a title (e.g. the name of the parser that produced

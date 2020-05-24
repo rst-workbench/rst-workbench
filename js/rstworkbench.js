@@ -146,6 +146,11 @@ function addRSTWebEditButton(parserName, rs3String) {
     </form>`;
 
     let rs3EditButton = stringToElement(rs3EditButtonString);
+
+    // add <hr> to separate results from different parsers
+    const hr = document.createElement('hr');
+    rs3EditButton.appendChild(hr);
+    
     addToResults(parserName, rs3EditButton, 'rs3');
 }
 
@@ -331,7 +336,10 @@ function addToSection(section, title, content, contentClass) {
    into a div element. */
 function wrapInDiv(strOrElement, divID) {
     const contentElem = document.createElement('div');
-    contentElem.class = divID;
+    contentElem.id = divID;
+    // add some space above and below the <div>,
+    // cf. https://getbootstrap.com/docs/4.3/utilities/spacing/
+    contentElem.className = "mt-3 mb-2";
 
     if (typeof strOrElement === "string") {
         contentElem.innerText = strOrElement;

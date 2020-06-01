@@ -78,7 +78,7 @@ class RSTWorkbench {
     async getParseResults(text) {
         this.rstParsers.forEach(async (parser) => {
             parser.parse(text)
-                .then(output => addToResults(parser.name, output, 'parser-output'))
+                .then(output => addToResults(parser.name, output, `${parser.name}-parser-output`))
                 .catch(e => addToErrors(parser.name, e))
         });
     }
@@ -95,7 +95,13 @@ class RSTWorkbench {
         let parseOutput;
         try {
             parseOutput = await parser.parse(text);
-            addToResults(parser.name, parseOutput, 'parser-output');
+            let parseOutputElemID = `${parser.name}-parser-output`;
+            let showhideButtonStr = `<button class="btn btn-primary" onclick="showhide('${parseOutputElemID}')">Show/Hide original parser output</button>`
+            let showhideButton = stringToElement(showhideButtonStr);
+            addToResults(parser.name, parseOutput, parseOutputElemID);
+            showhide(parseOutputElemID); // hide original parser output by default
+            addToResults(parser.name, showhideButton, `${parser.name}-showhide`);
+
         } catch (err) {
             addToErrors(parser.name, err);
             return;
@@ -419,4 +425,14 @@ function addToErrors(title, error) {
 function getPort(service) {
     portString = service.ports[0].split(':')[0];
     return Number(portString);
+}
+
+// showhide makes the given element (in)visible
+function showhide(elementId) {
+  var x = document.getElementById(elementId);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }

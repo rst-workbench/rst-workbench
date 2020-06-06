@@ -66,7 +66,7 @@ services:
     labels:
       name: rst-converter-service
       type: format-converter
-    image: nlpbox/rst-converter-service:2020-05-18
+    image: nlpbox/rst-converter-service:2020-06-03
     ports:
     - 9150:5000
   rstweb-service:

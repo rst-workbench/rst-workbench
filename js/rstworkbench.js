@@ -100,7 +100,7 @@ class RSTWorkbench {
             let showhideButton = stringToElement(showhideButtonStr);
             addToResults(parser.name, parseOutput, parseOutputElemID);
             showhide(parseOutputElemID); // hide original parser output by default
-            addToResults(parser.name, showhideButton, `${parser.name}-showhide`);
+            addToButtonRow(parser.name, showhideButton);
 
         } catch (err) {
             addToErrors(parser.name, err);
@@ -111,6 +111,7 @@ class RSTWorkbench {
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
             addRS3DownloadButton(parser.name, rs3Output);
+            addRSTWebEditButton(parser.name, rs3Output);
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name}`, err);
             return;
@@ -122,7 +123,10 @@ class RSTWorkbench {
         try {
             svgOutput = await this.rstConverter.convert(rs3Output, 'rs3', 'svgtree-base64');
             addSVGtoResults(parser.name, svgOutput);
-            addRSTWebEditButton(parser.name, rs3Output);            
+
+            // separate output of different parsers
+            const hrElem = document.createElement('hr');
+            addToSection('results', parser.name, hrElem, 'rs3-image');
 
         } catch (err) {
             addToErrors(`rst-converter-service for ${parser.name} (rs3 to SVG)`, err);
@@ -140,7 +144,7 @@ function addRS3DownloadButton(parserName, rs3String) {
         <input class="btn btn-primary" type="submit" value="Download as .rs3 file">
     </form>`;
     let rs3DownloadButton = stringToElement(rs3DownloadButtonString);
-    addToResults(parserName, rs3DownloadButton, 'rs3');
+    addToButtonRow(parserName, rs3DownloadButton);
 }
 
 /* addRSTWebEditButton adds a button to the results section of the
@@ -152,12 +156,7 @@ function addRSTWebEditButton(parserName, rs3String) {
     </form>`;
 
     let rs3EditButton = stringToElement(rs3EditButtonString);
-
-    // add <hr> to separate results from different parsers
-    const hr = document.createElement('hr');
-    rs3EditButton.appendChild(hr);
-    
-    addToResults(parserName, rs3EditButton, 'rs3');
+    addToButtonRow(parserName, rs3EditButton);
 }
 
 
@@ -313,7 +312,7 @@ function download(filename, text) {
     <h2>{$title}</h2> // e.g. "codra"
     <div id=${contentClass}>{$content}</div> // <div id='parser-output'>Lots of parser output...</div>
   </div>
-</div> */ 
+</div> */
 function addToSection(section, title, content, contentClass) {
     const contentElem = wrapInDiv(content, contentClass);
 
@@ -330,13 +329,30 @@ function addToSection(section, title, content, contentClass) {
         const titleElem = document.createElement('h2');
         titleElem.innerText = title;
 
+        const buttonRowElem = document.createElement('div');
+        buttonRowElem.id = `${section}-${title}-buttons`;
+        buttonRowElem.className = 'row text-center';
+
         subElem.appendChild(titleElem);
         subElem.appendChild(contentElem);
+        subElem.appendChild(buttonRowElem);
         sectionElem.appendChild(subElem);
     } else {
         subElem.appendChild(contentElem);
     }
 }
+
+// adds the given button as a column to the "button row" of the given parser's results section
+function addToButtonRow(parserName, element) {
+    const buttonRowElem = document.getElementById(`results-${parserName}-buttons`);
+
+    const buttonColElem = document.createElement('div');
+    buttonColElem.className = 'col';
+    buttonRowElem.appendChild(buttonColElem);
+
+    buttonColElem.appendChild(element);
+}
+
 
 /* wrapContent wraps the given content (either a DOM element or a string)
    into a div element. */
@@ -391,25 +407,9 @@ function addBase64ImagetoResults(title, imageBase64, imageType) {
     img.alt = title + " RST parse";
     img.src = `data:image/${imageType};base64,${imageBase64}`;
 
-    // we can't use the img node twice, so we'll copy it
-    let imgClone = img.cloneNode();
+    //addToSection('results', title, divResultsImages, 'rs3-image');
+    addToSection('results', title, img, 'rs3-image');
 
-    let aEmbedded = document.createElement('a');
-    aEmbedded.href = '#' + title;
-    aEmbedded.appendChild(img);
-
-    let aOverlay = document.createElement('a');
-    aOverlay.href = "#_";
-    aOverlay.className = "lightbox";
-    aOverlay.id = title;
-    aOverlay.appendChild(imgClone);
-
-    let divResultsImages = document.createElement('div');
-    divResultsImages.id = "results-" + title + "-images";
-    divResultsImages.appendChild(aEmbedded);
-    divResultsImages.appendChild(aOverlay);
-
-    addToSection('results', title, divResultsImages, 'rs3-image');
 }
 
 

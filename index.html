@@ -16,34 +16,6 @@ body {
 
 /* image popups / overlays without Javascript
    source: https://www.sylvaindurand.org/overlay-image-in-pure-css */
-
-.lightbox {
-  position: fixed;
-  z-index: 99;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  transition: opacity .3s;
-  visibility: hidden; }
-  .lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    width: auto;
-    transform: scale(0.95);
-    transition: transform .3s; }
-  .lightbox:target {
-    outline: none;
-    visibility: visible;
-    cursor: default;
-    opacity: 1; }
-    .lightbox:target img {
-      transform: scale(1); }
     </style>
 </head>
 
@@ -74,7 +46,9 @@ However, their own contribution to climate change is all too often ignored.
         <input class="btn btn-primary" type='submit' id='btnSubmit' value='Run RST Parsers'/>
     </form>
 
-    <div>
+    <hr>
+
+    <div class="mt-3 mb-2">
         <h1>Parser results:</h1>
         <div id="results">
         <!-- API results go here-->

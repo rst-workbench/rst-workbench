@@ -1,8 +1,8 @@
 FROM nginx:alpine
 
-COPY index.html docker-compose.yml /usr/share/nginx/html/
-COPY css/bootstrap.min.css css/bootstrap.min.css.map /usr/share/nginx/html/css/
-COPY js/rstworkbench.js js/js-yaml.min.js /usr/share/nginx/html/js/
+COPY frontend/index.html docker-compose.yml /usr/share/nginx/html/
+COPY frontend/css/bootstrap.min.css frontend/css/bootstrap.min.css.map /usr/share/nginx/html/css/
+COPY frontend/js/rstworkbench.js frontend/js/js-yaml.min.js /usr/share/nginx/html/js/
 
 ARG HOST_HOSTNAME
 

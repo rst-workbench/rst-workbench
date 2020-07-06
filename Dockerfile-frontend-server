@@ -1,0 +1,11 @@
+FROM nginx:alpine
+
+COPY frontend/index.html docker-compose.yml /etc/nginx/html/
+COPY frontend/css/bootstrap.min.css frontend/css/bootstrap.min.css.map /etc/nginx/html/css/
+COPY frontend/js/rstworkbench.js frontend/js/js-yaml.min.js /etc/nginx/html/js/
+
+ARG HOST_HOSTNAME
+
+RUN sed -i 's/http:\/\/localhost/https:\/\/localhost/g' /etc/nginx/html/js/rstworkbench.js && \
+    sed -i "s/localhost/$HOST_HOSTNAME/g" /etc/nginx/html/js/rstworkbench.js
+

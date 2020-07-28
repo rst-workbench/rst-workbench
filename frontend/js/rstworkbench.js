@@ -1,4 +1,6 @@
-const confpath = 'docker-compose.yml';
+const confPath = 'docker-compose.yml';
+const setupType = 'local'; // options: 'local' or 'server'
+const hostName = 'localhost';
 
 /* This would be the "main" function in a sane programming language.
    Here, this code is triggered when the rst-workbench website is fully loaded.
@@ -41,7 +43,7 @@ class RSTWorkbench {
 
     /* fromConfigFile creates a Promise(RSTWorkbench) from a
        docker-compose config file. */
-    static async fromConfigFile(filepath = confpath) {
+    static async fromConfigFile(filepath = confPath) {
         const config = await this.loadConfig(filepath);
         const rstParsers = this.getRSTParsers(config);
         return new RSTWorkbench(config, rstParsers);
@@ -150,7 +152,7 @@ function addRS3DownloadButton(parserName, rs3String) {
 /* addRSTWebEditButton adds a button to the results section of the
    given parser that will load the given .rs3 into rstWeb for further editing. */
 function addRSTWebEditButton(parserName, rs3String) {
-    let rs3EditButtonString = `<form action="http://localhost:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor" id="open_${parserName}_in_rstweb" method="post" target="_blank">
+    let rs3EditButtonString = `<form action="http://${hostName}:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor" id="open_${parserName}_in_rstweb" method="post" target="_blank">
     <textarea class="text" name="input_file" form="open_${parserName}_in_rstweb" style='display:none;'>${rs3String}</textarea>
     <input type="submit" class="btn btn-primary submitButton" value="Edit in rstWeb">
     </form>`;
@@ -185,7 +187,13 @@ class RSTConverter {
           body: data,
         };
 
-        let response = await fetch(`http://localhost:${this.port}/convert/${inputFormat}/${outputFormat}`, options);
+        if (this.setup == 'server') {
+            const convertUrl = `https://${hostName}/${this.name}/convert/${inputFormat}/${outputFormat}`;
+        } else {
+            const convertUrl = `http://${hostName}:${this.port}/convert/${inputFormat}/${outputFormat}`;
+        }
+
+        let response = await fetch(convertUrl, options);
         let output = await response.text();
         if (!response.ok) {
             throw new Error(`${response.status}: ${response.statusText}\n${output}`);
@@ -220,7 +228,13 @@ class RSTWeb {
           body: data,
         };
 
-        let response = await fetch(`http://localhost:${this.port}/api/convert?input_format=rs3&output_format=png-base64`, options);
+        if (this.setup == 'server') {
+            const convertUrl = `https://${hostName}/${this.name}/api/convert?input_format=rs3&output_format=png-base64`;
+        } else {
+            const convertUrl = `http://${hostName}:${this.port}/api/convert?input_format=rs3&output_format=png-base64`;
+        }
+
+        let response = await fetch(convertUrl, options);
         let output = await response.text();
         if (!response.ok) {
             throw new Error(`${response.status}: ${response.statusText}\n${output}`);
@@ -235,17 +249,24 @@ class RSTWeb {
    The REST APIs were added to existing RST parsers as part of the rst-workbench
    project. */
 class RSTParser {
-    constructor(name, format, port) {
-        this.name = name
-        this.format = format
-        this.port = port
+    constructor(name, format, port, setup = setupType) {
+        this.name = name;
+        this.format = format;
+        this.port = port;
+        this.setup = setup;
     }
 
     // TODO: add GET /status to all parser APIs
     async isRunning() {
         let running = false;
 
-        const response = await fetch(`http://localhost:${this.port}/status`);
+        if (this.setup == 'server') {
+            const statusUrl = `https://${hostName}/${this.name}/status`;
+        } else {
+            const statusUrl = `http://${hostName}:${this.port}/status`;
+        }
+
+        const response = await fetch(statusUrl);
         if (response.ok && response.status == 200) {
             running = true;
         }
@@ -264,7 +285,13 @@ class RSTParser {
           body: data,
         };
 
-        let response = await fetch(`http://localhost:${this.port}/parse`, options);
+        if (this.setup == 'server') {
+            const parseUrl = `https://${hostName}/${this.name}/parse`;
+        } else {
+            const parseUrl = `http://${hostName}:${this.port}/parse`;
+        }
+
+        let response = await fetch(parseUrl, options);
         let output = await response.text();
         if (!response.ok) {
             throw new Error(`${response.status}: ${response.statusText}\n${output}`);

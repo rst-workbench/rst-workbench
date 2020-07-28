@@ -187,10 +187,11 @@ class RSTConverter {
           body: data,
         };
 
+        let convertUrl;
         if (this.setup == 'server') {
-            const convertUrl = `https://${hostName}/${this.name}/convert/${inputFormat}/${outputFormat}`;
+            convertUrl = `https://${hostName}/${this.name}/convert/${inputFormat}/${outputFormat}`;
         } else {
-            const convertUrl = `http://${hostName}:${this.port}/convert/${inputFormat}/${outputFormat}`;
+            convertUrl = `http://${hostName}:${this.port}/convert/${inputFormat}/${outputFormat}`;
         }
 
         let response = await fetch(convertUrl, options);
@@ -228,10 +229,11 @@ class RSTWeb {
           body: data,
         };
 
+        let convertUrl;
         if (this.setup == 'server') {
-            const convertUrl = `https://${hostName}/${this.name}/api/convert?input_format=rs3&output_format=png-base64`;
+            convertUrl = `https://${hostName}/${this.name}/api/convert?input_format=rs3&output_format=png-base64`;
         } else {
-            const convertUrl = `http://${hostName}:${this.port}/api/convert?input_format=rs3&output_format=png-base64`;
+            convertUrl = `http://${hostName}:${this.port}/api/convert?input_format=rs3&output_format=png-base64`;
         }
 
         let response = await fetch(convertUrl, options);
@@ -260,10 +262,11 @@ class RSTParser {
     async isRunning() {
         let running = false;
 
+        let statusUrl;
         if (this.setup == 'server') {
-            const statusUrl = `https://${hostName}/${this.name}/status`;
+            statusUrl = `https://${hostName}/${this.name}/status`;
         } else {
-            const statusUrl = `http://${hostName}:${this.port}/status`;
+            statusUrl = `http://${hostName}:${this.port}/status`;
         }
 
         const response = await fetch(statusUrl);
@@ -285,10 +288,11 @@ class RSTParser {
           body: data,
         };
 
+        let parseUrl;
         if (this.setup == 'server') {
-            const parseUrl = `https://${hostName}/${this.name}/parse`;
+            parseUrl = `https://${hostName}/${this.name}/parse`;
         } else {
-            const parseUrl = `http://${hostName}:${this.port}/parse`;
+            parseUrl = `http://${hostName}:${this.port}/parse`;
         }
 
         let response = await fetch(parseUrl, options);

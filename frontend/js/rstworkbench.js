@@ -172,8 +172,9 @@ function addRSTWebEditButton(parserName, rs3String) {
 /* RSTConverter defines a REST API for the rst-converter-service,
    which converts RST trees between a variety of formats. */
 class RSTConverter {
-    constructor(port) {
-        this.port = port
+    constructor(port, setup = setupType) {
+        this.port = port;
+        this.setup = setup;
     }
 
     // fromConfigObject creates an RSTConverter instance from a configuration object.

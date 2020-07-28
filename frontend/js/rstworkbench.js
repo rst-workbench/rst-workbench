@@ -152,7 +152,14 @@ function addRS3DownloadButton(parserName, rs3String) {
 /* addRSTWebEditButton adds a button to the results section of the
    given parser that will load the given .rs3 into rstWeb for further editing. */
 function addRSTWebEditButton(parserName, rs3String) {
-    let rs3EditButtonString = `<form action="http://${hostName}:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor" id="open_${parserName}_in_rstweb" method="post" target="_blank">
+    let actionUrl;
+    if (this.setup == 'server') {
+        actionUrl = `http://${hostName}/rstweb/api/convert?input_format=rs3&output_format=editor`;
+    } else {
+        actionUrl = `http://${hostName}:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor`;
+    }
+    
+    let rs3EditButtonString = `<form action="${actionUrl}" id="open_${parserName}_in_rstweb" method="post" target="_blank">
     <textarea class="text" name="input_file" form="open_${parserName}_in_rstweb" style='display:none;'>${rs3String}</textarea>
     <input type="submit" class="btn btn-primary submitButton" value="Edit in rstWeb">
     </form>`;
@@ -207,8 +214,9 @@ class RSTConverter {
 
 // RSTWeb defines a client for the REST API of the rstWeb annotation tool.
 class RSTWeb {
-    constructor(port) {
-        this.port = port
+    constructor(port, setup = setupType) {
+        this.port = port;
+        this.setup = setup;
     }
 
     // fromConfigObject creates an RSTWeb instance from a configuration object.

@@ -64,7 +64,7 @@ services:
     - 9104:8000
   rst-converter-service:
     labels:
-      name: rst-converter-service
+      name: rst-converter
       type: format-converter
     image: nlpbox/rst-converter-service:2020-06-03
     ports:

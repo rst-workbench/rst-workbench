@@ -172,8 +172,9 @@ function addRSTWebEditButton(parserName, rs3String) {
 /* RSTConverter defines a REST API for the rst-converter-service,
    which converts RST trees between a variety of formats. */
 class RSTConverter {
-    constructor(port, setup = setupType) {
+    constructor(port, name = 'rst-converter', setup = setupType) {
         this.port = port;
+        this.name = name;
         this.setup = setup;
     }
 
@@ -181,7 +182,7 @@ class RSTConverter {
     static fromConfigObject(config) {
         let service = config.services["rst-converter-service"];
         let port = getPort(service);
-        return new RSTConverter(port);
+        return new RSTConverter(port, name = service.labels.name);
     }
 
     /* convert converts the string representation of an RST tree from the given
@@ -215,8 +216,9 @@ class RSTConverter {
 
 // RSTWeb defines a client for the REST API of the rstWeb annotation tool.
 class RSTWeb {
-    constructor(port, setup = setupType) {
+    constructor(port, name = 'rstweb', setup = setupType) {
         this.port = port;
+        this.name = name;
         this.setup = setup;
     }
 
@@ -224,7 +226,7 @@ class RSTWeb {
     static fromConfigObject(config) {
         let service = config.services["rstweb-service"];
         let port = getPort(service);
-        return new RSTWeb(port);
+        return new RSTWeb(port, name = service.labels.name);
     }
 
     /* rs3ToImage converts the content of an rs3 file into a base64-encoded PNG

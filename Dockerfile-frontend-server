@@ -6,4 +6,5 @@ COPY frontend/js/rstworkbench.js frontend/js/js-yaml.min.js /etc/nginx/html/js/
 
 ARG HOST_HOSTNAME
 
-RUN sed -i "s/const setupType = 'local'/const setupType = 'server'/g" /etc/nginx/html/js/rstworkbench.js
+RUN sed -i "s/const setupType = 'local'/const setupType = 'server'/g" /etc/nginx/html/js/rstworkbench.js && \
+    sed -i "s/const hostName = 'localhost'/const hostName = '$HOST_HOSTNAME'/g" /etc/nginx/html/js/rstworkbench.js

@@ -7,7 +7,7 @@ services:
     build:
       context: .
       args:
-      - HOSTNAME
+      - DOMAIN
       dockerfile: Dockerfile-frontend
     ports:
     - 8000:80

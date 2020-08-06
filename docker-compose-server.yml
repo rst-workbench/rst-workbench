@@ -7,7 +7,7 @@ services:
     build:
       context: .
       args:
-      - HOST_HOSTNAME=${HOSTNAME}
+      - HOSTNAME
       dockerfile: Dockerfile-frontend-server
     restart: unless-stopped
     volumes:

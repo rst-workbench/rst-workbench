@@ -9,6 +9,8 @@ services:
       args:
       - DOMAIN
       dockerfile: Dockerfile-frontend-server
+    environment:
+      - DOMAIN
     restart: unless-stopped
     volumes:
       - ./nginx-certbot/data/nginx:/etc/nginx/conf.d
@@ -17,7 +19,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    command: "/bin/sh -c 'chown -R nginx:root /etc/letsencrypt && echo DOMAIN: $DOMAIN && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
     image: certbot/certbot

@@ -139,7 +139,7 @@ rst-converter-service_1  | xvfb-run: error: Xvfb failed to start
 rst-workbench_rst-converter-service_1 exited with code 1
 ```
 
-try to run it using ``HOSTNAME=localhost docker-compose up --build --force-recreate`` instead.
+try to run it using ``DOMAIN=localhost docker-compose up --build --force-recreate`` instead.
 ``HOSTNAME`` refers to the name under which the host machine (i.e. the machine on which you run
 ``docker-compose``) is reachable from the outside world.
 If you set the ``HOSTNAME`` to ``localhost``, the rst-workbench will be only available on the

@@ -36,10 +36,10 @@ def get_host_port(service_dict):
     return ports[0].split(':')[0]
 
 
-def make_output_filepath(output_dirpath, parser_config):
+def make_output_filepath(input_filename, output_dirpath, parser_config):
     parser_name = parser_config['labels']['name']
     parser_format = parser_config['labels']['format']
-    output_filename = f"{parser_name}.{parser_format}"
+    output_filename = f"{input_filename}.{parser_name}.{parser_format}"
     return os.path.join(output_dirpath, output_filename)
 
 
@@ -93,7 +93,8 @@ async def parse_file(input_filepath, output_dirpath, parsers, converter=None, ou
         parser_format = parser_config['labels']['format']
         port = get_host_port(parser_config)
 
-        parse_filepath = make_output_filepath(output_dirpath, parser_config)
+        input_filename = os.path.basename(input_filepath)
+        parse_filepath = make_output_filepath(input_filename, output_dirpath, parser_config)
         try:
             result = await post_file('localhost', port, '/parse', input_filepath)
             parse_succeeded = True

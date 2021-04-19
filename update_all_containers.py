@@ -103,3 +103,4 @@ def update_images(config_filepath='docker-compose.yml'):
 
 if __name__ == '__main__':
     update_images('docker-compose.yml')
+    update_images('docker-compose-server.yml')

@@ -34,7 +34,7 @@ services:
     labels:
       name: corenlp
       type: constituency-parser
-    image: nlpbox/corenlp:2018-10-27
+    image: nlpbox/corenlp:2021-04-18
     environment:
     - JAVA_XMX=4g
     ports:

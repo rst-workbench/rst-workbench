@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.7
+#!/usr/bin/env python3
 # coding: utf-8
 
 """This script checks if all images used in docker-compose.yml are up-to-date
@@ -66,9 +66,19 @@ def get_image_tags(organisation, repo):
         raise ValueError(f"Docker Hub returned this: {res.content}\nfor URL: {url}")
 
 
-def get_latest_tag(tags):
+def get_most_recent_tag(tags):
+    """Given a list of Docker Hub repo tags, return the most recent tag.
+
+    We can't rely on 'latest' to be the most recent one, so we use the tags
+    that we have attached ourselves to the repo.
+    """
     matching_tags = [tag for tag in tags if DATE_TAG_RE.match(tag)]
-    return sorted(matching_tags, key=natural_sort_key, reverse=True)[0]
+    if matching_tags:
+        return sorted(matching_tags, key=natural_sort_key, reverse=True)[0]
+
+    # There are no tags that start with a date in the form YYYY-MM-DD.
+    # As a fallback, we will assume tags with incremented numbers.
+    return sorted([int(t) for t in tags if t.isdigit()], reverse=True)[0]
 
 
 def update_images(config_filepath='docker-compose.yml'):
@@ -81,11 +91,11 @@ def update_images(config_filepath='docker-compose.yml'):
             current_tag = match.groupdict()['tag']
             try:
                 tags = get_image_tags(organisation, repo)
-                latest_tag = get_latest_tag(tags)
+                most_recent_tag = get_most_recent_tag(tags)
 
-                if current_tag != latest_tag:
-                    latest_image = f"{organisation}/{repo}:{latest_tag}"
-                    config['services'][service]['image'] = latest_image
+                if current_tag != most_recent_tag:
+                    most_recent_image = f"{organisation}/{repo}:{most_recent_tag}"
+                    config['services'][service]['image'] = most_recent_image
             except ValueError as e:
                 sys.stderr.write(f"Can't find tags online for image '{match.group()}'.\n")
     yamldict2file(config, config_filepath)
@@ -93,3 +103,4 @@ def update_images(config_filepath='docker-compose.yml'):
 
 if __name__ == '__main__':
     update_images('docker-compose.yml')
+    update_images('docker-compose-server.yml')

@@ -10,30 +10,31 @@ services:
       - DOMAIN
       dockerfile: Dockerfile-frontend-server
     environment:
-      - DOMAIN
+    - DOMAIN
     restart: unless-stopped
     volumes:
-      - ./nginx-certbot/data/nginx:/etc/nginx/conf.d
-      - ./nginx-certbot/data/certbot/conf:/etc/letsencrypt
-      - ./nginx-certbot/data/certbot/www:/var/www/certbot
+    - ./nginx-certbot/data/nginx:/etc/nginx/conf.d
+    - ./nginx-certbot/data/certbot/conf:/etc/letsencrypt
+    - ./nginx-certbot/data/certbot/www:/var/www/certbot
     ports:
-      - "80:80"
-      - "443:443"
-    command: "/bin/sh -c 'chown -R nginx:root /etc/letsencrypt && echo DOMAIN: $DOMAIN && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-
+    - 80:80
+    - 443:443
+    command: '/bin/sh -c ''chown -R nginx:root /etc/letsencrypt && echo DOMAIN: $DOMAIN
+      && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon
+      off;"'''
   certbot:
     image: certbot/certbot
     restart: unless-stopped
     volumes:
-      - ./nginx-certbot/data/certbot/conf:/etc/letsencrypt
-      - ./nginx-certbot/data/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
+    - ./nginx-certbot/data/certbot/conf:/etc/letsencrypt
+    - ./nginx-certbot/data/certbot/www:/var/www/certbot
+    entrypoint: /bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h &
+      wait $${!}; done;'
   corenlp:
     labels:
       name: corenlp
       type: constituency-parser
-    image: nlpbox/corenlp:3.9.2
+    image: nlpbox/corenlp:2021-04-18
     environment:
     - JAVA_XMX=4g
     ports:
@@ -51,7 +52,7 @@ services:
       name: dplp
       format: dplp
       type: rst-parser
-    image: nlpbox/dplp-service:2019-02-27
+    image: nlpbox/dplp-service:2021-04-16
     ports:
     - 9101:8000
     environment:
@@ -80,17 +81,16 @@ services:
     image: nlpbox/feng-hirst-service:2019-01-04
     ports:
     - 9104:8000
-
   neuraleduseg-service:
     labels:
       name: neuraleduseg
       type: discourse-segmenter
-    image: nlpbox/neuraleduseg-service:latest
+    image: nlpbox/neuraleduseg-service:2021-02-09
     ports:
-      - 9105:8000
-    entrypoint: >
-      hug -f neuralseg/splitter_api.py
+    - 9105:8000
+    entrypoint: 'hug -f neuralseg/splitter_api.py
 
+      '
   stagedp-service:
     labels:
       name: stagedp
@@ -98,18 +98,18 @@ services:
       format: stagedp
     image: nlpbox/stagedp-service:9
     environment:
-      - CORENLP_ENDPOINT=http://corenlp:9000
-      - NEURALSEG_ENDPOINT=http://neuraleduseg-service:8000 # we're using the container port, b/c this is not via --net host
+    - CORENLP_ENDPOINT=http://corenlp:9000
+    - NEURALSEG_ENDPOINT=http://neuraleduseg-service:8000
     ports:
-      - 9106:8000
-    entrypoint: >
-      hug -f src/stagedp/parser_api.py
+    - 9106:8000
+    entrypoint: 'hug -f src/stagedp/parser_api.py
 
+      '
   rst-converter-service:
     labels:
       name: rst-converter-service
       type: format-converter
-    image: nlpbox/rst-converter-service:2021-02-22
+    image: nlpbox/rst-converter-service:2021-03-14
     ports:
     - 9150:5000
   rstweb-service:

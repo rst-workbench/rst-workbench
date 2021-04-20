@@ -11,17 +11,15 @@ services:
       dockerfile: Dockerfile-frontend
     ports:
     - 8000:80
-
   corenlp:
     labels:
       name: corenlp
       type: constituency-parser
-    image: nlpbox/corenlp:3.9.2
+    image: nlpbox/corenlp:2021-04-18
     environment:
     - JAVA_XMX=4g
     ports:
     - 9000:9000
-
   codra-service:
     labels:
       name: codra
@@ -30,13 +28,12 @@ services:
     image: nlpbox/codra-service:2019-05-16
     ports:
     - 9100:8000
-
   dplp-service:
     labels:
       name: dplp
       format: dplp
       type: rst-parser
-    image: nlpbox/dplp-service:2019-02-27
+    image: nlpbox/dplp-service:2021-04-16
     ports:
     - 9101:8000
     environment:
@@ -59,7 +56,6 @@ services:
     image: nlpbox/heilman-sagae-2015-service:2019-05-12-2
     ports:
     - 9103:8000
-
   feng-hirst-service:
     labels:
       name: feng-hirst-2014
@@ -68,39 +64,37 @@ services:
     image: nlpbox/feng-hirst-service:2019-01-04
     ports:
     - 9104:8000
-
   neuraleduseg-service:
     labels:
       name: neuraleduseg
       type: discourse-segmenter
-    image: nlpbox/neuraleduseg-service:latest
+    image: nlpbox/neuraleduseg-service:2021-02-09
     ports:
-      - 9105:8000
-    entrypoint: >
-      hug -f neuralseg/splitter_api.py
+    - 9105:8000
+    entrypoint: 'hug -f neuralseg/splitter_api.py
 
+      '
   stagedp-service:
     labels:
       name: stagedp
       type: rst-parser
       format: stagedp
-    image: nlpbox/stagedp-service:latest
+    image: nlpbox/stagedp-service:9
     environment:
-      - CORENLP_ENDPOINT=http://corenlp:9000
-      - NEURALSEG_ENDPOINT=http://neuraleduseg-service:8000 # we're using the container port, b/c this is not via --net host
+    - CORENLP_ENDPOINT=http://corenlp:9000
+    - NEURALSEG_ENDPOINT=http://neuraleduseg-service:8000
     ports:
-      - 9106:8000
-    entrypoint: >
-      hug -f src/stagedp/parser_api.py
+    - 9106:8000
+    entrypoint: 'hug -f src/stagedp/parser_api.py
 
+      '
   rst-converter-service:
     labels:
       name: rst-converter
       type: format-converter
-    image: nlpbox/rst-converter-service:2021-02-22
+    image: nlpbox/rst-converter-service:2021-03-14
     ports:
     - 9150:5000
-
   rstweb-service:
     labels:
       name: rstweb

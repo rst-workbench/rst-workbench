@@ -42,14 +42,14 @@ services:
     environment:
     - CORENLP_ENDPOINT=http://corenlp:9000
 
-  hilda-service:
-    labels:
-      name: hilda
-      format: hilda
-      type: rst-parser
-    image: hilda-service:2018-10-18
-    ports:
-    - 9102:8000
+  #~ hilda-service:
+    #~ labels:
+      #~ name: hilda
+      #~ format: hilda
+      #~ type: rst-parser
+    #~ image: hilda-service:2018-10-18
+    #~ ports:
+    #~ - 9102:8000
 
   heilman-sagae-service:
     labels:

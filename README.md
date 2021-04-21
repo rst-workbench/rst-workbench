@@ -26,37 +26,28 @@ containers with a REST API and pre-trained on RST-DT:
 HILDA itself is only available from the [Prendinger lab](http://research.nii.ac.jp/%7Eprendinger/),
 so we can't provide automated builds but only the build scripts here.
 
-### [Feng and Hirst (2014)](https://github.com/NLPbox/feng-hirst-service)
-
-[![Travis Build Status](https://travis-ci.org/NLPbox/feng-hirst-service.svg?branch=master)](https://travis-ci.org/NLPbox/feng-hirst-service)
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/nlpbox/feng-hirst-service.svg)](https://hub.docker.com/r/nlpbox/feng-hirst-service)
+### [Feng and Hirst (2014)](https://github.com/NLPbox/feng-hirst-service) [![Travis Build Status](https://travis-ci.org/NLPbox/feng-hirst-service.svg?branch=master)](https://travis-ci.org/NLPbox/feng-hirst-service)
 
 *Description*: REST API around the [Feng and Hirst (2014)](https://www.aclweb.org/anthology/P14-1048/) RST parser.
 
-### [DPLP (Ji and Eisenstein 2014)](https://github.com/NLPbox/dplp-service)
-
-[![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)
-[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)](https://img.shields.io/docker/build/nlpbox/dplp-service.svg)
+### [DPLP (Ji and Eisenstein 2014)](https://github.com/NLPbox/dplp-service) [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)
 
 *Description*: REST API around the DPLP RST parser [(Ji and Eisenstein 2014)](https://www.aclweb.org/anthology/P14-1002/).
 
-### [Heilman and Sagae (2015)](https://github.com/NLPbox/heilman-sagae-2015-service)
-
-[![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)
-[![Docker Build Status](https://img.shields.io/docker/build/nlpbox/heilman-sagae-2015-service.svg)](https://hub.docker.com/r/nlpbox/heilman-sagae-2015-service/)
+### [Heilman and Sagae (2015)](https://github.com/NLPbox/heilman-sagae-2015-service) [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)
 
 *Description*: REST API around the [Heilman and Sagae (2015)](https://arxiv.org/abs/1505.02425) RST parser.
 
-### [CODRA (Joty et al. 2015)](https://github.com/NLPbox/codra-service)
+### [CODRA (Joty et al. 2015)](https://github.com/NLPbox/codra-service) [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)
 
 *Description*: REST API around the CODRA RST parser [(Joty et al. 2015)](https://www.mitpressjournals.org/doi/abs/10.1162/COLI_a_00226).
 
-
-### [StageDP (Wang et al. 2017)](https://github.com/nlpbox/stagedp-service)
+### [StageDP (Wang et al. 2017)](https://github.com/nlpbox/stagedp-service) [![Github CI Build Status](https://github.com/NLPbox/stagedp-service/actions/workflows/ci.yml/badge.svg)]
 
 *Description*: REST API around the StageDP [(Wang et al. 2017)](https://www.aclweb.org/anthology/P17-2029/) RST parser.
 Since the parser requires EDU-segmented input, we combine it with a REST API
 around the NeuralEDUSeg discourse segmenter from the same author [(Wang et al. 2018)](https://www.aclweb.org/anthology/D18-1116/).
+
 
 ## Installation
 
@@ -85,8 +76,9 @@ machine were you run this command.
 ## Citation
 
 If you use rst-workbench, rst-converter-service or any of the dockerized RST parsers,
-please consider citing our paper.
+please consider citing our paper:
 
+```
 @inproceedings{neumann-2021-rst-workbench,
     title = "Using and comparing {R}hetorical {S}tructure {T}heory parsers with rst-workbench",
     author = "Neumann, Arne",
@@ -98,3 +90,4 @@ please consider citing our paper.
     url = "https://www.aclweb.org/anthology/2021.eacl-demos.1",
     pages = "1--6",
 }
+```

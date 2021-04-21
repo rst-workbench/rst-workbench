@@ -7,13 +7,11 @@ the trees produced by the RST parsers.
 
 
 
-Here's a video demonstrating its usage:
-
-
 <a href="https://www.youtube.com/watch?v=-zpdhp5nu-M">
   <img align="left" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="500">
 </a>
- 
+
+Here's a [video](https://www.youtube.com/watch?v=-zpdhp5nu-M) demonstrating its usage.  
 You can also try our demo server: https://rst-workbench.arne.cl/ .
 
 

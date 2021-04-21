@@ -7,11 +7,12 @@ and allows you to visualize and post-edit the trees produced by the parsers.
 <br clear="left"/>
 
 <a href="https://www.youtube.com/watch?v=-zpdhp5nu-M">
-  <img align="right" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="500">
+  <img align="right" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="600">
 </a>
 
-Here's a [video](https://www.youtube.com/watch?v=-zpdhp5nu-M) demonstrating its usage.
-You can also try our demo server: https://rst-workbench.arne.cl/ .
+Here's a [video](https://www.youtube.com/watch?v=-zpdhp5nu-M) demonstrating its usage.  
+You can also try our demo server at https://rst-workbench.arne.cl/.  
+\
 For installation instructions and usage examples, see [below](#installation).
 <br clear="right"/>
 

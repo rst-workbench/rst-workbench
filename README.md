@@ -2,18 +2,18 @@
 
 <img align="left" src="frontend/img/logo.png" width="300"> The `rst-workbench` lets you easily
 install and run existing RST parsers usind Docker containers.
-It provides a convenient web app for visually comparing and post-editing
-the trees produced by the RST parsers.
-
-
+It provides a convenient web app for running multiple RST parsers concurrently
+and allows you to visualize and post-edit the trees produced by the parsers.
+<br clear="left"/>
 
 <a href="https://www.youtube.com/watch?v=-zpdhp5nu-M">
-  <img align="left" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="500">
+  <img align="right" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="500">
 </a>
 
-Here's a [video](https://www.youtube.com/watch?v=-zpdhp5nu-M) demonstrating its usage.  
+Here's a [video](https://www.youtube.com/watch?v=-zpdhp5nu-M) demonstrating its usage.
 You can also try our demo server: https://rst-workbench.arne.cl/ .
-
+For installation instructions and usage examples, see [below](#installation).
+<br clear="right"/>
 
 ## Supported Parsers
 
@@ -58,7 +58,9 @@ so we can't provide automated builds but only the build scripts here.
 Since the parser requires EDU-segmented input, we combine it with a REST API
 around the NeuralEDUSeg discourse segmenter from the same author [(Wang et al. 2018)](https://www.aclweb.org/anthology/D18-1116/).
 
+## Installation
 
+## Usage
 
 
 
@@ -79,3 +81,20 @@ try to run it using ``DOMAIN=localhost docker-compose up --build --force-recreat
 ``docker-compose``) is reachable from the outside world.
 If you set the ``HOSTNAME`` to ``localhost``, the rst-workbench will be only available on the
 machine were you run this command.
+
+## Citation
+
+If you use rst-workbench, rst-converter-service or any of the dockerized RST parsers,
+please consider citing our paper.
+
+@inproceedings{neumann-2021-rst-workbench,
+    title = "Using and comparing {R}hetorical {S}tructure {T}heory parsers with rst-workbench",
+    author = "Neumann, Arne",
+    booktitle = "Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations",
+    month = apr,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2021.eacl-demos.1",
+    pages = "1--6",
+}

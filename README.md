@@ -20,33 +20,20 @@ For installation instructions and usage examples, see [below](#installation).
 Currently, we support the following RST parsers that we provide as Docker
 containers with a REST API and pre-trained on RST-DT:
 
-### [HILDA (Hernault et al. 2010)](https://github.com/nlpbox/hilda-service)
+- HILDA (Hernault et al. 2010) [[our repo](https://github.com/nlpbox/hilda-service)] [[paper](http://journals.linguisticsociety.org/elanguage/dad/article/download/591/591-2300-1-PB.pdf)]
+  - HILDA itself is only available from the [Prendinger lab](http://research.nii.ac.jp/%7Eprendinger/),
+    so we can't provide automated builds but only the build scripts here.
 
-*Description*: REST API around the HILDA RST parser ([Hernault et al. 2010](http://journals.linguisticsociety.org/elanguage/dad/article/download/591/591-2300-1-PB.pdf)).
-HILDA itself is only available from the [Prendinger lab](http://research.nii.ac.jp/%7Eprendinger/),
-so we can't provide automated builds but only the build scripts here.
+- Feng and Hirst (2014) [[our repo](https://github.com/NLPbox/feng-hirst-service)] [[paper](https://www.aclweb.org/anthology/P14-1048/)]
 
-### [Feng and Hirst (2014)](https://github.com/NLPbox/feng-hirst-service) [![Travis Build Status](https://travis-ci.org/NLPbox/feng-hirst-service.svg?branch=master)](https://travis-ci.org/NLPbox/feng-hirst-service)
+- DPLP (Ji and Eisenstein 2014) [[our repo](https://github.com/NLPbox/dplp-service)] [[paper](https://www.aclweb.org/anthology/P14-1002/)]
 
-*Description*: REST API around the [Feng and Hirst (2014)](https://www.aclweb.org/anthology/P14-1048/) RST parser.
+- Heilman and Sagae (2015) [[our repo](https://github.com/NLPbox/heilman-sagae-2015-service)] [[paper](https://arxiv.org/abs/1505.02425)]
 
-### [DPLP (Ji and Eisenstein 2014)](https://github.com/NLPbox/dplp-service) [![Travis Build Status](https://travis-ci.org/NLPbox/dplp-service.svg?branch=master)](https://travis-ci.org/NLPbox/dplp-service)
+- CODRA (Joty et al. 2015) [[our repo](https://github.com/NLPbox/codra-service)] [[paper](https://www.mitpressjournals.org/doi/abs/10.1162/COLI_a_00226)]
 
-*Description*: REST API around the DPLP RST parser [(Ji and Eisenstein 2014)](https://www.aclweb.org/anthology/P14-1002/).
-
-### [Heilman and Sagae (2015)](https://github.com/NLPbox/heilman-sagae-2015-service) [![Travis Build Status](https://travis-ci.org/NLPbox/heilman-sagae-2015-service.svg?branch=master)](https://travis-ci.org/NLPbox/heilman-sagae-2015-service)
-
-*Description*: REST API around the [Heilman and Sagae (2015)](https://arxiv.org/abs/1505.02425) RST parser.
-
-### [CODRA (Joty et al. 2015)](https://github.com/NLPbox/codra-service) [![Travis Build Status](https://travis-ci.org/NLPbox/codra-service.svg?branch=master)](https://travis-ci.org/NLPbox/codra-service)
-
-*Description*: REST API around the CODRA RST parser [(Joty et al. 2015)](https://www.mitpressjournals.org/doi/abs/10.1162/COLI_a_00226).
-
-### [StageDP (Wang et al. 2017)](https://github.com/nlpbox/stagedp-service) [![Github CI Build Status](https://github.com/NLPbox/stagedp-service/actions/workflows/ci.yml/badge.svg)]
-
-*Description*: REST API around the StageDP [(Wang et al. 2017)](https://www.aclweb.org/anthology/P17-2029/) RST parser.
-Since the parser requires EDU-segmented input, we combine it with a REST API
-around the NeuralEDUSeg discourse segmenter from the same author [(Wang et al. 2018)](https://www.aclweb.org/anthology/D18-1116/).
+- StageDP (Wang et al. 2017) [[our repo](https://github.com/nlpbox/stagedp-service)] [[paper](https://www.aclweb.org/anthology/P17-2029/)]
+  - the parser requires EDU-segmented input, so we combine it with the NeuralEDUSeg discourse segmenter [(Wang et al. 2018)](https://www.aclweb.org/anthology/D18-1116/)
 
 
 ## Installation

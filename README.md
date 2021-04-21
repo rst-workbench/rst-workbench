@@ -1,18 +1,21 @@
 # rst-workbench
 
-
+<div>
 <img align="left" src="frontend/img/logo.png" width="300"> The `rst-workbench` lets you easily
 install and run existing RST parsers usind Docker containers.
 It provides a convenient web app for visually comparing and post-editing
 the trees produced by the RST parsers.
-
+</div>
 
 Here's a video demonstrating its usage:
+
+<div>
 <a href="https://www.youtube.com/watch?v=-zpdhp5nu-M">
   <img align="left" src="frontend/img/demo-video-screenshot.png" alt="screenshot from rst-workbench demo video" width="500">
 </a>
  
 You can also try our demo server: https://rst-workbench.arne.cl/ .
+</div>
 
 
 ## Supported Parsers

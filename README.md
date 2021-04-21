@@ -38,7 +38,29 @@ containers with a REST API and pre-trained on RST-DT:
 
 ## Installation
 
+Please install Docker and docker-compose first, then clone this repo.  
+When running on your local machine, the rst-workbench does not need to be installed.  
+You can just run it using `docker-compose up`.
+
+### Server installation
+
+The repo contains everything necessary to run our demo server at https://rst-workbench.arne.cl/ .
+We usually start it like this:
+
+```
+DOMAIN=rst-workbench.arne.cl docker-compose -f docker-compose-server.yml up --build --force-recreate
+```
+
+To make it work on your domain, you will need to change the `domains` and `email` variables
+in the file `nginx-certbot/init-letsencrypt.sh`.
+
+
 ## Usage
+
+To run the rst-workbench, simply run `docker-compose up` in the folder into which you cloned the repo.  
+On the first run, this will take a while and download the Docker containers of all supported RST parsers.  
+On all subsequent runs, this will be much quicker and simply start the Docker containers from your hard drive.
+
 
 
 

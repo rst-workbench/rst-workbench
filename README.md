@@ -39,9 +39,10 @@ containers with a REST API and pre-trained on RST-DT:
 
 ## Installation
 
-Please install Docker and docker-compose first, then clone this repo.  
+Please install [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) first,
+then clone this repo.  
 When running on your local machine, the rst-workbench does not need to be installed.  
-You can just run it using `docker-compose up`.
+You can just run it using `docker-compose`.
 
 ### Server installation
 
@@ -58,30 +59,17 @@ in the file `nginx-certbot/init-letsencrypt.sh`.
 
 ## Usage
 
-To run the rst-workbench, simply run `docker-compose up` in the folder into which you cloned the repo.  
-On the first run, this will take a while and download the Docker containers of all supported RST parsers.  
+To run the rst-workbench on your local machine, simply run  
+`DOMAIN=localhost docker-compose up --build --force-recreate` in the folder into which you cloned the repo.  
+On the first run, this will take a long time and download the Docker containers of all supported RST parsers.  
 On all subsequent runs, this will be much quicker and simply start the Docker containers from your hard drive.
 
+Once it has started, go to http://localhost:8000/ in your browser to use the web interface.
 
+By setting set the `DOMAIN` to `localhost`, the rst-workbench will be only available on the
+machine where you run this command. The parameters `--build` and `--force-recreate` should
+not be needed on normal runs, but you will need them whenever you change the configuration.
 
-
-## Troubleshooting
-
-If running the rst-workbench with the command ``docker-compose up`` produces
-an unexpected error like this one,
-
-```
-Starting rst-workbench_rst-converter-service_1 ... done
-Attaching to rst-workbench_rst-converter-service_1
-rst-converter-service_1  | xvfb-run: error: Xvfb failed to start
-rst-workbench_rst-converter-service_1 exited with code 1
-```
-
-try to run it using ``DOMAIN=localhost docker-compose up --build --force-recreate`` instead.
-``HOSTNAME`` refers to the name under which the host machine (i.e. the machine on which you run
-``docker-compose``) is reachable from the outside world.
-If you set the ``HOSTNAME`` to ``localhost``, the rst-workbench will be only available on the
-machine were you run this command.
 
 ## Citation
 

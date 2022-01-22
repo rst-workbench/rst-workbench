@@ -17,6 +17,11 @@ window.addEventListener("load", async () => {
   rstForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+	// delete the contents of the results / errors section
+	// in case we want to use the parsers more than once
+	document.getElementById("results").textContent = "";
+	document.getElementById("errors").textContent = "";
+
     // parse the form content and display the results.
     const text = rstForm["input-text"].value;
     window.rstworkbench.getParseImages(text);

@@ -1,6 +1,13 @@
 #!/usr/bin/env python3.7
 # coding: utf-8
 
+"""
+This module is a commandline interface for rst-workbench.
+
+It allows you to parse a plaintext file with all RST parsers available,
+and write the resulting files (in the desired output formats) into a directory.
+"""
+
 import argparse
 import asyncio
 import os

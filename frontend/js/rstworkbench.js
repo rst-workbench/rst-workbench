@@ -21,6 +21,10 @@ window.addEventListener("load", async () => {
 	// in case we want to use the parsers more than once
 	document.getElementById("results").textContent = "";
 	document.getElementById("errors").textContent = "";
+	// Ensure the results / errors section is invisible.
+	// They will be made visible when the sections are filled later on.
+	ensureElementInvisible("results_section");
+	ensureElementInvisible("errors_section");
 
     // parse the form content and display the results.
     const text = rstForm["input-text"].value;
@@ -421,6 +425,7 @@ function wrapInDiv(strOrElement, divID) {
 /* addToResults adds a title (e.g. the name of a parser) and some content
    to the results section of the page. */
 function addToResults(title, content, contentClass) {
+	ensureElementVisible('results_section');
     addToSection('results', title, content, contentClass);
 }
 
@@ -464,6 +469,7 @@ function addBase64ImagetoResults(title, imageBase64, imageType) {
 /* addToErrors adds a title (e.g. the name of the parser that produced
    the error) and and error message to the  section of the page. */
 function addToErrors(title, error) {
+	ensureElementVisible('errors_section');
     addToSection('errors', title, error.toString(), 'error');
 }
 
@@ -474,7 +480,8 @@ function getPort(service) {
     return Number(portString);
 }
 
-// showhide makes the given element (in)visible
+
+// showhide toggles the visibility of the given DOM element
 function showhide(elementId) {
   var x = document.getElementById(elementId);
   if (x.style.display === "none") {
@@ -482,4 +489,16 @@ function showhide(elementId) {
   } else {
     x.style.display = "none";
   }
+}
+
+// ensure that the given DOM element is visible
+function ensureElementVisible(elementId) {
+	var x = document.getElementById(elementId);
+	x.style.display = "block";
+}
+
+// ensure that the given DOM element invisible
+function ensureElementInvisible(elementId) {
+	var x = document.getElementById(elementId);
+	x.style.display = "none";
 }

@@ -2,7 +2,13 @@ const confPath = 'docker-compose.yml';
 const setupType = 'local'; // options: 'local' or 'server'
 const hostName = 'localhost';
 
+const IN_PROGRESS_SYMBOL = '<div class="lds-hourglass"></div>';
+const DONE_SYMBOL = '✅';
+const ERROR_SYMBOL = '💥';
+
+
 /* This would be the "main" function in a sane programming language.
+ * 
    Here, this code is triggered when the rst-workbench website is fully loaded.
    It creates an RSTWorkbench instance and calls its getParseImages
    method on the content of the RST form whenever the submit button is pressed. */
@@ -19,10 +25,12 @@ window.addEventListener("load", async () => {
 
 	// delete the contents of the results / errors section
 	// in case we want to use the parsers more than once
+	document.getElementById("progress").textContent = "";
 	document.getElementById("results").textContent = "";
 	document.getElementById("errors").textContent = "";
 	// Ensure the results / errors section is invisible.
 	// They will be made visible when the sections are filled later on.
+	ensureElementInvisible("progress_section");
 	ensureElementInvisible("results_section");
 	ensureElementInvisible("errors_section");
 
@@ -95,8 +103,14 @@ class RSTWorkbench {
     }
 
     /* getParseImages parses the given text with all configured parsers, converts
-       the results into images and adds those to the "Results" section of the page. */
+       the results into images and adds those to the "Results" section of the page.
+       
+       This is the 'entry' function that gets called when the "Run RST parser"
+       button is pressed. */
     async getParseImages(text) {
+		// make "progress bar" visible
+		ensureElementVisible("progress_section");
+
         this.rstParsers.forEach(async (parser) => this.parseTextToImage(parser, text));
     }
 
@@ -105,16 +119,20 @@ class RSTWorkbench {
     async parseTextToImage(parser, text) {
         let parseOutput;
         try {
+			updateProgress(`${parser.name}`, `${IN_PROGRESS_SYMBOL}`);
+
             parseOutput = await parser.parse(text);
             let parseOutputElemID = `${parser.name}-parser-output`;
             let showhideButtonStr = `<button class="btn btn-primary" onclick="showhide('${parseOutputElemID}')">Show/Hide original parser output</button>`
             let showhideButton = stringToElement(showhideButtonStr);
             addToResults(parser.name, parseOutput, parseOutputElemID);
+            
             showhide(parseOutputElemID); // hide original parser output by default
             addToButtonRow(parser.name, showhideButton);
 
         } catch (err) {
             addToErrors(parser.name, err);
+            updateProgress(`${parser.name}`, `<a href="#errors-${parser.name}">${ERROR_SYMBOL}</a>`);
             return;
         }
 
@@ -124,7 +142,9 @@ class RSTWorkbench {
             addRS3DownloadButton(parser.name, rs3Output);
             addRSTWebEditButton(parser.name, rs3Output);
         } catch (err) {
-            addToErrors(`rst-converter-service for ${parser.name}`, err);
+			const errorId = `rst-converter-service for ${parser.name}`;
+            addToErrors(errorId, err);
+            updateProgress(`${parser.name}`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
             return;
         }
 
@@ -139,8 +159,12 @@ class RSTWorkbench {
             const hrElem = document.createElement('hr');
             addToSection('results', parser.name, hrElem, 'rs3-image');
 
+            updateProgress(`${parser.name}`, `<a href="#results-${parser.name}">${DONE_SYMBOL}</a>`);
+
         } catch (err) {
-            addToErrors(`rst-converter-service for ${parser.name} (rs3 to SVG)`, err);
+			const errorId = `rst-converter-service for ${parser.name} (rs3 to SVG)`; 
+            addToErrors(errorId, err);
+            updateProgress(`${parser.name}`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
             return;
         }
     }
@@ -452,7 +476,6 @@ function addSVGtoResults(title, svgBase64) {
     addBase64ImagetoResults(title, svgBase64, 'svg+xml');
 }
 
-
 function addBase64ImagetoResults(title, imageBase64, imageType) {
     let img = document.createElement('img');
     img.className = "img-fluid";
@@ -471,6 +494,23 @@ function addBase64ImagetoResults(title, imageBase64, imageType) {
 function addToErrors(title, error) {
 	ensureElementVisible('errors_section');
     addToSection('errors', title, error.toString(), 'error');
+}
+
+/* updateProgress adds/updates the parser status row in the progress table.
+   given parser. */
+function updateProgress(parserName, message) {
+	const parserProgressElementName = `${parserName}-progress`;
+	let parserProgress = document.getElementById(parserProgressElementName);
+	let newParserProgress = stringToElement(`<tr id="${parserName}-progress"><th scope="row">${parserName}</th><td>${message}</td></tr>`);
+
+	if (parserProgress === null) {
+		// create parser progress table row
+		let progressTable = document.getElementById('progress');		
+		progressTable.appendChild(newParserProgress);
+	} else {
+		// update existing parser progress table row
+		parserProgress.replaceWith(newParserProgress);
+	}
 }
 
 /* getPort returns a Port number given a service Object.

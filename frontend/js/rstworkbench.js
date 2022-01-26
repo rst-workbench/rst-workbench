@@ -36,8 +36,8 @@ window.addEventListener("load", async () => {
 
     // parse the form content and display the results.
     let sourceText = rstForm["input-text"].value;
-    let sourceLangElem = rstForm["source-language"];
-    if (sourceLangElem === null) {
+    let sourceLangElem = rstForm["source-lang"];
+    if (sourceLangElem === undefined) {
 		// assume source language is English
 		window.rstworkbench.getParseImages(sourceText);
 	} else {

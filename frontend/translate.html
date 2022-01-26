@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>rst-workbench demo (with machine translation)</title>
+
+<!-- Primary Meta Tags -->
+<title>rst-workbench — Run and Compare RST parsers online. Edit RST parse trees in your browser.</title>
+<meta name="title" content="rst-workbench — Run and Compare RST parsers online. Edit RST parse trees in your browser.">
+<meta name="description" content="Includes: CODRA (Joty+ 2015), DPLP (Ji/Eisenstein 2014), HILDA (Hernault+ 2010), Feng/Hirst (2014), Heilman/Sagae (2015).">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://metatags.io/">
+<meta property="og:title" content="rst-workbench — Run and Compare RST parsers online. Edit RST parse trees in your browser.">
+<meta property="og:description" content="Includes: CODRA (Joty+ 2015), DPLP (Ji/Eisenstein 2014), HILDA (Hernault+ 2010), Feng/Hirst (2014), Heilman/Sagae (2015).">
+<meta property="og:image" content="img/preview.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://metatags.io/">
+<meta property="twitter:title" content="rst-workbench — Run and Compare RST parsers online. Edit RST parse trees in your browser.">
+<meta property="twitter:description" content="Includes: CODRA (Joty+ 2015), DPLP (Ji/Eisenstein 2014), HILDA (Hernault+ 2010), Feng/Hirst (2014), Heilman/Sagae (2015).">
+<meta property="twitter:image" content="img/preview.png">
+
+<style>
+body {
+  padding-top: 5rem; /* padding between navbar and main content */
+}
+
+/* image popups / overlays without Javascript
+   source: https://www.sylvaindurand.org/overlay-image-in-pure-css */
+.content { max-width: 48em; }
+  .content img { max-width: 100%; }
+
+
+/* animated "in progress" icon from https://github.com/loadingio/css-spinner */
+.lds-hourglass,
+.lds-hourglass:after {
+  box-sizing: border-box;
+}
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 2px;
+  box-sizing: border-box;
+  border: 8px solid currentColor;
+  border-color: currentColor transparent currentColor transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+</style>
+</head>
+
+<body>
+    <script src='js/js-yaml.min.js'></script>
+    <script src='js/rstworkbench.js'></script>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">rst-workbench</a>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="https://github.com/arne-cl/rst-workbench" target="_blank">Download
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://youtu.be/-zpdhp5nu-M" target="_blank">Instruction Video</a>
+      </li>
+  </div>
+
+
+</nav>
+
+
+<main role="main" class="container">
+
+    <form id='rst' method='get'>
+
+        <div class="form-group">
+            <h2>Enter some text to be parsed:</h2>
+            <textarea class="form-control" id='input-text' rows="10" value>
+Students and lecturers alike are worried about global warming and related climate change.
+With a clear ecological conscience and convinced that they stand on the right side of history,
+they cycle to their university campus, buy a vegetarian sandwich on the way
+and were jointly outraged when Donald Trump pulled the US out of the Paris Climate Agreement.
+However, their own contribution to climate change is all too often ignored.</textarea>
+        </div>
+
+	  <div class="form-group">
+		<label for="source-lang">Source language:</label>
+		<select class="form-control" id="source-lang">
+		  <option value="NL">Dutch</option>
+		  <option value="EN" selected="selected">English</option>
+		  <option value="DE">German</option>
+		</select>
+	  </div>
+
+        <input class="btn btn-primary" type='submit' id='btnSubmit' value='Run RST Parsers'/>
+    </form>
+
+    <hr>
+
+    <div class="mt-3 mb-2">
+		<div id="progress_section" style="display:none">
+			<div>
+				<table class="table table-sm table-striped table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th>Parser</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+
+					<tbody id="progress">
+						<!-- API progress go here-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div id="results_section" style="display:none">
+			<h1>Parser results:</h1>
+			<div id="results">
+				<!-- API results go here-->
+			</div>		
+		</div>
+
+		<div id="errors_section" style="display:none">
+			<h1>Errors:</h1>
+			<div id="errors">
+				<!-- API errors go here-->
+			</div>
+		</div>
+    </div>
+
+</main>
+
+
+</body>
+
+</html>
+

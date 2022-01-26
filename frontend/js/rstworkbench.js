@@ -35,8 +35,21 @@ window.addEventListener("load", async () => {
 	ensureElementInvisible("errors_section");
 
     // parse the form content and display the results.
-    const text = rstForm["input-text"].value;
-    window.rstworkbench.getParseImages(text);
+    let sourceText = rstForm["input-text"].value;
+    let sourceLangElem = rstForm["source-language"];
+    if (sourceLangElem === null) {
+		// assume source language is English
+		window.rstworkbench.getParseImages(sourceText);
+	} else {
+		let sourceLang = sourceLangElem.value;
+		if (sourceLang === 'EN') {
+			window.rstworkbench.getParseImages(sourceText);
+		} else { // source is not English -> translate to English, then run RST parsers
+			let englishText = await translate(sourceText, sourceLang, 'EN');
+			window.rstworkbench.getParseImages(englishText);
+		}
+		
+	}
   });
 });
 
@@ -541,4 +554,25 @@ function ensureElementVisible(elementId) {
 function ensureElementInvisible(elementId) {
 	var x = document.getElementById(elementId);
 	x.style.display = "none";
+}
+
+// translate a string from source language to target language using DeepL.
+async function translate(text, source_lang = 'DE', target_lang = 'EN') {
+	const data = new FormData();
+	data.append('auth_key', '31daab55-b4ad-cb6a-4caf-ffe280ce5e4f:fx');
+	data.append('text', text);
+	data.append('source_lang', source_lang);
+	data.append('target_lang', target_lang);
+
+	const options = {
+	  method: 'POST',
+	  body: data,
+	};
+
+	let response = await fetch('https://api-free.deepl.com/v2/translate', options);
+	if (!response.ok) {
+		throw new Error(`${response.status}: ${response.statusText}\n${output}`);
+	}
+	let output = await response.json();
+	return output.translations[0].text;
 }

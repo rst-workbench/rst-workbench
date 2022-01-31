@@ -128,16 +128,17 @@ class RSTWorkbench {
        
        This is the 'entry' function that gets called when the "Run RST parser"
        button is pressed. */
-    async getParseImages(text) {
+    async getParseImages(text, sourceLang = 'EN') {
 		// make "progress bar" visible
 		ensureElementVisible("progress_section");
 
-        this.rstParsers.forEach(async (parser) => this.parseTextToImage(parser, text));
+        this.rstParsers.forEach(async (parser) => this.parseTextToImage(parser, text, sourceLang));
     }
 
     /* parseTextToImage parses the given text with the given parser, converts
        it to an image (via .rs3) and adds it to the "Results" section of the page. */
-    async parseTextToImage(parser, text) {
+    async parseTextToImage(parser, text, sourceLang = 'EN') {
+        // parse text and add original parser output to page w/ toggle button
         let parseOutput;
         try {
 			updateProgress(`${parser.name}`, `${IN_PROGRESS_SYMBOL}`);
@@ -157,6 +158,7 @@ class RSTWorkbench {
             return;
         }
 
+		// convert original parser output to rs3 and make it downloadable
         let rs3Output;
         try {
             rs3Output = await this.rstConverter.convert(parseOutput, parser.format, 'rs3');
@@ -170,7 +172,7 @@ class RSTWorkbench {
         }
 
         /* convert .rs3 to an SVG image and add it to the output
-         * and add it to the output (as an base64 image embedded in the HTML) */
+         * as an base64 image embedded in the HTML */
         let svgOutput;
         try {
             svgOutput = await this.rstConverter.convert(rs3Output, 'rs3', 'svgtree-base64');
@@ -181,13 +183,30 @@ class RSTWorkbench {
             addToSection('results', parser.name, hrElem, 'rs3-image');
 
             updateProgress(`${parser.name}`, `<a href="#results-${parser.name}">${DONE_SYMBOL}</a>`);
-
         } catch (err) {
 			const errorId = `rst-converter-service for ${parser.name} (rs3 to SVG)`; 
             addToErrors(errorId, err);
             updateProgress(`${parser.name}`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
             return;
         }
+
+		/* if source language is not English, translate the rs3 file
+		 * back into the source language and visualize that as well */
+		// TODO: implement backtranslation + viz
+		try { // translate rs3 from English to source language
+			const translatorName = `DeepL-translate-EN-${sourceLang}`;
+			updateProgress(translatorName, IN_PROGRESS_SYMBOL);
+			let rs3OutputTranslated = await translate(rs3Output, 'EN', sourceLang);
+			updateProgress(translatorName, `<a href="#results-${translatorName}">${DONE_SYMBOL}</a>`);
+		} catch (err) {
+			addToErrors(translatorName, err);
+			updateProgress(translatorName, `<a href="#errors-${translatorName}">${ERROR_SYMBOL}</a>`);
+		}
+		try {
+			
+		} catch (err) {
+			
+		}
     }
 }
 
@@ -565,12 +584,12 @@ function ensureElementInvisible(elementId) {
 }
 
 // translate a string from source language to target language using DeepL.
-async function translate(text, source_lang = 'DE', target_lang = 'EN') {
+async function translate(text, sourceLang = 'DE', targetLang = 'EN') {
 	const data = new FormData();
 	data.append('auth_key', '31daab55-b4ad-cb6a-4caf-ffe280ce5e4f:fx');
 	data.append('text', text);
-	data.append('source_lang', source_lang);
-	data.append('target_lang', target_lang);
+	data.append('source_lang', sourceLang);
+	data.append('target_lang', targetLang);
 
 	const options = {
 	  method: 'POST',

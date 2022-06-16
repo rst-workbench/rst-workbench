@@ -39,18 +39,18 @@ window.addEventListener("load", async () => {
     let sourceLangElem = rstForm["source-lang"];
     if (sourceLangElem === undefined) {
 		// assume source language is English
-		window.rstworkbench.getParseImages(sourceText);
+		window.rstworkbench.getParseImages(sourceText, sourceLang='EN');
 	} else {
 		let sourceLang = sourceLangElem.value;
 		if (sourceLang === 'EN') {
-			window.rstworkbench.getParseImages(sourceText);
+			window.rstworkbench.getParseImages(sourceText, sourceLang='EN');
 		} else { // source is not English -> translate to English, then run RST parsers
 			try {
 				const translatorName = `DeepL-translate-${sourceLang}-EN`;
 				updateProgress(translatorName, IN_PROGRESS_SYMBOL);
 				let englishText = await translate(sourceText, sourceLang, 'EN');
 				updateProgress(translatorName, `<a href="#results-${translatorName}">${DONE_SYMBOL}</a>`);
-				window.rstworkbench.getParseImages(englishText);
+				window.rstworkbench.getParseImages(englishText, sourceLang=sourceLang);
 			} catch (err) {
 				addToErrors(translatorName, err);
 				updateProgress(translatorName, `<a href="#errors-${translatorName}">${ERROR_SYMBOL}</a>`);

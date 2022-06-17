@@ -196,8 +196,33 @@ class RSTWorkbench {
 		try { // translate rs3 from English to source language
 			const translatorName = `DeepL-translate-EN-${sourceLang}`;
 			updateProgress(translatorName, IN_PROGRESS_SYMBOL);
-			let rs3OutputTranslated = await translate(rs3Output, 'EN', sourceLang);
+			let rs3TranslatedOutput = await translate(rs3Output, 'EN', sourceLang);
 			updateProgress(translatorName, `<a href="#results-${translatorName}">${DONE_SYMBOL}</a>`);
+
+			// make backtranslated .rs3 file downloadable / viewable in rstWeb
+            addRS3DownloadButton(parser.name, rs3TranslatedOutput);
+            addRSTWebEditButton(parser.name, rs3TranslatedOutput);
+
+			/* convert backtranslated .rs3 file into an SVG image
+			 * and add that to the output (as base64 image embedded in HTML) */
+			let svgTranslatedOutput;
+			try {
+				svgTranslatedOutput = await this.rstConverter.convert(rs3TranslatedOutput, 'rs3', 'svgtree-base64');
+				addSVGtoResults(parser.name, svgTranslatedOutput);
+
+				// separate output of different parsers
+				const hrElem = document.createElement('hr');
+				addToSection('results', parser.name, hrElem, 'rs3-image');
+
+				updateProgress(`${parser.name}-backtranslated`, `<a href="#results-${parser.name}">${DONE_SYMBOL}</a>`);
+			} catch (err) {
+				const errorId = `rst-converter-service for ${parser.name}-backtranslated (rs3 to SVG)`; 
+				addToErrors(errorId, err);
+				updateProgress(`${parser.name}-backtranslated`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
+				return;
+			}			
+			
+			
 		} catch (err) {
 			addToErrors(translatorName, err);
 			updateProgress(translatorName, `<a href="#errors-${translatorName}">${ERROR_SYMBOL}</a>`);
@@ -590,6 +615,8 @@ async function translate(text, sourceLang = 'DE', targetLang = 'EN') {
 	data.append('text', text);
 	data.append('source_lang', sourceLang);
 	data.append('target_lang', targetLang);
+	// cf. https://www.deepl.com/en/docs-api/handling-xml/
+	data.append('tag_handling', 'xml');
 
 	const options = {
 	  method: 'POST',

@@ -227,11 +227,7 @@ class RSTWorkbench {
 			addToErrors(translatorName, err);
 			updateProgress(translatorName, `<a href="#errors-${translatorName}">${ERROR_SYMBOL}</a>`);
 		}
-		try {
-			
-		} catch (err) {
-			
-		}
+
     }
 }
 

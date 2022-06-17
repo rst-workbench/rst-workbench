@@ -190,6 +190,11 @@ class RSTWorkbench {
             return;
         }
 
+		// don't translate anything if the source text is in English
+		if (sourceLang == 'EN') {
+			return;
+		}
+
 		/* if source language is not English, translate the rs3 file
 		 * back into the source language and visualize that as well */
 		// TODO: implement backtranslation + viz

@@ -96,7 +96,7 @@ services:
       name: stagedp
       type: rst-parser
       format: stagedp
-    image: nlpbox/stagedp-service:9
+    image: nlpbox/stagedp-service:10
     environment:
     - CORENLP_ENDPOINT=http://corenlp:9000
     - NEURALSEG_ENDPOINT=http://neuraleduseg-service:8000

@@ -40,27 +40,18 @@ containers with a REST API and pre-trained on RST-DT:
 ## Installation
 
 Please install [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) first,
-then clone this repo.  
-When running on your local machine, the rst-workbench does not need to be installed.  
-You can just run it using `docker-compose`.
-
-### Server installation
-
-The repo contains everything necessary to run our demo server at https://rst-workbench.arne.cl/ .
-We usually start it like this:
+then clone this repo including its submodules.
 
 ```
-DOMAIN=rst-workbench.arne.cl docker-compose -f docker-compose-server.yml up --build --force-recreate
+git clone --recurse-submodules https://github.com/rst-workbench/rst-workbench
 ```
 
-To make it work on your domain, you will need to change the `domains` and `email` variables
-in the file `nginx-certbot/init-letsencrypt.sh`.
 
-
-## Usage
+### Usage on your local machine
 
 To run the rst-workbench on your local machine, simply run  
-`DOMAIN=localhost docker-compose up --build --force-recreate` in the folder into which you cloned the repo.  
+`DOMAIN=localhost docker compose up --build --force-recreate` in the folder into which you cloned the repo.  
+
 On the first run, this will take a long time and download the Docker containers of all supported RST parsers.  
 On all subsequent runs, this will be much quicker and simply start the Docker containers from your hard drive.
 
@@ -69,6 +60,21 @@ Once it has started, go to http://localhost:8000/ in your browser to use the web
 By setting set the `DOMAIN` to `localhost`, the rst-workbench will be only available on the
 machine where you run this command. The parameters `--build` and `--force-recreate` should
 not be needed on normal runs, but you will need them whenever you change the configuration.
+
+  
+### Usage on a server
+
+The repo contains everything necessary to run our demo server at https://rst-workbench.arne.cl/ .
+We usually start it like this:
+
+```
+DOMAIN=rst-workbench.arne.cl docker compose -f docker-compose-server.yml up --build --force-recreate
+```
+
+To make it work on your domain, you will need to change the `domains` and `email` variables
+in the file `nginx-certbot/init-letsencrypt.sh`.
+
+
 
 
 ## Citation

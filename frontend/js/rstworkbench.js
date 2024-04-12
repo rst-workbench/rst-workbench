@@ -12,33 +12,47 @@ const ERROR_SYMBOL = '💥';
    Here, this code is triggered when the rst-workbench website is fully loaded.
    It creates an RSTWorkbench instance and calls its getParseImages
    method on the content of the RST form whenever the submit button is pressed. */
-window.addEventListener("load", async () => {
+window.addEventListener("load", () => {
   // access the form element ...
   let rstForm = document.getElementById("rst");
 
-  // make the workbench instance globally available
-  window.rstworkbench = await RSTWorkbench.fromConfigFile();
+  // Load RSTWorkbench configuration
+  RSTWorkbench.fromConfigFile()
+    .then(workbench => {
+      // make the workbench instance globally available
+      window.rstworkbench = workbench;
 
-  // ...and take over its submit event.
-  rstForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+      // ...and take over its submit event.
+      rstForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        // hide the results / errors section and delete its contents
+        // in case we want to use the parsers more than once
+        clearAndHideResultsSections();
 
-    // delete the contents of the results / errors section
-    // in case we want to use the parsers more than once
-    document.getElementById("progress").textContent = "";
-    document.getElementById("results").textContent = "";
-    document.getElementById("errors").textContent = "";
-    // Ensure the results / errors section is invisible.
-    // They will be made visible when the sections are filled later on.
-    ensureElementInvisible("progress_section");
-    ensureElementInvisible("results_section");
-    ensureElementInvisible("errors_section");
-
-    // parse the form content and display the results.
-    const text = rstForm["input-text"].value;
-    window.rstworkbench.getParseImages(text);
-  });
+        // parse the form content and display the results.
+        const text = rstForm["input-text"].value;
+        window.rstworkbench.getParseImages(text)
+          .catch(error => {
+            console.error('Error processing the RST form:', error);
+            document.getElementById("errors").textContent = "Error: " + error.message;
+            ensureElementVisible("errors_section");
+          });
+      });
+    })
+    .catch(error => {
+      console.error('Failed to initialize RSTWorkbench:', error);
+    });
 });
+
+function clearAndHideResultsSections() {
+  document.getElementById("progress").textContent = "";
+  document.getElementById("results").textContent = "";
+  document.getElementById("errors").textContent = "";
+  ensureElementInvisible("progress_section");
+  ensureElementInvisible("results_section");
+  ensureElementInvisible("errors_section");
+}
+
 
 
 /* RSTWorkbench makes different RST parsers and converters accessible via

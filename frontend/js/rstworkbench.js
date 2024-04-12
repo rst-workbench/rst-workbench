@@ -215,7 +215,8 @@ class RSTConverter {
     static fromConfigObject(config) {
         let service = config.services["rst-converter-service"];
         let port = getPort(service);
-        return new RSTConverter(port, name = service.labels.name);
+        let name = service.labels.name;
+        return new RSTConverter(port, name);
     }
 
     /* convert converts the string representation of an RST tree from the given
@@ -259,7 +260,8 @@ class RSTWeb {
     static fromConfigObject(config) {
         let service = config.services["rstweb-service"];
         let port = getPort(service);
-        return new RSTWeb(port, name = service.labels.name);
+        let name = service.labels.name;
+        return new RSTWeb(port, name);
     }
 
     /* rs3ToImage converts the content of an rs3 file into a base64-encoded PNG

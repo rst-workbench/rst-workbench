@@ -8,7 +8,7 @@ const ERROR_SYMBOL = '💥';
 
 
 /* This would be the "main" function in a sane programming language.
- * 
+ *
    Here, this code is triggered when the rst-workbench website is fully loaded.
    It creates an RSTWorkbench instance and calls its getParseImages
    method on the content of the RST form whenever the submit button is pressed. */
@@ -23,16 +23,16 @@ window.addEventListener("load", async () => {
   rstForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-	// delete the contents of the results / errors section
-	// in case we want to use the parsers more than once
-	document.getElementById("progress").textContent = "";
-	document.getElementById("results").textContent = "";
-	document.getElementById("errors").textContent = "";
-	// Ensure the results / errors section is invisible.
-	// They will be made visible when the sections are filled later on.
-	ensureElementInvisible("progress_section");
-	ensureElementInvisible("results_section");
-	ensureElementInvisible("errors_section");
+    // delete the contents of the results / errors section
+    // in case we want to use the parsers more than once
+    document.getElementById("progress").textContent = "";
+    document.getElementById("results").textContent = "";
+    document.getElementById("errors").textContent = "";
+    // Ensure the results / errors section is invisible.
+    // They will be made visible when the sections are filled later on.
+    ensureElementInvisible("progress_section");
+    ensureElementInvisible("results_section");
+    ensureElementInvisible("errors_section");
 
     // parse the form content and display the results.
     const text = rstForm["input-text"].value;
@@ -104,12 +104,12 @@ class RSTWorkbench {
 
     /* getParseImages parses the given text with all configured parsers, converts
        the results into images and adds those to the "Results" section of the page.
-       
+
        This is the 'entry' function that gets called when the "Run RST parser"
        button is pressed. */
     async getParseImages(text) {
-		// make "progress bar" visible
-		ensureElementVisible("progress_section");
+        // make "progress bar" visible
+        ensureElementVisible("progress_section");
 
         this.rstParsers.forEach(async (parser) => this.parseTextToImage(parser, text));
     }
@@ -119,14 +119,14 @@ class RSTWorkbench {
     async parseTextToImage(parser, text) {
         let parseOutput;
         try {
-			updateProgress(`${parser.name}`, `${IN_PROGRESS_SYMBOL}`);
+            updateProgress(`${parser.name}`, `${IN_PROGRESS_SYMBOL}`);
 
             parseOutput = await parser.parse(text);
             let parseOutputElemID = `${parser.name}-parser-output`;
             let showhideButtonStr = `<button class="btn btn-primary" onclick="showhide('${parseOutputElemID}')">Show/Hide original parser output</button>`
             let showhideButton = stringToElement(showhideButtonStr);
             addToResults(parser.name, parseOutput, parseOutputElemID);
-            
+
             showhide(parseOutputElemID); // hide original parser output by default
             addToButtonRow(parser.name, showhideButton);
 
@@ -142,7 +142,7 @@ class RSTWorkbench {
             addRS3DownloadButton(parser.name, rs3Output);
             addRSTWebEditButton(parser.name, rs3Output);
         } catch (err) {
-			const errorId = `rst-converter-service for ${parser.name}`;
+            const errorId = `rst-converter-service for ${parser.name}`;
             addToErrors(errorId, err);
             updateProgress(`${parser.name}`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
             return;
@@ -162,7 +162,7 @@ class RSTWorkbench {
             updateProgress(`${parser.name}`, `<a href="#results-${parser.name}">${DONE_SYMBOL}</a>`);
 
         } catch (err) {
-			const errorId = `rst-converter-service for ${parser.name} (rs3 to SVG)`; 
+            const errorId = `rst-converter-service for ${parser.name} (rs3 to SVG)`;
             addToErrors(errorId, err);
             updateProgress(`${parser.name}`, `<a href="#errors-${errorId}">${ERROR_SYMBOL}</a>`);
             return;
@@ -191,7 +191,7 @@ function addRSTWebEditButton(parserName, rs3String) {
     } else {
         actionUrl = `http://${hostName}:${window.rstworkbench.rstWeb.port}/api/convert?input_format=rs3&output_format=editor`;
     }
-    
+
     let rs3EditButtonString = `<form action="${actionUrl}" id="open_${parserName}_in_rstweb" method="post" target="_blank">
     <textarea class="text" name="input_file" form="open_${parserName}_in_rstweb" style='display:none;'>${rs3String}</textarea>
     <input type="submit" class="btn btn-primary submitButton" value="Edit in rstWeb">
@@ -449,7 +449,7 @@ function wrapInDiv(strOrElement, divID) {
 /* addToResults adds a title (e.g. the name of a parser) and some content
    to the results section of the page. */
 function addToResults(title, content, contentClass) {
-	ensureElementVisible('results_section');
+    ensureElementVisible('results_section');
     addToSection('results', title, content, contentClass);
 }
 
@@ -492,25 +492,25 @@ function addBase64ImagetoResults(title, imageBase64, imageType) {
 /* addToErrors adds a title (e.g. the name of the parser that produced
    the error) and and error message to the  section of the page. */
 function addToErrors(title, error) {
-	ensureElementVisible('errors_section');
+    ensureElementVisible('errors_section');
     addToSection('errors', title, error.toString(), 'error');
 }
 
 /* updateProgress adds/updates the parser status row in the progress table.
    given parser. */
 function updateProgress(parserName, message) {
-	const parserProgressElementName = `${parserName}-progress`;
-	let parserProgress = document.getElementById(parserProgressElementName);
-	let newParserProgress = stringToElement(`<tr id="${parserName}-progress"><th scope="row">${parserName}</th><td>${message}</td></tr>`);
+    const parserProgressElementName = `${parserName}-progress`;
+    let parserProgress = document.getElementById(parserProgressElementName);
+    let newParserProgress = stringToElement(`<tr id="${parserName}-progress"><th scope="row">${parserName}</th><td>${message}</td></tr>`);
 
-	if (parserProgress === null) {
-		// create parser progress table row
-		let progressTable = document.getElementById('progress');		
-		progressTable.appendChild(newParserProgress);
-	} else {
-		// update existing parser progress table row
-		parserProgress.replaceWith(newParserProgress);
-	}
+    if (parserProgress === null) {
+        // create parser progress table row
+        let progressTable = document.getElementById('progress');
+        progressTable.appendChild(newParserProgress);
+    } else {
+        // update existing parser progress table row
+        parserProgress.replaceWith(newParserProgress);
+    }
 }
 
 /* getPort returns a Port number given a service Object.
@@ -533,12 +533,12 @@ function showhide(elementId) {
 
 // ensure that the given DOM element is visible
 function ensureElementVisible(elementId) {
-	let x = document.getElementById(elementId);
-	x.style.display = "block";
+    let x = document.getElementById(elementId);
+    x.style.display = "block";
 }
 
 // ensure that the given DOM element invisible
 function ensureElementInvisible(elementId) {
-	let x = document.getElementById(elementId);
-	x.style.display = "none";
+    let x = document.getElementById(elementId);
+    x.style.display = "none";
 }

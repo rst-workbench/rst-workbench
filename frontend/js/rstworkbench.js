@@ -482,7 +482,6 @@ function addBase64ImagetoResults(title, imageBase64, imageType) {
     img.alt = title + " RST parse";
     img.src = `data:image/${imageType};base64,${imageBase64}`;
 
-    //addToSection('results', title, divResultsImages, 'rs3-image');
     addToSection('results', title, img, 'rs3-image');
 
 }

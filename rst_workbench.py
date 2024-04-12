@@ -20,7 +20,7 @@ from update_all_containers import DOCKER_COMPOSE_CONFIG_PATH, yamlfile2dict
 
 
 def get_rst_parsers(config_filepath=DOCKER_COMPOSE_CONFIG_PATH):
-    config = yamlfile2dict(DOCKER_COMPOSE_CONFIG_PATH)
+    config = yamlfile2dict(config_filepath)
 
     rst_parsers = {}
     for service in config['services']:
@@ -34,7 +34,7 @@ def get_rst_parsers(config_filepath=DOCKER_COMPOSE_CONFIG_PATH):
 
 
 def get_converter(config_filepath=DOCKER_COMPOSE_CONFIG_PATH):
-    config = yamlfile2dict(DOCKER_COMPOSE_CONFIG_PATH)
+    config = yamlfile2dict(config_filepath)
     return config['services']['rst-converter-service']
 
 

@@ -96,7 +96,7 @@ def update_images(config_filepath='docker-compose.yml'):
                 if current_tag != most_recent_tag:
                     most_recent_image = f"{organisation}/{repo}:{most_recent_tag}"
                     config['services'][service]['image'] = most_recent_image
-            except ValueError as e:
+            except ValueError:
                 sys.stderr.write(f"Can't find tags online for image '{match.group()}'.\n")
     yamldict2file(config, config_filepath)
 

@@ -318,7 +318,6 @@ class RSTParser {
         this.setup = setup;
     }
 
-    // TODO: add GET /status to all parser APIs
     async isRunning() {
         let running = false;
 
@@ -341,7 +340,7 @@ class RSTParser {
     async parse(input) {
         const data = new FormData();
         data.append('input', input);
-        data.append('output_format', 'original'); // TODO: rm after cleanup of parser APIs
+        data.append('output_format', 'original');
 
         const options = {
           method: 'POST',

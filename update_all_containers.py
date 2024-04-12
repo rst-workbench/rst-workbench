@@ -19,9 +19,9 @@ import yaml
 DOCKER_COMPOSE_CONFIG_PATH = "docker-compose.yml"
 DOCKER_HUB_ENDPOINT = "https://hub.docker.com/v2/repositories"
 
-DATE_TAG_RE = re.compile("\d{4}-\d{2}-\d{2}(-\d+)?")
-IMAGE_RE = re.compile("(?P<organisation>.*?)/(?P<repo>.*?):(?P<tag>.*)")
-INTEGER_RE = re.compile('(\d+)')
+DATE_TAG_RE = re.compile(r"\d{4}-\d{2}-\d{2}(-\d+)?")
+IMAGE_RE = re.compile(r"(?P<organisation>.*?)/(?P<repo>.*?):(?P<tag>.*)")
+INTEGER_RE = re.compile(r"(\d+)")
 
 
 def natural_sort_key(s):

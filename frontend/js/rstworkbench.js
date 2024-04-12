@@ -363,7 +363,7 @@ function stringToElement(htmlString) {
    the user's computer.
    source: https://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server */
 function download(filename, text) {
-  var element = document.createElement('a');
+  let element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
   element.setAttribute('download', filename);
 
@@ -516,14 +516,14 @@ function updateProgress(parserName, message) {
 /* getPort returns a Port number given a service Object.
    service = {build: Object, image: string, ports: Array(string)} */
 function getPort(service) {
-    portString = service.ports[0].split(':')[0];
+    let portString = service.ports[0].split(':')[0];
     return Number(portString);
 }
 
 
 // showhide toggles the visibility of the given DOM element
 function showhide(elementId) {
-  var x = document.getElementById(elementId);
+  let x = document.getElementById(elementId);
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
@@ -533,12 +533,12 @@ function showhide(elementId) {
 
 // ensure that the given DOM element is visible
 function ensureElementVisible(elementId) {
-	var x = document.getElementById(elementId);
+	let x = document.getElementById(elementId);
 	x.style.display = "block";
 }
 
 // ensure that the given DOM element invisible
 function ensureElementInvisible(elementId) {
-	var x = document.getElementById(elementId);
+	let x = document.getElementById(elementId);
 	x.style.display = "none";
 }
